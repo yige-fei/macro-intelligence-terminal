@@ -16,7 +16,7 @@ export default function ResearchView() {
       <main className="flex-1 overflow-auto">
         <div className="max-w-[1280px] mx-auto px-4 py-4 flex flex-col gap-3">
           <div className="note text-[12px]" role="note" data-testid="research-disclaimer">
-            <b className="amber">These are evaluation results, not a backtest and not a trading signal.</b>{" "}
+            <b className="amber">These figures are illustrative, not actual evaluation results, a backtest, or trading signals.</b>{" "}
             Executable backtesting is not built.
           </div>
           {HISTORICAL_DATA === "demo" && (
