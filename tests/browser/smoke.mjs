@@ -19,12 +19,11 @@ const REPO = resolve(dirname(fileURLToPath(import.meta.url)), "..", "..");
 const outArg = process.argv.indexOf("--out");
 const OUT = outArg > 0 ? resolve(process.argv[outArg + 1]) : mkdtempSync(join(tmpdir(), "mit-smoke-"));
 mkdirSync(OUT, { recursive: true });
-const TMP = mkdtempSync(join(tmpdir(), "mit-smoke-data-"));
-
 if (!findChrome()) {
   console.error("SKIPPED: no Chrome/Chromium found; set CHROME_PATH. No browser check was run.");
   process.exit(2);
 }
+const TMP = mkdtempSync(join(tmpdir(), "mit-smoke-data-"));
 
 const freePort = () => new Promise((res) => { const s = createServer(); s.listen(0, "127.0.0.1", () => { const p = s.address().port; s.close(() => res(p)); }); });
 const json = (p) => JSON.parse(readFileSync(p, "utf8"));
@@ -77,9 +76,10 @@ const chartReady = (page) => waitFor(page, `document.querySelector('[data-widget
 const clickButton = (page, label, scope = '[data-widget="chart"]') =>
   page.clickEl(`[...document.querySelectorAll('${scope} button')].find(b => b.innerText.trim() === ${JSON.stringify(label)})`);
 
-const chrome = await launch({ profileDir: join(TMP, "profile"), port: await freePort() });
+let chrome = null;
 const servers = [];
 try {
+  chrome = await launch({ profileDir: join(TMP, "profile"), port: await freePort() }); // inside try: temp data is always removed
   // ---------------------------------------------------------------- main scenario: demo-data/
   const main = await serve(join(REPO, "demo-data"));
   servers.push(main);
@@ -269,11 +269,11 @@ try {
   check("harness", "E0", "Harness completed without an internal error", false, String(e?.stack ?? e));
 } finally {
   for (const s of servers) s.stop();
-  await chrome.close();
+  if (chrome) await chrome.close();
   rmSync(TMP, { recursive: true, force: true });
 }
 
 const failed = results.filter((r) => !r.ok);
-save(join(OUT, "smoke.json"), { results, requests: chrome.log.requests.map((u) => u.replace(/127\.0\.0\.1:\d+/, "127.0.0.1:<port>")) });
+save(join(OUT, "smoke.json"), { results, requests: (chrome?.log.requests ?? []).map((u) => u.replace(/127\.0\.0\.1:\d+/, "127.0.0.1:<port>")) });
 console.log(`\n${results.length - failed.length}/${results.length} checks passed; results in ${OUT}`);
 process.exit(failed.length ? 1 : 0);
