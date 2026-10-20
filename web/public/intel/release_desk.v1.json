@@ -1,0 +1,3277 @@
+{
+ "export_contract": "release_desk_export",
+ "export_version": "1.0.0",
+ "generator_version": "0.1.0",
+ "record_contract": "macro_release_event 0.2.0",
+ "data_mode": "SOURCE_DERIVED",
+ "values_policy": "NO_ECONOMIC_VALUES",
+ "as_of_utc": "2026-10-17T14:15:09Z",
+ "generated_at_utc": "2026-10-17T14:34:59Z",
+ "clock": "REAL",
+ "scope": [
+  {
+   "family": "BLS_CPI",
+   "label": "Consumer Price Index",
+   "stage": null
+  },
+  {
+   "family": "BLS_EMPSIT",
+   "label": "Employment Situation",
+   "stage": null
+  },
+  {
+   "family": "BEA_GDP",
+   "label": "GDP Advance Estimate",
+   "stage": "ADVANCE"
+  }
+ ],
+ "attribution": [
+  "Source: U.S. Bureau of Labor Statistics",
+  "Source: U.S. Bureau of Economic Analysis"
+ ],
+ "events": [
+  {
+   "event_id": "BEA.GDP.ADVANCE.2025-Q4",
+   "family": "BEA_GDP",
+   "stage": "ADVANCE",
+   "family_label": "Gross Domestic Product",
+   "authority_code": "BEA",
+   "authority_name": "U.S. Bureau of Economic Analysis",
+   "release_name": "GDP (Advance Estimate), 4th Quarter and Year 2025",
+   "reference_period": {
+    "kind": "quarter",
+    "period": "2025-Q4"
+   },
+   "desk_status": "SCHEDULED_UNVERIFIED",
+   "flags": [
+    "DUE_NOT_CONFIRMED"
+   ],
+   "schedule": {
+    "status": "SCHEDULED",
+    "current": {
+     "local_date": "2026-02-20",
+     "local_time": "08:30",
+     "time_zone": "America/New_York",
+     "source_tz_label": "UTC",
+     "precision": "minute",
+     "utc": "2026-02-20T13:30:00Z",
+     "source_kind": "ICS_CALENDAR",
+     "source_url": "https://www.bea.gov/news/schedule/ics/online-calendar-subscription.ics"
+    },
+    "original": {
+     "local_date": "2026-02-20",
+     "local_time": "08:30",
+     "time_zone": "America/New_York",
+     "source_tz_label": "UTC",
+     "precision": "minute",
+     "utc": "2026-02-20T13:30:00Z",
+     "source_kind": "ICS_CALENDAR",
+     "source_url": "https://www.bea.gov/news/schedule/ics/online-calendar-subscription.ics"
+    },
+    "history": [
+     {
+      "local_date": "2026-02-20",
+      "local_time": "08:30",
+      "time_zone": "America/New_York",
+      "source_tz_label": "UTC",
+      "precision": "minute",
+      "utc": "2026-02-20T13:30:00Z",
+      "source_kind": "ICS_CALENDAR",
+      "source_url": "https://www.bea.gov/news/schedule/ics/online-calendar-subscription.ics"
+     }
+    ]
+   },
+   "publication": {
+    "status": "DUE_UNCONFIRMED",
+    "official_release_time": null,
+    "observed_available_at_utc": null,
+    "verification": {
+     "state": "NOT_ATTEMPTED",
+     "last_attempt_at_utc": null,
+     "detail": null,
+     "page_event_id": null
+    },
+    "evidence": []
+   },
+   "retrieval": {
+    "state": "FRESH",
+    "last_attempt_at_utc": "2026-10-17T13:52:04Z",
+    "last_success_at_utc": "2026-10-17T13:52:04Z",
+    "last_error": null,
+    "stale_after": "P7D"
+   },
+   "conflicts": [],
+   "notes": [],
+   "sources": [
+    {
+     "url": "https://www.bea.gov/news/schedule/ics/online-calendar-subscription.ics",
+     "publisher": "BEA",
+     "kind": "ICS_CALENDAR",
+     "retrieved_at_utc": "2026-10-16T06:13:38Z"
+    }
+   ],
+   "attribution": [
+    "Source: U.S. Bureau of Economic Analysis"
+   ],
+   "synthetic": false,
+   "record_version": 1
+  },
+  {
+   "event_id": "BEA.GDP.ADVANCE.2026-Q1",
+   "family": "BEA_GDP",
+   "stage": "ADVANCE",
+   "family_label": "Gross Domestic Product",
+   "authority_code": "BEA",
+   "authority_name": "U.S. Bureau of Economic Analysis",
+   "release_name": "GDP (Advance Estimate), 1st Quarter 2026",
+   "reference_period": {
+    "kind": "quarter",
+    "period": "2026-Q1"
+   },
+   "desk_status": "SCHEDULED_UNVERIFIED",
+   "flags": [
+    "DUE_NOT_CONFIRMED"
+   ],
+   "schedule": {
+    "status": "SCHEDULED",
+    "current": {
+     "local_date": "2026-04-30",
+     "local_time": "08:30",
+     "time_zone": "America/New_York",
+     "source_tz_label": "UTC",
+     "precision": "minute",
+     "utc": "2026-04-30T12:30:00Z",
+     "source_kind": "ICS_CALENDAR",
+     "source_url": "https://www.bea.gov/news/schedule/ics/online-calendar-subscription.ics"
+    },
+    "original": {
+     "local_date": "2026-04-30",
+     "local_time": "08:30",
+     "time_zone": "America/New_York",
+     "source_tz_label": "UTC",
+     "precision": "minute",
+     "utc": "2026-04-30T12:30:00Z",
+     "source_kind": "ICS_CALENDAR",
+     "source_url": "https://www.bea.gov/news/schedule/ics/online-calendar-subscription.ics"
+    },
+    "history": [
+     {
+      "local_date": "2026-04-30",
+      "local_time": "08:30",
+      "time_zone": "America/New_York",
+      "source_tz_label": "UTC",
+      "precision": "minute",
+      "utc": "2026-04-30T12:30:00Z",
+      "source_kind": "ICS_CALENDAR",
+      "source_url": "https://www.bea.gov/news/schedule/ics/online-calendar-subscription.ics"
+     }
+    ]
+   },
+   "publication": {
+    "status": "DUE_UNCONFIRMED",
+    "official_release_time": null,
+    "observed_available_at_utc": null,
+    "verification": {
+     "state": "NOT_ATTEMPTED",
+     "last_attempt_at_utc": null,
+     "detail": null,
+     "page_event_id": null
+    },
+    "evidence": []
+   },
+   "retrieval": {
+    "state": "FRESH",
+    "last_attempt_at_utc": "2026-10-17T13:52:04Z",
+    "last_success_at_utc": "2026-10-17T13:52:04Z",
+    "last_error": null,
+    "stale_after": "P7D"
+   },
+   "conflicts": [],
+   "notes": [],
+   "sources": [
+    {
+     "url": "https://www.bea.gov/news/schedule/ics/online-calendar-subscription.ics",
+     "publisher": "BEA",
+     "kind": "ICS_CALENDAR",
+     "retrieved_at_utc": "2026-10-16T06:13:38Z"
+    }
+   ],
+   "attribution": [
+    "Source: U.S. Bureau of Economic Analysis"
+   ],
+   "synthetic": false,
+   "record_version": 1
+  },
+  {
+   "event_id": "BEA.GDP.ADVANCE.2026-Q2",
+   "family": "BEA_GDP",
+   "stage": "ADVANCE",
+   "family_label": "Gross Domestic Product",
+   "authority_code": "BEA",
+   "authority_name": "U.S. Bureau of Economic Analysis",
+   "release_name": "GDP (Advance Estimate), 2nd Quarter 2026",
+   "reference_period": {
+    "kind": "quarter",
+    "period": "2026-Q2"
+   },
+   "desk_status": "SCHEDULED_UNVERIFIED",
+   "flags": [
+    "DUE_NOT_CONFIRMED"
+   ],
+   "schedule": {
+    "status": "SCHEDULED",
+    "current": {
+     "local_date": "2026-07-30",
+     "local_time": "08:30",
+     "time_zone": "America/New_York",
+     "source_tz_label": "UTC",
+     "precision": "minute",
+     "utc": "2026-07-30T12:30:00Z",
+     "source_kind": "ICS_CALENDAR",
+     "source_url": "https://www.bea.gov/news/schedule/ics/online-calendar-subscription.ics"
+    },
+    "original": {
+     "local_date": "2026-07-30",
+     "local_time": "08:30",
+     "time_zone": "America/New_York",
+     "source_tz_label": "UTC",
+     "precision": "minute",
+     "utc": "2026-07-30T12:30:00Z",
+     "source_kind": "ICS_CALENDAR",
+     "source_url": "https://www.bea.gov/news/schedule/ics/online-calendar-subscription.ics"
+    },
+    "history": [
+     {
+      "local_date": "2026-07-30",
+      "local_time": "08:30",
+      "time_zone": "America/New_York",
+      "source_tz_label": "UTC",
+      "precision": "minute",
+      "utc": "2026-07-30T12:30:00Z",
+      "source_kind": "ICS_CALENDAR",
+      "source_url": "https://www.bea.gov/news/schedule/ics/online-calendar-subscription.ics"
+     }
+    ]
+   },
+   "publication": {
+    "status": "DUE_UNCONFIRMED",
+    "official_release_time": null,
+    "observed_available_at_utc": null,
+    "verification": {
+     "state": "NOT_ATTEMPTED",
+     "last_attempt_at_utc": null,
+     "detail": null,
+     "page_event_id": null
+    },
+    "evidence": []
+   },
+   "retrieval": {
+    "state": "FRESH",
+    "last_attempt_at_utc": "2026-10-17T13:52:04Z",
+    "last_success_at_utc": "2026-10-17T13:52:04Z",
+    "last_error": null,
+    "stale_after": "P7D"
+   },
+   "conflicts": [],
+   "notes": [],
+   "sources": [
+    {
+     "url": "https://www.bea.gov/news/schedule/ics/online-calendar-subscription.ics",
+     "publisher": "BEA",
+     "kind": "ICS_CALENDAR",
+     "retrieved_at_utc": "2026-10-16T06:13:38Z"
+    }
+   ],
+   "attribution": [
+    "Source: U.S. Bureau of Economic Analysis"
+   ],
+   "synthetic": false,
+   "record_version": 1
+  },
+  {
+   "event_id": "BLS.EMPSIT.2026-09",
+   "family": "BLS_EMPSIT",
+   "stage": null,
+   "family_label": "Employment Situation",
+   "authority_code": "BLS",
+   "authority_name": "U.S. Bureau of Labor Statistics",
+   "release_name": "Employment Situation",
+   "reference_period": {
+    "kind": "month",
+    "period": "2026-09"
+   },
+   "desk_status": "CONFIRMED",
+   "flags": [],
+   "schedule": {
+    "status": "UNKNOWN",
+    "current": null,
+    "original": null,
+    "history": []
+   },
+   "publication": {
+    "status": "CONFIRMED",
+    "official_release_time": {
+     "basis": "SOURCE_STATED_EMBARGO",
+     "local_date": "2026-10-02",
+     "local_time": "08:30",
+     "source_tz_label": "ET",
+     "time_zone": "America/New_York",
+     "utc": "2026-10-02T12:30:00Z"
+    },
+    "observed_available_at_utc": "2026-10-16T06:13:43Z",
+    "verification": {
+     "state": "MATCHED",
+     "last_attempt_at_utc": "2026-10-16T06:13:43Z",
+     "detail": null,
+     "page_event_id": "BLS.EMPSIT.2026-09"
+    },
+    "evidence": [
+     {
+      "kind": "NEWS_RELEASE_EMBARGO_LINE",
+      "document_id": "USDL-26-1549",
+      "excerpt": "embargoed until 8:30 a.m. (ET) Friday, October 2, 2026",
+      "source_url": "https://www.bls.gov/news.release/empsit.nr0.htm",
+      "retrieved_at_utc": "2026-10-16T06:13:43Z"
+     }
+    ]
+   },
+   "retrieval": {
+    "state": "FRESH",
+    "last_attempt_at_utc": "2026-10-16T06:13:43Z",
+    "last_success_at_utc": "2026-10-16T06:13:43Z",
+    "last_error": null,
+    "stale_after": "P7D"
+   },
+   "conflicts": [],
+   "notes": [],
+   "sources": [
+    {
+     "url": "https://www.bls.gov/news.release/empsit.nr0.htm",
+     "publisher": "BLS",
+     "kind": "NEWS_RELEASE",
+     "retrieved_at_utc": "2026-10-16T06:13:43Z"
+    }
+   ],
+   "attribution": [
+    "Source: U.S. Bureau of Labor Statistics"
+   ],
+   "synthetic": false,
+   "record_version": 1
+  },
+  {
+   "event_id": "BLS.CPI.2026-09",
+   "family": "BLS_CPI",
+   "stage": null,
+   "family_label": "Consumer Price Index",
+   "authority_code": "BLS",
+   "authority_name": "U.S. Bureau of Labor Statistics",
+   "release_name": "Consumer Price Index",
+   "reference_period": {
+    "kind": "month",
+    "period": "2026-09"
+   },
+   "desk_status": "CONFIRMED",
+   "flags": [],
+   "schedule": {
+    "status": "UNKNOWN",
+    "current": null,
+    "original": null,
+    "history": []
+   },
+   "publication": {
+    "status": "CONFIRMED",
+    "official_release_time": {
+     "basis": "SOURCE_STATED_EMBARGO",
+     "local_date": "2026-10-14",
+     "local_time": "08:30",
+     "source_tz_label": "ET",
+     "time_zone": "America/New_York",
+     "utc": "2026-10-14T12:30:00Z"
+    },
+    "observed_available_at_utc": "2026-10-17T14:15:08Z",
+    "verification": {
+     "state": "MATCHED",
+     "last_attempt_at_utc": "2026-10-17T14:15:08Z",
+     "detail": null,
+     "page_event_id": "BLS.CPI.2026-09"
+    },
+    "evidence": [
+     {
+      "kind": "NEWS_RELEASE_EMBARGO_LINE",
+      "document_id": "USDL-26-1574",
+      "excerpt": "embargoed until 8:30 a.m. (ET) Wednesday, October 14, 2026",
+      "source_url": "https://www.bls.gov/news.release/cpi.nr0.htm",
+      "retrieved_at_utc": "2026-10-17T14:15:08Z"
+     }
+    ]
+   },
+   "retrieval": {
+    "state": "FRESH",
+    "last_attempt_at_utc": "2026-10-17T14:15:08Z",
+    "last_success_at_utc": "2026-10-17T14:15:08Z",
+    "last_error": null,
+    "stale_after": "P7D"
+   },
+   "conflicts": [],
+   "notes": [],
+   "sources": [
+    {
+     "url": "https://www.bls.gov/news.release/cpi.nr0.htm",
+     "publisher": "BLS",
+     "kind": "NEWS_RELEASE",
+     "retrieved_at_utc": "2026-10-17T14:15:08Z"
+    }
+   ],
+   "attribution": [
+    "Source: U.S. Bureau of Labor Statistics"
+   ],
+   "synthetic": false,
+   "record_version": 1
+  },
+  {
+   "event_id": "BEA.GDP.ADVANCE.2026-Q3",
+   "family": "BEA_GDP",
+   "stage": "ADVANCE",
+   "family_label": "Gross Domestic Product",
+   "authority_code": "BEA",
+   "authority_name": "U.S. Bureau of Economic Analysis",
+   "release_name": "GDP (Advance Estimate), 3rd Quarter 2026",
+   "reference_period": {
+    "kind": "quarter",
+    "period": "2026-Q3"
+   },
+   "desk_status": "SCHEDULED_UNVERIFIED",
+   "flags": [],
+   "schedule": {
+    "status": "SCHEDULED",
+    "current": {
+     "local_date": "2026-10-29",
+     "local_time": "08:30",
+     "time_zone": "America/New_York",
+     "source_tz_label": "UTC",
+     "precision": "minute",
+     "utc": "2026-10-29T12:30:00Z",
+     "source_kind": "ICS_CALENDAR",
+     "source_url": "https://www.bea.gov/news/schedule/ics/online-calendar-subscription.ics"
+    },
+    "original": {
+     "local_date": "2026-10-29",
+     "local_time": "08:30",
+     "time_zone": "America/New_York",
+     "source_tz_label": "UTC",
+     "precision": "minute",
+     "utc": "2026-10-29T12:30:00Z",
+     "source_kind": "ICS_CALENDAR",
+     "source_url": "https://www.bea.gov/news/schedule/ics/online-calendar-subscription.ics"
+    },
+    "history": [
+     {
+      "local_date": "2026-10-29",
+      "local_time": "08:30",
+      "time_zone": "America/New_York",
+      "source_tz_label": "UTC",
+      "precision": "minute",
+      "utc": "2026-10-29T12:30:00Z",
+      "source_kind": "ICS_CALENDAR",
+      "source_url": "https://www.bea.gov/news/schedule/ics/online-calendar-subscription.ics"
+     }
+    ]
+   },
+   "publication": {
+    "status": "NOT_YET_DUE",
+    "official_release_time": null,
+    "observed_available_at_utc": null,
+    "verification": {
+     "state": "NOT_ATTEMPTED",
+     "last_attempt_at_utc": null,
+     "detail": null,
+     "page_event_id": null
+    },
+    "evidence": []
+   },
+   "retrieval": {
+    "state": "FRESH",
+    "last_attempt_at_utc": "2026-10-17T13:52:04Z",
+    "last_success_at_utc": "2026-10-17T13:52:04Z",
+    "last_error": null,
+    "stale_after": "P7D"
+   },
+   "conflicts": [],
+   "notes": [],
+   "sources": [
+    {
+     "url": "https://www.bea.gov/news/schedule/ics/online-calendar-subscription.ics",
+     "publisher": "BEA",
+     "kind": "ICS_CALENDAR",
+     "retrieved_at_utc": "2026-10-16T06:13:38Z"
+    }
+   ],
+   "attribution": [
+    "Source: U.S. Bureau of Economic Analysis"
+   ],
+   "synthetic": false,
+   "record_version": 1
+  },
+  {
+   "event_id": "BLS.EMPSIT.2026-10",
+   "family": "BLS_EMPSIT",
+   "stage": null,
+   "family_label": "Employment Situation",
+   "authority_code": "BLS",
+   "authority_name": "U.S. Bureau of Labor Statistics",
+   "release_name": "Employment Situation",
+   "reference_period": {
+    "kind": "month",
+    "period": "2026-10"
+   },
+   "desk_status": "SCHEDULED_UNVERIFIED",
+   "flags": [],
+   "schedule": {
+    "status": "SCHEDULED",
+    "current": {
+     "local_date": "2026-11-06",
+     "local_time": "08:30",
+     "time_zone": "America/New_York",
+     "source_tz_label": "US-Eastern",
+     "precision": "minute",
+     "utc": "2026-11-06T13:30:00Z",
+     "source_kind": "ICS_CALENDAR",
+     "source_url": "https://www.bls.gov/schedule/news_release/bls.ics"
+    },
+    "original": {
+     "local_date": "2026-11-06",
+     "local_time": "08:30",
+     "time_zone": "America/New_York",
+     "source_tz_label": "US-Eastern",
+     "precision": "minute",
+     "utc": "2026-11-06T13:30:00Z",
+     "source_kind": "ICS_CALENDAR",
+     "source_url": "https://www.bls.gov/schedule/news_release/bls.ics"
+    },
+    "history": [
+     {
+      "local_date": "2026-11-06",
+      "local_time": "08:30",
+      "time_zone": "America/New_York",
+      "source_tz_label": "US-Eastern",
+      "precision": "minute",
+      "utc": "2026-11-06T13:30:00Z",
+      "source_kind": "ICS_CALENDAR",
+      "source_url": "https://www.bls.gov/schedule/news_release/bls.ics"
+     }
+    ]
+   },
+   "publication": {
+    "status": "NOT_YET_DUE",
+    "official_release_time": null,
+    "observed_available_at_utc": null,
+    "verification": {
+     "state": "NOT_ATTEMPTED",
+     "last_attempt_at_utc": null,
+     "detail": null,
+     "page_event_id": null
+    },
+    "evidence": []
+   },
+   "retrieval": {
+    "state": "FRESH",
+    "last_attempt_at_utc": "2026-10-17T13:51:59Z",
+    "last_success_at_utc": "2026-10-17T13:51:59Z",
+    "last_error": null,
+    "stale_after": "P7D"
+   },
+   "conflicts": [],
+   "notes": [],
+   "sources": [
+    {
+     "url": "https://www.bls.gov/schedule/news_release/bls.ics",
+     "publisher": "BLS",
+     "kind": "ICS_CALENDAR",
+     "retrieved_at_utc": "2026-10-16T06:13:23Z"
+    },
+    {
+     "url": "https://www.bls.gov/schedule/news_release/empsit.htm",
+     "publisher": "BLS",
+     "kind": "SCHEDULE_PAGE",
+     "retrieved_at_utc": "2026-10-16T06:13:33Z"
+    }
+   ],
+   "attribution": [
+    "Source: U.S. Bureau of Labor Statistics"
+   ],
+   "synthetic": false,
+   "record_version": 1
+  },
+  {
+   "event_id": "BLS.CPI.2026-10",
+   "family": "BLS_CPI",
+   "stage": null,
+   "family_label": "Consumer Price Index",
+   "authority_code": "BLS",
+   "authority_name": "U.S. Bureau of Labor Statistics",
+   "release_name": "Consumer Price Index",
+   "reference_period": {
+    "kind": "month",
+    "period": "2026-10"
+   },
+   "desk_status": "SCHEDULED_UNVERIFIED",
+   "flags": [],
+   "schedule": {
+    "status": "SCHEDULED",
+    "current": {
+     "local_date": "2026-11-10",
+     "local_time": "08:30",
+     "time_zone": "America/New_York",
+     "source_tz_label": "US-Eastern",
+     "precision": "minute",
+     "utc": "2026-11-10T13:30:00Z",
+     "source_kind": "ICS_CALENDAR",
+     "source_url": "https://www.bls.gov/schedule/news_release/bls.ics"
+    },
+    "original": {
+     "local_date": "2026-11-10",
+     "local_time": "08:30",
+     "time_zone": "America/New_York",
+     "source_tz_label": "US-Eastern",
+     "precision": "minute",
+     "utc": "2026-11-10T13:30:00Z",
+     "source_kind": "ICS_CALENDAR",
+     "source_url": "https://www.bls.gov/schedule/news_release/bls.ics"
+    },
+    "history": [
+     {
+      "local_date": "2026-11-10",
+      "local_time": "08:30",
+      "time_zone": "America/New_York",
+      "source_tz_label": "US-Eastern",
+      "precision": "minute",
+      "utc": "2026-11-10T13:30:00Z",
+      "source_kind": "ICS_CALENDAR",
+      "source_url": "https://www.bls.gov/schedule/news_release/bls.ics"
+     }
+    ]
+   },
+   "publication": {
+    "status": "NOT_YET_DUE",
+    "official_release_time": null,
+    "observed_available_at_utc": null,
+    "verification": {
+     "state": "NOT_ATTEMPTED",
+     "last_attempt_at_utc": null,
+     "detail": null,
+     "page_event_id": null
+    },
+    "evidence": []
+   },
+   "retrieval": {
+    "state": "FRESH",
+    "last_attempt_at_utc": "2026-10-17T13:51:54Z",
+    "last_success_at_utc": "2026-10-17T13:51:54Z",
+    "last_error": null,
+    "stale_after": "P7D"
+   },
+   "conflicts": [],
+   "notes": [],
+   "sources": [
+    {
+     "url": "https://www.bls.gov/schedule/news_release/bls.ics",
+     "publisher": "BLS",
+     "kind": "ICS_CALENDAR",
+     "retrieved_at_utc": "2026-10-16T06:13:23Z"
+    },
+    {
+     "url": "https://www.bls.gov/schedule/news_release/cpi.htm",
+     "publisher": "BLS",
+     "kind": "SCHEDULE_PAGE",
+     "retrieved_at_utc": "2026-10-16T06:13:28Z"
+    }
+   ],
+   "attribution": [
+    "Source: U.S. Bureau of Labor Statistics"
+   ],
+   "synthetic": false,
+   "record_version": 1
+  },
+  {
+   "event_id": "BLS.EMPSIT.2026-11",
+   "family": "BLS_EMPSIT",
+   "stage": null,
+   "family_label": "Employment Situation",
+   "authority_code": "BLS",
+   "authority_name": "U.S. Bureau of Labor Statistics",
+   "release_name": "Employment Situation",
+   "reference_period": {
+    "kind": "month",
+    "period": "2026-11"
+   },
+   "desk_status": "SCHEDULED_UNVERIFIED",
+   "flags": [],
+   "schedule": {
+    "status": "SCHEDULED",
+    "current": {
+     "local_date": "2026-12-04",
+     "local_time": "08:30",
+     "time_zone": "America/New_York",
+     "source_tz_label": "US-Eastern",
+     "precision": "minute",
+     "utc": "2026-12-04T13:30:00Z",
+     "source_kind": "ICS_CALENDAR",
+     "source_url": "https://www.bls.gov/schedule/news_release/bls.ics"
+    },
+    "original": {
+     "local_date": "2026-12-04",
+     "local_time": "08:30",
+     "time_zone": "America/New_York",
+     "source_tz_label": "US-Eastern",
+     "precision": "minute",
+     "utc": "2026-12-04T13:30:00Z",
+     "source_kind": "ICS_CALENDAR",
+     "source_url": "https://www.bls.gov/schedule/news_release/bls.ics"
+    },
+    "history": [
+     {
+      "local_date": "2026-12-04",
+      "local_time": "08:30",
+      "time_zone": "America/New_York",
+      "source_tz_label": "US-Eastern",
+      "precision": "minute",
+      "utc": "2026-12-04T13:30:00Z",
+      "source_kind": "ICS_CALENDAR",
+      "source_url": "https://www.bls.gov/schedule/news_release/bls.ics"
+     }
+    ]
+   },
+   "publication": {
+    "status": "NOT_YET_DUE",
+    "official_release_time": null,
+    "observed_available_at_utc": null,
+    "verification": {
+     "state": "NOT_ATTEMPTED",
+     "last_attempt_at_utc": null,
+     "detail": null,
+     "page_event_id": null
+    },
+    "evidence": []
+   },
+   "retrieval": {
+    "state": "FRESH",
+    "last_attempt_at_utc": "2026-10-17T13:51:59Z",
+    "last_success_at_utc": "2026-10-17T13:51:59Z",
+    "last_error": null,
+    "stale_after": "P7D"
+   },
+   "conflicts": [],
+   "notes": [],
+   "sources": [
+    {
+     "url": "https://www.bls.gov/schedule/news_release/bls.ics",
+     "publisher": "BLS",
+     "kind": "ICS_CALENDAR",
+     "retrieved_at_utc": "2026-10-16T06:13:23Z"
+    },
+    {
+     "url": "https://www.bls.gov/schedule/news_release/empsit.htm",
+     "publisher": "BLS",
+     "kind": "SCHEDULE_PAGE",
+     "retrieved_at_utc": "2026-10-16T06:13:33Z"
+    }
+   ],
+   "attribution": [
+    "Source: U.S. Bureau of Labor Statistics"
+   ],
+   "synthetic": false,
+   "record_version": 1
+  },
+  {
+   "event_id": "BLS.CPI.2026-11",
+   "family": "BLS_CPI",
+   "stage": null,
+   "family_label": "Consumer Price Index",
+   "authority_code": "BLS",
+   "authority_name": "U.S. Bureau of Labor Statistics",
+   "release_name": "Consumer Price Index",
+   "reference_period": {
+    "kind": "month",
+    "period": "2026-11"
+   },
+   "desk_status": "SCHEDULED_UNVERIFIED",
+   "flags": [],
+   "schedule": {
+    "status": "SCHEDULED",
+    "current": {
+     "local_date": "2026-12-10",
+     "local_time": "08:30",
+     "time_zone": "America/New_York",
+     "source_tz_label": "US-Eastern",
+     "precision": "minute",
+     "utc": "2026-12-10T13:30:00Z",
+     "source_kind": "ICS_CALENDAR",
+     "source_url": "https://www.bls.gov/schedule/news_release/bls.ics"
+    },
+    "original": {
+     "local_date": "2026-12-10",
+     "local_time": "08:30",
+     "time_zone": "America/New_York",
+     "source_tz_label": "US-Eastern",
+     "precision": "minute",
+     "utc": "2026-12-10T13:30:00Z",
+     "source_kind": "ICS_CALENDAR",
+     "source_url": "https://www.bls.gov/schedule/news_release/bls.ics"
+    },
+    "history": [
+     {
+      "local_date": "2026-12-10",
+      "local_time": "08:30",
+      "time_zone": "America/New_York",
+      "source_tz_label": "US-Eastern",
+      "precision": "minute",
+      "utc": "2026-12-10T13:30:00Z",
+      "source_kind": "ICS_CALENDAR",
+      "source_url": "https://www.bls.gov/schedule/news_release/bls.ics"
+     }
+    ]
+   },
+   "publication": {
+    "status": "NOT_YET_DUE",
+    "official_release_time": null,
+    "observed_available_at_utc": null,
+    "verification": {
+     "state": "NOT_ATTEMPTED",
+     "last_attempt_at_utc": null,
+     "detail": null,
+     "page_event_id": null
+    },
+    "evidence": []
+   },
+   "retrieval": {
+    "state": "FRESH",
+    "last_attempt_at_utc": "2026-10-17T13:51:54Z",
+    "last_success_at_utc": "2026-10-17T13:51:54Z",
+    "last_error": null,
+    "stale_after": "P7D"
+   },
+   "conflicts": [],
+   "notes": [],
+   "sources": [
+    {
+     "url": "https://www.bls.gov/schedule/news_release/bls.ics",
+     "publisher": "BLS",
+     "kind": "ICS_CALENDAR",
+     "retrieved_at_utc": "2026-10-16T06:13:23Z"
+    },
+    {
+     "url": "https://www.bls.gov/schedule/news_release/cpi.htm",
+     "publisher": "BLS",
+     "kind": "SCHEDULE_PAGE",
+     "retrieved_at_utc": "2026-10-16T06:13:28Z"
+    }
+   ],
+   "attribution": [
+    "Source: U.S. Bureau of Labor Statistics"
+   ],
+   "synthetic": false,
+   "record_version": 1
+  },
+  {
+   "event_id": "BLS.EMPSIT.2026-12",
+   "family": "BLS_EMPSIT",
+   "stage": null,
+   "family_label": "Employment Situation",
+   "authority_code": "BLS",
+   "authority_name": "U.S. Bureau of Labor Statistics",
+   "release_name": "Employment Situation",
+   "reference_period": {
+    "kind": "month",
+    "period": "2026-12"
+   },
+   "desk_status": "SCHEDULED_UNVERIFIED",
+   "flags": [
+    "ZONE_NOT_STATED"
+   ],
+   "schedule": {
+    "status": "SCHEDULED",
+    "current": {
+     "local_date": "2027-01-08",
+     "local_time": "08:30",
+     "time_zone": null,
+     "source_tz_label": null,
+     "precision": "minute",
+     "utc": null,
+     "source_kind": "SCHEDULE_PAGE",
+     "source_url": "https://www.bls.gov/schedule/news_release/empsit.htm"
+    },
+    "original": {
+     "local_date": "2027-01-08",
+     "local_time": "08:30",
+     "time_zone": null,
+     "source_tz_label": null,
+     "precision": "minute",
+     "utc": null,
+     "source_kind": "SCHEDULE_PAGE",
+     "source_url": "https://www.bls.gov/schedule/news_release/empsit.htm"
+    },
+    "history": [
+     {
+      "local_date": "2027-01-08",
+      "local_time": "08:30",
+      "time_zone": null,
+      "source_tz_label": null,
+      "precision": "minute",
+      "utc": null,
+      "source_kind": "SCHEDULE_PAGE",
+      "source_url": "https://www.bls.gov/schedule/news_release/empsit.htm"
+     }
+    ]
+   },
+   "publication": {
+    "status": "NOT_YET_DUE",
+    "official_release_time": null,
+    "observed_available_at_utc": null,
+    "verification": {
+     "state": "NOT_ATTEMPTED",
+     "last_attempt_at_utc": null,
+     "detail": null,
+     "page_event_id": null
+    },
+    "evidence": []
+   },
+   "retrieval": {
+    "state": "FRESH",
+    "last_attempt_at_utc": "2026-10-17T13:51:59Z",
+    "last_success_at_utc": "2026-10-17T13:51:59Z",
+    "last_error": null,
+    "stale_after": "P7D"
+   },
+   "conflicts": [],
+   "notes": [],
+   "sources": [
+    {
+     "url": "https://www.bls.gov/schedule/news_release/empsit.htm",
+     "publisher": "BLS",
+     "kind": "SCHEDULE_PAGE",
+     "retrieved_at_utc": "2026-10-16T06:13:33Z"
+    }
+   ],
+   "attribution": [
+    "Source: U.S. Bureau of Labor Statistics"
+   ],
+   "synthetic": false,
+   "record_version": 1
+  },
+  {
+   "event_id": "BLS.CPI.2026-12",
+   "family": "BLS_CPI",
+   "stage": null,
+   "family_label": "Consumer Price Index",
+   "authority_code": "BLS",
+   "authority_name": "U.S. Bureau of Labor Statistics",
+   "release_name": "Consumer Price Index",
+   "reference_period": {
+    "kind": "month",
+    "period": "2026-12"
+   },
+   "desk_status": "SCHEDULED_UNVERIFIED",
+   "flags": [
+    "ZONE_NOT_STATED"
+   ],
+   "schedule": {
+    "status": "SCHEDULED",
+    "current": {
+     "local_date": "2027-01-13",
+     "local_time": "08:30",
+     "time_zone": null,
+     "source_tz_label": null,
+     "precision": "minute",
+     "utc": null,
+     "source_kind": "SCHEDULE_PAGE",
+     "source_url": "https://www.bls.gov/schedule/news_release/cpi.htm"
+    },
+    "original": {
+     "local_date": "2027-01-13",
+     "local_time": "08:30",
+     "time_zone": null,
+     "source_tz_label": null,
+     "precision": "minute",
+     "utc": null,
+     "source_kind": "SCHEDULE_PAGE",
+     "source_url": "https://www.bls.gov/schedule/news_release/cpi.htm"
+    },
+    "history": [
+     {
+      "local_date": "2027-01-13",
+      "local_time": "08:30",
+      "time_zone": null,
+      "source_tz_label": null,
+      "precision": "minute",
+      "utc": null,
+      "source_kind": "SCHEDULE_PAGE",
+      "source_url": "https://www.bls.gov/schedule/news_release/cpi.htm"
+     }
+    ]
+   },
+   "publication": {
+    "status": "NOT_YET_DUE",
+    "official_release_time": null,
+    "observed_available_at_utc": null,
+    "verification": {
+     "state": "NOT_ATTEMPTED",
+     "last_attempt_at_utc": null,
+     "detail": null,
+     "page_event_id": null
+    },
+    "evidence": []
+   },
+   "retrieval": {
+    "state": "FRESH",
+    "last_attempt_at_utc": "2026-10-17T13:51:54Z",
+    "last_success_at_utc": "2026-10-17T13:51:54Z",
+    "last_error": null,
+    "stale_after": "P7D"
+   },
+   "conflicts": [],
+   "notes": [],
+   "sources": [
+    {
+     "url": "https://www.bls.gov/schedule/news_release/cpi.htm",
+     "publisher": "BLS",
+     "kind": "SCHEDULE_PAGE",
+     "retrieved_at_utc": "2026-10-16T06:13:28Z"
+    }
+   ],
+   "attribution": [
+    "Source: U.S. Bureau of Labor Statistics"
+   ],
+   "synthetic": false,
+   "record_version": 1
+  },
+  {
+   "event_id": "BEA.GDP.ADVANCE.2026-Q4",
+   "family": "BEA_GDP",
+   "stage": "ADVANCE",
+   "family_label": "Gross Domestic Product",
+   "authority_code": "BEA",
+   "authority_name": "U.S. Bureau of Economic Analysis",
+   "release_name": "GDP (Advance Estimate), 4th Quarter and Year 2026",
+   "reference_period": {
+    "kind": "quarter",
+    "period": "2026-Q4"
+   },
+   "desk_status": "SCHEDULED_UNVERIFIED",
+   "flags": [],
+   "schedule": {
+    "status": "SCHEDULED",
+    "current": {
+     "local_date": "2027-01-28",
+     "local_time": "08:30",
+     "time_zone": "America/New_York",
+     "source_tz_label": "UTC",
+     "precision": "minute",
+     "utc": "2027-01-28T13:30:00Z",
+     "source_kind": "ICS_CALENDAR",
+     "source_url": "https://www.bea.gov/news/schedule/ics/online-calendar-subscription.ics"
+    },
+    "original": {
+     "local_date": "2027-01-28",
+     "local_time": "08:30",
+     "time_zone": "America/New_York",
+     "source_tz_label": "UTC",
+     "precision": "minute",
+     "utc": "2027-01-28T13:30:00Z",
+     "source_kind": "ICS_CALENDAR",
+     "source_url": "https://www.bea.gov/news/schedule/ics/online-calendar-subscription.ics"
+    },
+    "history": [
+     {
+      "local_date": "2027-01-28",
+      "local_time": "08:30",
+      "time_zone": "America/New_York",
+      "source_tz_label": "UTC",
+      "precision": "minute",
+      "utc": "2027-01-28T13:30:00Z",
+      "source_kind": "ICS_CALENDAR",
+      "source_url": "https://www.bea.gov/news/schedule/ics/online-calendar-subscription.ics"
+     }
+    ]
+   },
+   "publication": {
+    "status": "NOT_YET_DUE",
+    "official_release_time": null,
+    "observed_available_at_utc": null,
+    "verification": {
+     "state": "NOT_ATTEMPTED",
+     "last_attempt_at_utc": null,
+     "detail": null,
+     "page_event_id": null
+    },
+    "evidence": []
+   },
+   "retrieval": {
+    "state": "FRESH",
+    "last_attempt_at_utc": "2026-10-17T13:52:04Z",
+    "last_success_at_utc": "2026-10-17T13:52:04Z",
+    "last_error": null,
+    "stale_after": "P7D"
+   },
+   "conflicts": [],
+   "notes": [],
+   "sources": [
+    {
+     "url": "https://www.bea.gov/news/schedule/ics/online-calendar-subscription.ics",
+     "publisher": "BEA",
+     "kind": "ICS_CALENDAR",
+     "retrieved_at_utc": "2026-10-16T06:13:38Z"
+    }
+   ],
+   "attribution": [
+    "Source: U.S. Bureau of Economic Analysis"
+   ],
+   "synthetic": false,
+   "record_version": 1
+  },
+  {
+   "event_id": "BLS.EMPSIT.2027-01",
+   "family": "BLS_EMPSIT",
+   "stage": null,
+   "family_label": "Employment Situation",
+   "authority_code": "BLS",
+   "authority_name": "U.S. Bureau of Labor Statistics",
+   "release_name": "Employment Situation",
+   "reference_period": {
+    "kind": "month",
+    "period": "2027-01"
+   },
+   "desk_status": "SCHEDULED_UNVERIFIED",
+   "flags": [
+    "ZONE_NOT_STATED"
+   ],
+   "schedule": {
+    "status": "SCHEDULED",
+    "current": {
+     "local_date": "2027-02-05",
+     "local_time": "08:30",
+     "time_zone": null,
+     "source_tz_label": null,
+     "precision": "minute",
+     "utc": null,
+     "source_kind": "SCHEDULE_PAGE",
+     "source_url": "https://www.bls.gov/schedule/news_release/empsit.htm"
+    },
+    "original": {
+     "local_date": "2027-02-05",
+     "local_time": "08:30",
+     "time_zone": null,
+     "source_tz_label": null,
+     "precision": "minute",
+     "utc": null,
+     "source_kind": "SCHEDULE_PAGE",
+     "source_url": "https://www.bls.gov/schedule/news_release/empsit.htm"
+    },
+    "history": [
+     {
+      "local_date": "2027-02-05",
+      "local_time": "08:30",
+      "time_zone": null,
+      "source_tz_label": null,
+      "precision": "minute",
+      "utc": null,
+      "source_kind": "SCHEDULE_PAGE",
+      "source_url": "https://www.bls.gov/schedule/news_release/empsit.htm"
+     }
+    ]
+   },
+   "publication": {
+    "status": "NOT_YET_DUE",
+    "official_release_time": null,
+    "observed_available_at_utc": null,
+    "verification": {
+     "state": "NOT_ATTEMPTED",
+     "last_attempt_at_utc": null,
+     "detail": null,
+     "page_event_id": null
+    },
+    "evidence": []
+   },
+   "retrieval": {
+    "state": "FRESH",
+    "last_attempt_at_utc": "2026-10-17T13:51:59Z",
+    "last_success_at_utc": "2026-10-17T13:51:59Z",
+    "last_error": null,
+    "stale_after": "P7D"
+   },
+   "conflicts": [],
+   "notes": [],
+   "sources": [
+    {
+     "url": "https://www.bls.gov/schedule/news_release/empsit.htm",
+     "publisher": "BLS",
+     "kind": "SCHEDULE_PAGE",
+     "retrieved_at_utc": "2026-10-16T06:13:33Z"
+    }
+   ],
+   "attribution": [
+    "Source: U.S. Bureau of Labor Statistics"
+   ],
+   "synthetic": false,
+   "record_version": 1
+  },
+  {
+   "event_id": "BLS.CPI.2027-01",
+   "family": "BLS_CPI",
+   "stage": null,
+   "family_label": "Consumer Price Index",
+   "authority_code": "BLS",
+   "authority_name": "U.S. Bureau of Labor Statistics",
+   "release_name": "Consumer Price Index",
+   "reference_period": {
+    "kind": "month",
+    "period": "2027-01"
+   },
+   "desk_status": "SCHEDULED_UNVERIFIED",
+   "flags": [
+    "ZONE_NOT_STATED"
+   ],
+   "schedule": {
+    "status": "SCHEDULED",
+    "current": {
+     "local_date": "2027-02-11",
+     "local_time": "08:30",
+     "time_zone": null,
+     "source_tz_label": null,
+     "precision": "minute",
+     "utc": null,
+     "source_kind": "SCHEDULE_PAGE",
+     "source_url": "https://www.bls.gov/schedule/news_release/cpi.htm"
+    },
+    "original": {
+     "local_date": "2027-02-11",
+     "local_time": "08:30",
+     "time_zone": null,
+     "source_tz_label": null,
+     "precision": "minute",
+     "utc": null,
+     "source_kind": "SCHEDULE_PAGE",
+     "source_url": "https://www.bls.gov/schedule/news_release/cpi.htm"
+    },
+    "history": [
+     {
+      "local_date": "2027-02-11",
+      "local_time": "08:30",
+      "time_zone": null,
+      "source_tz_label": null,
+      "precision": "minute",
+      "utc": null,
+      "source_kind": "SCHEDULE_PAGE",
+      "source_url": "https://www.bls.gov/schedule/news_release/cpi.htm"
+     }
+    ]
+   },
+   "publication": {
+    "status": "NOT_YET_DUE",
+    "official_release_time": null,
+    "observed_available_at_utc": null,
+    "verification": {
+     "state": "NOT_ATTEMPTED",
+     "last_attempt_at_utc": null,
+     "detail": null,
+     "page_event_id": null
+    },
+    "evidence": []
+   },
+   "retrieval": {
+    "state": "FRESH",
+    "last_attempt_at_utc": "2026-10-17T13:51:54Z",
+    "last_success_at_utc": "2026-10-17T13:51:54Z",
+    "last_error": null,
+    "stale_after": "P7D"
+   },
+   "conflicts": [],
+   "notes": [],
+   "sources": [
+    {
+     "url": "https://www.bls.gov/schedule/news_release/cpi.htm",
+     "publisher": "BLS",
+     "kind": "SCHEDULE_PAGE",
+     "retrieved_at_utc": "2026-10-16T06:13:28Z"
+    }
+   ],
+   "attribution": [
+    "Source: U.S. Bureau of Labor Statistics"
+   ],
+   "synthetic": false,
+   "record_version": 1
+  },
+  {
+   "event_id": "BLS.EMPSIT.2027-02",
+   "family": "BLS_EMPSIT",
+   "stage": null,
+   "family_label": "Employment Situation",
+   "authority_code": "BLS",
+   "authority_name": "U.S. Bureau of Labor Statistics",
+   "release_name": "Employment Situation",
+   "reference_period": {
+    "kind": "month",
+    "period": "2027-02"
+   },
+   "desk_status": "SCHEDULED_UNVERIFIED",
+   "flags": [
+    "ZONE_NOT_STATED"
+   ],
+   "schedule": {
+    "status": "SCHEDULED",
+    "current": {
+     "local_date": "2027-03-05",
+     "local_time": "08:30",
+     "time_zone": null,
+     "source_tz_label": null,
+     "precision": "minute",
+     "utc": null,
+     "source_kind": "SCHEDULE_PAGE",
+     "source_url": "https://www.bls.gov/schedule/news_release/empsit.htm"
+    },
+    "original": {
+     "local_date": "2027-03-05",
+     "local_time": "08:30",
+     "time_zone": null,
+     "source_tz_label": null,
+     "precision": "minute",
+     "utc": null,
+     "source_kind": "SCHEDULE_PAGE",
+     "source_url": "https://www.bls.gov/schedule/news_release/empsit.htm"
+    },
+    "history": [
+     {
+      "local_date": "2027-03-05",
+      "local_time": "08:30",
+      "time_zone": null,
+      "source_tz_label": null,
+      "precision": "minute",
+      "utc": null,
+      "source_kind": "SCHEDULE_PAGE",
+      "source_url": "https://www.bls.gov/schedule/news_release/empsit.htm"
+     }
+    ]
+   },
+   "publication": {
+    "status": "NOT_YET_DUE",
+    "official_release_time": null,
+    "observed_available_at_utc": null,
+    "verification": {
+     "state": "NOT_ATTEMPTED",
+     "last_attempt_at_utc": null,
+     "detail": null,
+     "page_event_id": null
+    },
+    "evidence": []
+   },
+   "retrieval": {
+    "state": "FRESH",
+    "last_attempt_at_utc": "2026-10-17T13:51:59Z",
+    "last_success_at_utc": "2026-10-17T13:51:59Z",
+    "last_error": null,
+    "stale_after": "P7D"
+   },
+   "conflicts": [],
+   "notes": [],
+   "sources": [
+    {
+     "url": "https://www.bls.gov/schedule/news_release/empsit.htm",
+     "publisher": "BLS",
+     "kind": "SCHEDULE_PAGE",
+     "retrieved_at_utc": "2026-10-16T06:13:33Z"
+    }
+   ],
+   "attribution": [
+    "Source: U.S. Bureau of Labor Statistics"
+   ],
+   "synthetic": false,
+   "record_version": 1
+  },
+  {
+   "event_id": "BLS.CPI.2027-02",
+   "family": "BLS_CPI",
+   "stage": null,
+   "family_label": "Consumer Price Index",
+   "authority_code": "BLS",
+   "authority_name": "U.S. Bureau of Labor Statistics",
+   "release_name": "Consumer Price Index",
+   "reference_period": {
+    "kind": "month",
+    "period": "2027-02"
+   },
+   "desk_status": "SCHEDULED_UNVERIFIED",
+   "flags": [
+    "ZONE_NOT_STATED"
+   ],
+   "schedule": {
+    "status": "SCHEDULED",
+    "current": {
+     "local_date": "2027-03-10",
+     "local_time": "08:30",
+     "time_zone": null,
+     "source_tz_label": null,
+     "precision": "minute",
+     "utc": null,
+     "source_kind": "SCHEDULE_PAGE",
+     "source_url": "https://www.bls.gov/schedule/news_release/cpi.htm"
+    },
+    "original": {
+     "local_date": "2027-03-10",
+     "local_time": "08:30",
+     "time_zone": null,
+     "source_tz_label": null,
+     "precision": "minute",
+     "utc": null,
+     "source_kind": "SCHEDULE_PAGE",
+     "source_url": "https://www.bls.gov/schedule/news_release/cpi.htm"
+    },
+    "history": [
+     {
+      "local_date": "2027-03-10",
+      "local_time": "08:30",
+      "time_zone": null,
+      "source_tz_label": null,
+      "precision": "minute",
+      "utc": null,
+      "source_kind": "SCHEDULE_PAGE",
+      "source_url": "https://www.bls.gov/schedule/news_release/cpi.htm"
+     }
+    ]
+   },
+   "publication": {
+    "status": "NOT_YET_DUE",
+    "official_release_time": null,
+    "observed_available_at_utc": null,
+    "verification": {
+     "state": "NOT_ATTEMPTED",
+     "last_attempt_at_utc": null,
+     "detail": null,
+     "page_event_id": null
+    },
+    "evidence": []
+   },
+   "retrieval": {
+    "state": "FRESH",
+    "last_attempt_at_utc": "2026-10-17T13:51:54Z",
+    "last_success_at_utc": "2026-10-17T13:51:54Z",
+    "last_error": null,
+    "stale_after": "P7D"
+   },
+   "conflicts": [],
+   "notes": [],
+   "sources": [
+    {
+     "url": "https://www.bls.gov/schedule/news_release/cpi.htm",
+     "publisher": "BLS",
+     "kind": "SCHEDULE_PAGE",
+     "retrieved_at_utc": "2026-10-16T06:13:28Z"
+    }
+   ],
+   "attribution": [
+    "Source: U.S. Bureau of Labor Statistics"
+   ],
+   "synthetic": false,
+   "record_version": 1
+  },
+  {
+   "event_id": "BLS.EMPSIT.2027-03",
+   "family": "BLS_EMPSIT",
+   "stage": null,
+   "family_label": "Employment Situation",
+   "authority_code": "BLS",
+   "authority_name": "U.S. Bureau of Labor Statistics",
+   "release_name": "Employment Situation",
+   "reference_period": {
+    "kind": "month",
+    "period": "2027-03"
+   },
+   "desk_status": "SCHEDULED_UNVERIFIED",
+   "flags": [
+    "ZONE_NOT_STATED"
+   ],
+   "schedule": {
+    "status": "SCHEDULED",
+    "current": {
+     "local_date": "2027-04-02",
+     "local_time": "08:30",
+     "time_zone": null,
+     "source_tz_label": null,
+     "precision": "minute",
+     "utc": null,
+     "source_kind": "SCHEDULE_PAGE",
+     "source_url": "https://www.bls.gov/schedule/news_release/empsit.htm"
+    },
+    "original": {
+     "local_date": "2027-04-02",
+     "local_time": "08:30",
+     "time_zone": null,
+     "source_tz_label": null,
+     "precision": "minute",
+     "utc": null,
+     "source_kind": "SCHEDULE_PAGE",
+     "source_url": "https://www.bls.gov/schedule/news_release/empsit.htm"
+    },
+    "history": [
+     {
+      "local_date": "2027-04-02",
+      "local_time": "08:30",
+      "time_zone": null,
+      "source_tz_label": null,
+      "precision": "minute",
+      "utc": null,
+      "source_kind": "SCHEDULE_PAGE",
+      "source_url": "https://www.bls.gov/schedule/news_release/empsit.htm"
+     }
+    ]
+   },
+   "publication": {
+    "status": "NOT_YET_DUE",
+    "official_release_time": null,
+    "observed_available_at_utc": null,
+    "verification": {
+     "state": "NOT_ATTEMPTED",
+     "last_attempt_at_utc": null,
+     "detail": null,
+     "page_event_id": null
+    },
+    "evidence": []
+   },
+   "retrieval": {
+    "state": "FRESH",
+    "last_attempt_at_utc": "2026-10-17T13:51:59Z",
+    "last_success_at_utc": "2026-10-17T13:51:59Z",
+    "last_error": null,
+    "stale_after": "P7D"
+   },
+   "conflicts": [],
+   "notes": [],
+   "sources": [
+    {
+     "url": "https://www.bls.gov/schedule/news_release/empsit.htm",
+     "publisher": "BLS",
+     "kind": "SCHEDULE_PAGE",
+     "retrieved_at_utc": "2026-10-16T06:13:33Z"
+    }
+   ],
+   "attribution": [
+    "Source: U.S. Bureau of Labor Statistics"
+   ],
+   "synthetic": false,
+   "record_version": 1
+  },
+  {
+   "event_id": "BLS.CPI.2027-03",
+   "family": "BLS_CPI",
+   "stage": null,
+   "family_label": "Consumer Price Index",
+   "authority_code": "BLS",
+   "authority_name": "U.S. Bureau of Labor Statistics",
+   "release_name": "Consumer Price Index",
+   "reference_period": {
+    "kind": "month",
+    "period": "2027-03"
+   },
+   "desk_status": "SCHEDULED_UNVERIFIED",
+   "flags": [
+    "ZONE_NOT_STATED"
+   ],
+   "schedule": {
+    "status": "SCHEDULED",
+    "current": {
+     "local_date": "2027-04-13",
+     "local_time": "08:30",
+     "time_zone": null,
+     "source_tz_label": null,
+     "precision": "minute",
+     "utc": null,
+     "source_kind": "SCHEDULE_PAGE",
+     "source_url": "https://www.bls.gov/schedule/news_release/cpi.htm"
+    },
+    "original": {
+     "local_date": "2027-04-13",
+     "local_time": "08:30",
+     "time_zone": null,
+     "source_tz_label": null,
+     "precision": "minute",
+     "utc": null,
+     "source_kind": "SCHEDULE_PAGE",
+     "source_url": "https://www.bls.gov/schedule/news_release/cpi.htm"
+    },
+    "history": [
+     {
+      "local_date": "2027-04-13",
+      "local_time": "08:30",
+      "time_zone": null,
+      "source_tz_label": null,
+      "precision": "minute",
+      "utc": null,
+      "source_kind": "SCHEDULE_PAGE",
+      "source_url": "https://www.bls.gov/schedule/news_release/cpi.htm"
+     }
+    ]
+   },
+   "publication": {
+    "status": "NOT_YET_DUE",
+    "official_release_time": null,
+    "observed_available_at_utc": null,
+    "verification": {
+     "state": "NOT_ATTEMPTED",
+     "last_attempt_at_utc": null,
+     "detail": null,
+     "page_event_id": null
+    },
+    "evidence": []
+   },
+   "retrieval": {
+    "state": "FRESH",
+    "last_attempt_at_utc": "2026-10-17T13:51:54Z",
+    "last_success_at_utc": "2026-10-17T13:51:54Z",
+    "last_error": null,
+    "stale_after": "P7D"
+   },
+   "conflicts": [],
+   "notes": [],
+   "sources": [
+    {
+     "url": "https://www.bls.gov/schedule/news_release/cpi.htm",
+     "publisher": "BLS",
+     "kind": "SCHEDULE_PAGE",
+     "retrieved_at_utc": "2026-10-16T06:13:28Z"
+    }
+   ],
+   "attribution": [
+    "Source: U.S. Bureau of Labor Statistics"
+   ],
+   "synthetic": false,
+   "record_version": 1
+  },
+  {
+   "event_id": "BEA.GDP.ADVANCE.2027-Q1",
+   "family": "BEA_GDP",
+   "stage": "ADVANCE",
+   "family_label": "Gross Domestic Product",
+   "authority_code": "BEA",
+   "authority_name": "U.S. Bureau of Economic Analysis",
+   "release_name": "GDP (Advance Estimate), 1st Quarter 2027",
+   "reference_period": {
+    "kind": "quarter",
+    "period": "2027-Q1"
+   },
+   "desk_status": "SCHEDULED_UNVERIFIED",
+   "flags": [],
+   "schedule": {
+    "status": "SCHEDULED",
+    "current": {
+     "local_date": "2027-04-29",
+     "local_time": "08:30",
+     "time_zone": "America/New_York",
+     "source_tz_label": "UTC",
+     "precision": "minute",
+     "utc": "2027-04-29T12:30:00Z",
+     "source_kind": "ICS_CALENDAR",
+     "source_url": "https://www.bea.gov/news/schedule/ics/online-calendar-subscription.ics"
+    },
+    "original": {
+     "local_date": "2027-04-29",
+     "local_time": "08:30",
+     "time_zone": "America/New_York",
+     "source_tz_label": "UTC",
+     "precision": "minute",
+     "utc": "2027-04-29T12:30:00Z",
+     "source_kind": "ICS_CALENDAR",
+     "source_url": "https://www.bea.gov/news/schedule/ics/online-calendar-subscription.ics"
+    },
+    "history": [
+     {
+      "local_date": "2027-04-29",
+      "local_time": "08:30",
+      "time_zone": "America/New_York",
+      "source_tz_label": "UTC",
+      "precision": "minute",
+      "utc": "2027-04-29T12:30:00Z",
+      "source_kind": "ICS_CALENDAR",
+      "source_url": "https://www.bea.gov/news/schedule/ics/online-calendar-subscription.ics"
+     }
+    ]
+   },
+   "publication": {
+    "status": "NOT_YET_DUE",
+    "official_release_time": null,
+    "observed_available_at_utc": null,
+    "verification": {
+     "state": "NOT_ATTEMPTED",
+     "last_attempt_at_utc": null,
+     "detail": null,
+     "page_event_id": null
+    },
+    "evidence": []
+   },
+   "retrieval": {
+    "state": "FRESH",
+    "last_attempt_at_utc": "2026-10-17T13:52:04Z",
+    "last_success_at_utc": "2026-10-17T13:52:04Z",
+    "last_error": null,
+    "stale_after": "P7D"
+   },
+   "conflicts": [],
+   "notes": [],
+   "sources": [
+    {
+     "url": "https://www.bea.gov/news/schedule/ics/online-calendar-subscription.ics",
+     "publisher": "BEA",
+     "kind": "ICS_CALENDAR",
+     "retrieved_at_utc": "2026-10-16T06:13:38Z"
+    }
+   ],
+   "attribution": [
+    "Source: U.S. Bureau of Economic Analysis"
+   ],
+   "synthetic": false,
+   "record_version": 1
+  },
+  {
+   "event_id": "BLS.EMPSIT.2027-04",
+   "family": "BLS_EMPSIT",
+   "stage": null,
+   "family_label": "Employment Situation",
+   "authority_code": "BLS",
+   "authority_name": "U.S. Bureau of Labor Statistics",
+   "release_name": "Employment Situation",
+   "reference_period": {
+    "kind": "month",
+    "period": "2027-04"
+   },
+   "desk_status": "SCHEDULED_UNVERIFIED",
+   "flags": [
+    "ZONE_NOT_STATED"
+   ],
+   "schedule": {
+    "status": "SCHEDULED",
+    "current": {
+     "local_date": "2027-05-07",
+     "local_time": "08:30",
+     "time_zone": null,
+     "source_tz_label": null,
+     "precision": "minute",
+     "utc": null,
+     "source_kind": "SCHEDULE_PAGE",
+     "source_url": "https://www.bls.gov/schedule/news_release/empsit.htm"
+    },
+    "original": {
+     "local_date": "2027-05-07",
+     "local_time": "08:30",
+     "time_zone": null,
+     "source_tz_label": null,
+     "precision": "minute",
+     "utc": null,
+     "source_kind": "SCHEDULE_PAGE",
+     "source_url": "https://www.bls.gov/schedule/news_release/empsit.htm"
+    },
+    "history": [
+     {
+      "local_date": "2027-05-07",
+      "local_time": "08:30",
+      "time_zone": null,
+      "source_tz_label": null,
+      "precision": "minute",
+      "utc": null,
+      "source_kind": "SCHEDULE_PAGE",
+      "source_url": "https://www.bls.gov/schedule/news_release/empsit.htm"
+     }
+    ]
+   },
+   "publication": {
+    "status": "NOT_YET_DUE",
+    "official_release_time": null,
+    "observed_available_at_utc": null,
+    "verification": {
+     "state": "NOT_ATTEMPTED",
+     "last_attempt_at_utc": null,
+     "detail": null,
+     "page_event_id": null
+    },
+    "evidence": []
+   },
+   "retrieval": {
+    "state": "FRESH",
+    "last_attempt_at_utc": "2026-10-17T13:51:59Z",
+    "last_success_at_utc": "2026-10-17T13:51:59Z",
+    "last_error": null,
+    "stale_after": "P7D"
+   },
+   "conflicts": [],
+   "notes": [],
+   "sources": [
+    {
+     "url": "https://www.bls.gov/schedule/news_release/empsit.htm",
+     "publisher": "BLS",
+     "kind": "SCHEDULE_PAGE",
+     "retrieved_at_utc": "2026-10-16T06:13:33Z"
+    }
+   ],
+   "attribution": [
+    "Source: U.S. Bureau of Labor Statistics"
+   ],
+   "synthetic": false,
+   "record_version": 1
+  },
+  {
+   "event_id": "BLS.CPI.2027-04",
+   "family": "BLS_CPI",
+   "stage": null,
+   "family_label": "Consumer Price Index",
+   "authority_code": "BLS",
+   "authority_name": "U.S. Bureau of Labor Statistics",
+   "release_name": "Consumer Price Index",
+   "reference_period": {
+    "kind": "month",
+    "period": "2027-04"
+   },
+   "desk_status": "SCHEDULED_UNVERIFIED",
+   "flags": [
+    "ZONE_NOT_STATED"
+   ],
+   "schedule": {
+    "status": "SCHEDULED",
+    "current": {
+     "local_date": "2027-05-12",
+     "local_time": "08:30",
+     "time_zone": null,
+     "source_tz_label": null,
+     "precision": "minute",
+     "utc": null,
+     "source_kind": "SCHEDULE_PAGE",
+     "source_url": "https://www.bls.gov/schedule/news_release/cpi.htm"
+    },
+    "original": {
+     "local_date": "2027-05-12",
+     "local_time": "08:30",
+     "time_zone": null,
+     "source_tz_label": null,
+     "precision": "minute",
+     "utc": null,
+     "source_kind": "SCHEDULE_PAGE",
+     "source_url": "https://www.bls.gov/schedule/news_release/cpi.htm"
+    },
+    "history": [
+     {
+      "local_date": "2027-05-12",
+      "local_time": "08:30",
+      "time_zone": null,
+      "source_tz_label": null,
+      "precision": "minute",
+      "utc": null,
+      "source_kind": "SCHEDULE_PAGE",
+      "source_url": "https://www.bls.gov/schedule/news_release/cpi.htm"
+     }
+    ]
+   },
+   "publication": {
+    "status": "NOT_YET_DUE",
+    "official_release_time": null,
+    "observed_available_at_utc": null,
+    "verification": {
+     "state": "NOT_ATTEMPTED",
+     "last_attempt_at_utc": null,
+     "detail": null,
+     "page_event_id": null
+    },
+    "evidence": []
+   },
+   "retrieval": {
+    "state": "FRESH",
+    "last_attempt_at_utc": "2026-10-17T13:51:54Z",
+    "last_success_at_utc": "2026-10-17T13:51:54Z",
+    "last_error": null,
+    "stale_after": "P7D"
+   },
+   "conflicts": [],
+   "notes": [],
+   "sources": [
+    {
+     "url": "https://www.bls.gov/schedule/news_release/cpi.htm",
+     "publisher": "BLS",
+     "kind": "SCHEDULE_PAGE",
+     "retrieved_at_utc": "2026-10-16T06:13:28Z"
+    }
+   ],
+   "attribution": [
+    "Source: U.S. Bureau of Labor Statistics"
+   ],
+   "synthetic": false,
+   "record_version": 1
+  },
+  {
+   "event_id": "BLS.EMPSIT.2027-05",
+   "family": "BLS_EMPSIT",
+   "stage": null,
+   "family_label": "Employment Situation",
+   "authority_code": "BLS",
+   "authority_name": "U.S. Bureau of Labor Statistics",
+   "release_name": "Employment Situation",
+   "reference_period": {
+    "kind": "month",
+    "period": "2027-05"
+   },
+   "desk_status": "SCHEDULED_UNVERIFIED",
+   "flags": [
+    "ZONE_NOT_STATED"
+   ],
+   "schedule": {
+    "status": "SCHEDULED",
+    "current": {
+     "local_date": "2027-06-04",
+     "local_time": "08:30",
+     "time_zone": null,
+     "source_tz_label": null,
+     "precision": "minute",
+     "utc": null,
+     "source_kind": "SCHEDULE_PAGE",
+     "source_url": "https://www.bls.gov/schedule/news_release/empsit.htm"
+    },
+    "original": {
+     "local_date": "2027-06-04",
+     "local_time": "08:30",
+     "time_zone": null,
+     "source_tz_label": null,
+     "precision": "minute",
+     "utc": null,
+     "source_kind": "SCHEDULE_PAGE",
+     "source_url": "https://www.bls.gov/schedule/news_release/empsit.htm"
+    },
+    "history": [
+     {
+      "local_date": "2027-06-04",
+      "local_time": "08:30",
+      "time_zone": null,
+      "source_tz_label": null,
+      "precision": "minute",
+      "utc": null,
+      "source_kind": "SCHEDULE_PAGE",
+      "source_url": "https://www.bls.gov/schedule/news_release/empsit.htm"
+     }
+    ]
+   },
+   "publication": {
+    "status": "NOT_YET_DUE",
+    "official_release_time": null,
+    "observed_available_at_utc": null,
+    "verification": {
+     "state": "NOT_ATTEMPTED",
+     "last_attempt_at_utc": null,
+     "detail": null,
+     "page_event_id": null
+    },
+    "evidence": []
+   },
+   "retrieval": {
+    "state": "FRESH",
+    "last_attempt_at_utc": "2026-10-17T13:51:59Z",
+    "last_success_at_utc": "2026-10-17T13:51:59Z",
+    "last_error": null,
+    "stale_after": "P7D"
+   },
+   "conflicts": [],
+   "notes": [],
+   "sources": [
+    {
+     "url": "https://www.bls.gov/schedule/news_release/empsit.htm",
+     "publisher": "BLS",
+     "kind": "SCHEDULE_PAGE",
+     "retrieved_at_utc": "2026-10-16T06:13:33Z"
+    }
+   ],
+   "attribution": [
+    "Source: U.S. Bureau of Labor Statistics"
+   ],
+   "synthetic": false,
+   "record_version": 1
+  },
+  {
+   "event_id": "BLS.CPI.2027-05",
+   "family": "BLS_CPI",
+   "stage": null,
+   "family_label": "Consumer Price Index",
+   "authority_code": "BLS",
+   "authority_name": "U.S. Bureau of Labor Statistics",
+   "release_name": "Consumer Price Index",
+   "reference_period": {
+    "kind": "month",
+    "period": "2027-05"
+   },
+   "desk_status": "SCHEDULED_UNVERIFIED",
+   "flags": [
+    "ZONE_NOT_STATED"
+   ],
+   "schedule": {
+    "status": "SCHEDULED",
+    "current": {
+     "local_date": "2027-06-10",
+     "local_time": "08:30",
+     "time_zone": null,
+     "source_tz_label": null,
+     "precision": "minute",
+     "utc": null,
+     "source_kind": "SCHEDULE_PAGE",
+     "source_url": "https://www.bls.gov/schedule/news_release/cpi.htm"
+    },
+    "original": {
+     "local_date": "2027-06-10",
+     "local_time": "08:30",
+     "time_zone": null,
+     "source_tz_label": null,
+     "precision": "minute",
+     "utc": null,
+     "source_kind": "SCHEDULE_PAGE",
+     "source_url": "https://www.bls.gov/schedule/news_release/cpi.htm"
+    },
+    "history": [
+     {
+      "local_date": "2027-06-10",
+      "local_time": "08:30",
+      "time_zone": null,
+      "source_tz_label": null,
+      "precision": "minute",
+      "utc": null,
+      "source_kind": "SCHEDULE_PAGE",
+      "source_url": "https://www.bls.gov/schedule/news_release/cpi.htm"
+     }
+    ]
+   },
+   "publication": {
+    "status": "NOT_YET_DUE",
+    "official_release_time": null,
+    "observed_available_at_utc": null,
+    "verification": {
+     "state": "NOT_ATTEMPTED",
+     "last_attempt_at_utc": null,
+     "detail": null,
+     "page_event_id": null
+    },
+    "evidence": []
+   },
+   "retrieval": {
+    "state": "FRESH",
+    "last_attempt_at_utc": "2026-10-17T13:51:54Z",
+    "last_success_at_utc": "2026-10-17T13:51:54Z",
+    "last_error": null,
+    "stale_after": "P7D"
+   },
+   "conflicts": [],
+   "notes": [],
+   "sources": [
+    {
+     "url": "https://www.bls.gov/schedule/news_release/cpi.htm",
+     "publisher": "BLS",
+     "kind": "SCHEDULE_PAGE",
+     "retrieved_at_utc": "2026-10-16T06:13:28Z"
+    }
+   ],
+   "attribution": [
+    "Source: U.S. Bureau of Labor Statistics"
+   ],
+   "synthetic": false,
+   "record_version": 1
+  },
+  {
+   "event_id": "BLS.EMPSIT.2027-06",
+   "family": "BLS_EMPSIT",
+   "stage": null,
+   "family_label": "Employment Situation",
+   "authority_code": "BLS",
+   "authority_name": "U.S. Bureau of Labor Statistics",
+   "release_name": "Employment Situation",
+   "reference_period": {
+    "kind": "month",
+    "period": "2027-06"
+   },
+   "desk_status": "SCHEDULED_UNVERIFIED",
+   "flags": [
+    "ZONE_NOT_STATED"
+   ],
+   "schedule": {
+    "status": "SCHEDULED",
+    "current": {
+     "local_date": "2027-07-02",
+     "local_time": "08:30",
+     "time_zone": null,
+     "source_tz_label": null,
+     "precision": "minute",
+     "utc": null,
+     "source_kind": "SCHEDULE_PAGE",
+     "source_url": "https://www.bls.gov/schedule/news_release/empsit.htm"
+    },
+    "original": {
+     "local_date": "2027-07-02",
+     "local_time": "08:30",
+     "time_zone": null,
+     "source_tz_label": null,
+     "precision": "minute",
+     "utc": null,
+     "source_kind": "SCHEDULE_PAGE",
+     "source_url": "https://www.bls.gov/schedule/news_release/empsit.htm"
+    },
+    "history": [
+     {
+      "local_date": "2027-07-02",
+      "local_time": "08:30",
+      "time_zone": null,
+      "source_tz_label": null,
+      "precision": "minute",
+      "utc": null,
+      "source_kind": "SCHEDULE_PAGE",
+      "source_url": "https://www.bls.gov/schedule/news_release/empsit.htm"
+     }
+    ]
+   },
+   "publication": {
+    "status": "NOT_YET_DUE",
+    "official_release_time": null,
+    "observed_available_at_utc": null,
+    "verification": {
+     "state": "NOT_ATTEMPTED",
+     "last_attempt_at_utc": null,
+     "detail": null,
+     "page_event_id": null
+    },
+    "evidence": []
+   },
+   "retrieval": {
+    "state": "FRESH",
+    "last_attempt_at_utc": "2026-10-17T13:51:59Z",
+    "last_success_at_utc": "2026-10-17T13:51:59Z",
+    "last_error": null,
+    "stale_after": "P7D"
+   },
+   "conflicts": [],
+   "notes": [],
+   "sources": [
+    {
+     "url": "https://www.bls.gov/schedule/news_release/empsit.htm",
+     "publisher": "BLS",
+     "kind": "SCHEDULE_PAGE",
+     "retrieved_at_utc": "2026-10-16T06:13:33Z"
+    }
+   ],
+   "attribution": [
+    "Source: U.S. Bureau of Labor Statistics"
+   ],
+   "synthetic": false,
+   "record_version": 1
+  },
+  {
+   "event_id": "BLS.CPI.2027-06",
+   "family": "BLS_CPI",
+   "stage": null,
+   "family_label": "Consumer Price Index",
+   "authority_code": "BLS",
+   "authority_name": "U.S. Bureau of Labor Statistics",
+   "release_name": "Consumer Price Index",
+   "reference_period": {
+    "kind": "month",
+    "period": "2027-06"
+   },
+   "desk_status": "SCHEDULED_UNVERIFIED",
+   "flags": [
+    "ZONE_NOT_STATED"
+   ],
+   "schedule": {
+    "status": "SCHEDULED",
+    "current": {
+     "local_date": "2027-07-14",
+     "local_time": "08:30",
+     "time_zone": null,
+     "source_tz_label": null,
+     "precision": "minute",
+     "utc": null,
+     "source_kind": "SCHEDULE_PAGE",
+     "source_url": "https://www.bls.gov/schedule/news_release/cpi.htm"
+    },
+    "original": {
+     "local_date": "2027-07-14",
+     "local_time": "08:30",
+     "time_zone": null,
+     "source_tz_label": null,
+     "precision": "minute",
+     "utc": null,
+     "source_kind": "SCHEDULE_PAGE",
+     "source_url": "https://www.bls.gov/schedule/news_release/cpi.htm"
+    },
+    "history": [
+     {
+      "local_date": "2027-07-14",
+      "local_time": "08:30",
+      "time_zone": null,
+      "source_tz_label": null,
+      "precision": "minute",
+      "utc": null,
+      "source_kind": "SCHEDULE_PAGE",
+      "source_url": "https://www.bls.gov/schedule/news_release/cpi.htm"
+     }
+    ]
+   },
+   "publication": {
+    "status": "NOT_YET_DUE",
+    "official_release_time": null,
+    "observed_available_at_utc": null,
+    "verification": {
+     "state": "NOT_ATTEMPTED",
+     "last_attempt_at_utc": null,
+     "detail": null,
+     "page_event_id": null
+    },
+    "evidence": []
+   },
+   "retrieval": {
+    "state": "FRESH",
+    "last_attempt_at_utc": "2026-10-17T13:51:54Z",
+    "last_success_at_utc": "2026-10-17T13:51:54Z",
+    "last_error": null,
+    "stale_after": "P7D"
+   },
+   "conflicts": [],
+   "notes": [],
+   "sources": [
+    {
+     "url": "https://www.bls.gov/schedule/news_release/cpi.htm",
+     "publisher": "BLS",
+     "kind": "SCHEDULE_PAGE",
+     "retrieved_at_utc": "2026-10-16T06:13:28Z"
+    }
+   ],
+   "attribution": [
+    "Source: U.S. Bureau of Labor Statistics"
+   ],
+   "synthetic": false,
+   "record_version": 1
+  },
+  {
+   "event_id": "BEA.GDP.ADVANCE.2027-Q2",
+   "family": "BEA_GDP",
+   "stage": "ADVANCE",
+   "family_label": "Gross Domestic Product",
+   "authority_code": "BEA",
+   "authority_name": "U.S. Bureau of Economic Analysis",
+   "release_name": "GDP (Advance Estimate), 2nd Quarter 2027",
+   "reference_period": {
+    "kind": "quarter",
+    "period": "2027-Q2"
+   },
+   "desk_status": "SCHEDULED_UNVERIFIED",
+   "flags": [],
+   "schedule": {
+    "status": "SCHEDULED",
+    "current": {
+     "local_date": "2027-07-29",
+     "local_time": "08:30",
+     "time_zone": "America/New_York",
+     "source_tz_label": "UTC",
+     "precision": "minute",
+     "utc": "2027-07-29T12:30:00Z",
+     "source_kind": "ICS_CALENDAR",
+     "source_url": "https://www.bea.gov/news/schedule/ics/online-calendar-subscription.ics"
+    },
+    "original": {
+     "local_date": "2027-07-29",
+     "local_time": "08:30",
+     "time_zone": "America/New_York",
+     "source_tz_label": "UTC",
+     "precision": "minute",
+     "utc": "2027-07-29T12:30:00Z",
+     "source_kind": "ICS_CALENDAR",
+     "source_url": "https://www.bea.gov/news/schedule/ics/online-calendar-subscription.ics"
+    },
+    "history": [
+     {
+      "local_date": "2027-07-29",
+      "local_time": "08:30",
+      "time_zone": "America/New_York",
+      "source_tz_label": "UTC",
+      "precision": "minute",
+      "utc": "2027-07-29T12:30:00Z",
+      "source_kind": "ICS_CALENDAR",
+      "source_url": "https://www.bea.gov/news/schedule/ics/online-calendar-subscription.ics"
+     }
+    ]
+   },
+   "publication": {
+    "status": "NOT_YET_DUE",
+    "official_release_time": null,
+    "observed_available_at_utc": null,
+    "verification": {
+     "state": "NOT_ATTEMPTED",
+     "last_attempt_at_utc": null,
+     "detail": null,
+     "page_event_id": null
+    },
+    "evidence": []
+   },
+   "retrieval": {
+    "state": "FRESH",
+    "last_attempt_at_utc": "2026-10-17T13:52:04Z",
+    "last_success_at_utc": "2026-10-17T13:52:04Z",
+    "last_error": null,
+    "stale_after": "P7D"
+   },
+   "conflicts": [],
+   "notes": [],
+   "sources": [
+    {
+     "url": "https://www.bea.gov/news/schedule/ics/online-calendar-subscription.ics",
+     "publisher": "BEA",
+     "kind": "ICS_CALENDAR",
+     "retrieved_at_utc": "2026-10-16T06:13:38Z"
+    }
+   ],
+   "attribution": [
+    "Source: U.S. Bureau of Economic Analysis"
+   ],
+   "synthetic": false,
+   "record_version": 1
+  },
+  {
+   "event_id": "BLS.EMPSIT.2027-07",
+   "family": "BLS_EMPSIT",
+   "stage": null,
+   "family_label": "Employment Situation",
+   "authority_code": "BLS",
+   "authority_name": "U.S. Bureau of Labor Statistics",
+   "release_name": "Employment Situation",
+   "reference_period": {
+    "kind": "month",
+    "period": "2027-07"
+   },
+   "desk_status": "SCHEDULED_UNVERIFIED",
+   "flags": [
+    "ZONE_NOT_STATED"
+   ],
+   "schedule": {
+    "status": "SCHEDULED",
+    "current": {
+     "local_date": "2027-08-06",
+     "local_time": "08:30",
+     "time_zone": null,
+     "source_tz_label": null,
+     "precision": "minute",
+     "utc": null,
+     "source_kind": "SCHEDULE_PAGE",
+     "source_url": "https://www.bls.gov/schedule/news_release/empsit.htm"
+    },
+    "original": {
+     "local_date": "2027-08-06",
+     "local_time": "08:30",
+     "time_zone": null,
+     "source_tz_label": null,
+     "precision": "minute",
+     "utc": null,
+     "source_kind": "SCHEDULE_PAGE",
+     "source_url": "https://www.bls.gov/schedule/news_release/empsit.htm"
+    },
+    "history": [
+     {
+      "local_date": "2027-08-06",
+      "local_time": "08:30",
+      "time_zone": null,
+      "source_tz_label": null,
+      "precision": "minute",
+      "utc": null,
+      "source_kind": "SCHEDULE_PAGE",
+      "source_url": "https://www.bls.gov/schedule/news_release/empsit.htm"
+     }
+    ]
+   },
+   "publication": {
+    "status": "NOT_YET_DUE",
+    "official_release_time": null,
+    "observed_available_at_utc": null,
+    "verification": {
+     "state": "NOT_ATTEMPTED",
+     "last_attempt_at_utc": null,
+     "detail": null,
+     "page_event_id": null
+    },
+    "evidence": []
+   },
+   "retrieval": {
+    "state": "FRESH",
+    "last_attempt_at_utc": "2026-10-17T13:51:59Z",
+    "last_success_at_utc": "2026-10-17T13:51:59Z",
+    "last_error": null,
+    "stale_after": "P7D"
+   },
+   "conflicts": [],
+   "notes": [],
+   "sources": [
+    {
+     "url": "https://www.bls.gov/schedule/news_release/empsit.htm",
+     "publisher": "BLS",
+     "kind": "SCHEDULE_PAGE",
+     "retrieved_at_utc": "2026-10-16T06:13:33Z"
+    }
+   ],
+   "attribution": [
+    "Source: U.S. Bureau of Labor Statistics"
+   ],
+   "synthetic": false,
+   "record_version": 1
+  },
+  {
+   "event_id": "BLS.CPI.2027-07",
+   "family": "BLS_CPI",
+   "stage": null,
+   "family_label": "Consumer Price Index",
+   "authority_code": "BLS",
+   "authority_name": "U.S. Bureau of Labor Statistics",
+   "release_name": "Consumer Price Index",
+   "reference_period": {
+    "kind": "month",
+    "period": "2027-07"
+   },
+   "desk_status": "SCHEDULED_UNVERIFIED",
+   "flags": [
+    "ZONE_NOT_STATED"
+   ],
+   "schedule": {
+    "status": "SCHEDULED",
+    "current": {
+     "local_date": "2027-08-11",
+     "local_time": "08:30",
+     "time_zone": null,
+     "source_tz_label": null,
+     "precision": "minute",
+     "utc": null,
+     "source_kind": "SCHEDULE_PAGE",
+     "source_url": "https://www.bls.gov/schedule/news_release/cpi.htm"
+    },
+    "original": {
+     "local_date": "2027-08-11",
+     "local_time": "08:30",
+     "time_zone": null,
+     "source_tz_label": null,
+     "precision": "minute",
+     "utc": null,
+     "source_kind": "SCHEDULE_PAGE",
+     "source_url": "https://www.bls.gov/schedule/news_release/cpi.htm"
+    },
+    "history": [
+     {
+      "local_date": "2027-08-11",
+      "local_time": "08:30",
+      "time_zone": null,
+      "source_tz_label": null,
+      "precision": "minute",
+      "utc": null,
+      "source_kind": "SCHEDULE_PAGE",
+      "source_url": "https://www.bls.gov/schedule/news_release/cpi.htm"
+     }
+    ]
+   },
+   "publication": {
+    "status": "NOT_YET_DUE",
+    "official_release_time": null,
+    "observed_available_at_utc": null,
+    "verification": {
+     "state": "NOT_ATTEMPTED",
+     "last_attempt_at_utc": null,
+     "detail": null,
+     "page_event_id": null
+    },
+    "evidence": []
+   },
+   "retrieval": {
+    "state": "FRESH",
+    "last_attempt_at_utc": "2026-10-17T13:51:54Z",
+    "last_success_at_utc": "2026-10-17T13:51:54Z",
+    "last_error": null,
+    "stale_after": "P7D"
+   },
+   "conflicts": [],
+   "notes": [],
+   "sources": [
+    {
+     "url": "https://www.bls.gov/schedule/news_release/cpi.htm",
+     "publisher": "BLS",
+     "kind": "SCHEDULE_PAGE",
+     "retrieved_at_utc": "2026-10-16T06:13:28Z"
+    }
+   ],
+   "attribution": [
+    "Source: U.S. Bureau of Labor Statistics"
+   ],
+   "synthetic": false,
+   "record_version": 1
+  },
+  {
+   "event_id": "BLS.EMPSIT.2027-08",
+   "family": "BLS_EMPSIT",
+   "stage": null,
+   "family_label": "Employment Situation",
+   "authority_code": "BLS",
+   "authority_name": "U.S. Bureau of Labor Statistics",
+   "release_name": "Employment Situation",
+   "reference_period": {
+    "kind": "month",
+    "period": "2027-08"
+   },
+   "desk_status": "SCHEDULED_UNVERIFIED",
+   "flags": [
+    "ZONE_NOT_STATED"
+   ],
+   "schedule": {
+    "status": "SCHEDULED",
+    "current": {
+     "local_date": "2027-09-03",
+     "local_time": "08:30",
+     "time_zone": null,
+     "source_tz_label": null,
+     "precision": "minute",
+     "utc": null,
+     "source_kind": "SCHEDULE_PAGE",
+     "source_url": "https://www.bls.gov/schedule/news_release/empsit.htm"
+    },
+    "original": {
+     "local_date": "2027-09-03",
+     "local_time": "08:30",
+     "time_zone": null,
+     "source_tz_label": null,
+     "precision": "minute",
+     "utc": null,
+     "source_kind": "SCHEDULE_PAGE",
+     "source_url": "https://www.bls.gov/schedule/news_release/empsit.htm"
+    },
+    "history": [
+     {
+      "local_date": "2027-09-03",
+      "local_time": "08:30",
+      "time_zone": null,
+      "source_tz_label": null,
+      "precision": "minute",
+      "utc": null,
+      "source_kind": "SCHEDULE_PAGE",
+      "source_url": "https://www.bls.gov/schedule/news_release/empsit.htm"
+     }
+    ]
+   },
+   "publication": {
+    "status": "NOT_YET_DUE",
+    "official_release_time": null,
+    "observed_available_at_utc": null,
+    "verification": {
+     "state": "NOT_ATTEMPTED",
+     "last_attempt_at_utc": null,
+     "detail": null,
+     "page_event_id": null
+    },
+    "evidence": []
+   },
+   "retrieval": {
+    "state": "FRESH",
+    "last_attempt_at_utc": "2026-10-17T13:51:59Z",
+    "last_success_at_utc": "2026-10-17T13:51:59Z",
+    "last_error": null,
+    "stale_after": "P7D"
+   },
+   "conflicts": [],
+   "notes": [],
+   "sources": [
+    {
+     "url": "https://www.bls.gov/schedule/news_release/empsit.htm",
+     "publisher": "BLS",
+     "kind": "SCHEDULE_PAGE",
+     "retrieved_at_utc": "2026-10-16T06:13:33Z"
+    }
+   ],
+   "attribution": [
+    "Source: U.S. Bureau of Labor Statistics"
+   ],
+   "synthetic": false,
+   "record_version": 1
+  },
+  {
+   "event_id": "BLS.CPI.2027-08",
+   "family": "BLS_CPI",
+   "stage": null,
+   "family_label": "Consumer Price Index",
+   "authority_code": "BLS",
+   "authority_name": "U.S. Bureau of Labor Statistics",
+   "release_name": "Consumer Price Index",
+   "reference_period": {
+    "kind": "month",
+    "period": "2027-08"
+   },
+   "desk_status": "SCHEDULED_UNVERIFIED",
+   "flags": [
+    "ZONE_NOT_STATED"
+   ],
+   "schedule": {
+    "status": "SCHEDULED",
+    "current": {
+     "local_date": "2027-09-14",
+     "local_time": "08:30",
+     "time_zone": null,
+     "source_tz_label": null,
+     "precision": "minute",
+     "utc": null,
+     "source_kind": "SCHEDULE_PAGE",
+     "source_url": "https://www.bls.gov/schedule/news_release/cpi.htm"
+    },
+    "original": {
+     "local_date": "2027-09-14",
+     "local_time": "08:30",
+     "time_zone": null,
+     "source_tz_label": null,
+     "precision": "minute",
+     "utc": null,
+     "source_kind": "SCHEDULE_PAGE",
+     "source_url": "https://www.bls.gov/schedule/news_release/cpi.htm"
+    },
+    "history": [
+     {
+      "local_date": "2027-09-14",
+      "local_time": "08:30",
+      "time_zone": null,
+      "source_tz_label": null,
+      "precision": "minute",
+      "utc": null,
+      "source_kind": "SCHEDULE_PAGE",
+      "source_url": "https://www.bls.gov/schedule/news_release/cpi.htm"
+     }
+    ]
+   },
+   "publication": {
+    "status": "NOT_YET_DUE",
+    "official_release_time": null,
+    "observed_available_at_utc": null,
+    "verification": {
+     "state": "NOT_ATTEMPTED",
+     "last_attempt_at_utc": null,
+     "detail": null,
+     "page_event_id": null
+    },
+    "evidence": []
+   },
+   "retrieval": {
+    "state": "FRESH",
+    "last_attempt_at_utc": "2026-10-17T13:51:54Z",
+    "last_success_at_utc": "2026-10-17T13:51:54Z",
+    "last_error": null,
+    "stale_after": "P7D"
+   },
+   "conflicts": [],
+   "notes": [],
+   "sources": [
+    {
+     "url": "https://www.bls.gov/schedule/news_release/cpi.htm",
+     "publisher": "BLS",
+     "kind": "SCHEDULE_PAGE",
+     "retrieved_at_utc": "2026-10-16T06:13:28Z"
+    }
+   ],
+   "attribution": [
+    "Source: U.S. Bureau of Labor Statistics"
+   ],
+   "synthetic": false,
+   "record_version": 1
+  },
+  {
+   "event_id": "BLS.EMPSIT.2027-09",
+   "family": "BLS_EMPSIT",
+   "stage": null,
+   "family_label": "Employment Situation",
+   "authority_code": "BLS",
+   "authority_name": "U.S. Bureau of Labor Statistics",
+   "release_name": "Employment Situation",
+   "reference_period": {
+    "kind": "month",
+    "period": "2027-09"
+   },
+   "desk_status": "SCHEDULED_UNVERIFIED",
+   "flags": [
+    "ZONE_NOT_STATED"
+   ],
+   "schedule": {
+    "status": "SCHEDULED",
+    "current": {
+     "local_date": "2027-10-08",
+     "local_time": "08:30",
+     "time_zone": null,
+     "source_tz_label": null,
+     "precision": "minute",
+     "utc": null,
+     "source_kind": "SCHEDULE_PAGE",
+     "source_url": "https://www.bls.gov/schedule/news_release/empsit.htm"
+    },
+    "original": {
+     "local_date": "2027-10-08",
+     "local_time": "08:30",
+     "time_zone": null,
+     "source_tz_label": null,
+     "precision": "minute",
+     "utc": null,
+     "source_kind": "SCHEDULE_PAGE",
+     "source_url": "https://www.bls.gov/schedule/news_release/empsit.htm"
+    },
+    "history": [
+     {
+      "local_date": "2027-10-08",
+      "local_time": "08:30",
+      "time_zone": null,
+      "source_tz_label": null,
+      "precision": "minute",
+      "utc": null,
+      "source_kind": "SCHEDULE_PAGE",
+      "source_url": "https://www.bls.gov/schedule/news_release/empsit.htm"
+     }
+    ]
+   },
+   "publication": {
+    "status": "NOT_YET_DUE",
+    "official_release_time": null,
+    "observed_available_at_utc": null,
+    "verification": {
+     "state": "NOT_ATTEMPTED",
+     "last_attempt_at_utc": null,
+     "detail": null,
+     "page_event_id": null
+    },
+    "evidence": []
+   },
+   "retrieval": {
+    "state": "FRESH",
+    "last_attempt_at_utc": "2026-10-17T13:51:59Z",
+    "last_success_at_utc": "2026-10-17T13:51:59Z",
+    "last_error": null,
+    "stale_after": "P7D"
+   },
+   "conflicts": [],
+   "notes": [],
+   "sources": [
+    {
+     "url": "https://www.bls.gov/schedule/news_release/empsit.htm",
+     "publisher": "BLS",
+     "kind": "SCHEDULE_PAGE",
+     "retrieved_at_utc": "2026-10-16T06:13:33Z"
+    }
+   ],
+   "attribution": [
+    "Source: U.S. Bureau of Labor Statistics"
+   ],
+   "synthetic": false,
+   "record_version": 1
+  },
+  {
+   "event_id": "BLS.CPI.2027-09",
+   "family": "BLS_CPI",
+   "stage": null,
+   "family_label": "Consumer Price Index",
+   "authority_code": "BLS",
+   "authority_name": "U.S. Bureau of Labor Statistics",
+   "release_name": "Consumer Price Index",
+   "reference_period": {
+    "kind": "month",
+    "period": "2027-09"
+   },
+   "desk_status": "SCHEDULED_UNVERIFIED",
+   "flags": [
+    "ZONE_NOT_STATED"
+   ],
+   "schedule": {
+    "status": "SCHEDULED",
+    "current": {
+     "local_date": "2027-10-14",
+     "local_time": "08:30",
+     "time_zone": null,
+     "source_tz_label": null,
+     "precision": "minute",
+     "utc": null,
+     "source_kind": "SCHEDULE_PAGE",
+     "source_url": "https://www.bls.gov/schedule/news_release/cpi.htm"
+    },
+    "original": {
+     "local_date": "2027-10-14",
+     "local_time": "08:30",
+     "time_zone": null,
+     "source_tz_label": null,
+     "precision": "minute",
+     "utc": null,
+     "source_kind": "SCHEDULE_PAGE",
+     "source_url": "https://www.bls.gov/schedule/news_release/cpi.htm"
+    },
+    "history": [
+     {
+      "local_date": "2027-10-14",
+      "local_time": "08:30",
+      "time_zone": null,
+      "source_tz_label": null,
+      "precision": "minute",
+      "utc": null,
+      "source_kind": "SCHEDULE_PAGE",
+      "source_url": "https://www.bls.gov/schedule/news_release/cpi.htm"
+     }
+    ]
+   },
+   "publication": {
+    "status": "NOT_YET_DUE",
+    "official_release_time": null,
+    "observed_available_at_utc": null,
+    "verification": {
+     "state": "NOT_ATTEMPTED",
+     "last_attempt_at_utc": null,
+     "detail": null,
+     "page_event_id": null
+    },
+    "evidence": []
+   },
+   "retrieval": {
+    "state": "FRESH",
+    "last_attempt_at_utc": "2026-10-17T13:51:54Z",
+    "last_success_at_utc": "2026-10-17T13:51:54Z",
+    "last_error": null,
+    "stale_after": "P7D"
+   },
+   "conflicts": [],
+   "notes": [],
+   "sources": [
+    {
+     "url": "https://www.bls.gov/schedule/news_release/cpi.htm",
+     "publisher": "BLS",
+     "kind": "SCHEDULE_PAGE",
+     "retrieved_at_utc": "2026-10-16T06:13:28Z"
+    }
+   ],
+   "attribution": [
+    "Source: U.S. Bureau of Labor Statistics"
+   ],
+   "synthetic": false,
+   "record_version": 1
+  },
+  {
+   "event_id": "BEA.GDP.ADVANCE.2027-Q3",
+   "family": "BEA_GDP",
+   "stage": "ADVANCE",
+   "family_label": "Gross Domestic Product",
+   "authority_code": "BEA",
+   "authority_name": "U.S. Bureau of Economic Analysis",
+   "release_name": "GDP (Advance Estimate), 3rd Quarter 2027",
+   "reference_period": {
+    "kind": "quarter",
+    "period": "2027-Q3"
+   },
+   "desk_status": "SCHEDULED_UNVERIFIED",
+   "flags": [],
+   "schedule": {
+    "status": "SCHEDULED",
+    "current": {
+     "local_date": "2027-10-28",
+     "local_time": "08:30",
+     "time_zone": "America/New_York",
+     "source_tz_label": "UTC",
+     "precision": "minute",
+     "utc": "2027-10-28T12:30:00Z",
+     "source_kind": "ICS_CALENDAR",
+     "source_url": "https://www.bea.gov/news/schedule/ics/online-calendar-subscription.ics"
+    },
+    "original": {
+     "local_date": "2027-10-28",
+     "local_time": "08:30",
+     "time_zone": "America/New_York",
+     "source_tz_label": "UTC",
+     "precision": "minute",
+     "utc": "2027-10-28T12:30:00Z",
+     "source_kind": "ICS_CALENDAR",
+     "source_url": "https://www.bea.gov/news/schedule/ics/online-calendar-subscription.ics"
+    },
+    "history": [
+     {
+      "local_date": "2027-10-28",
+      "local_time": "08:30",
+      "time_zone": "America/New_York",
+      "source_tz_label": "UTC",
+      "precision": "minute",
+      "utc": "2027-10-28T12:30:00Z",
+      "source_kind": "ICS_CALENDAR",
+      "source_url": "https://www.bea.gov/news/schedule/ics/online-calendar-subscription.ics"
+     }
+    ]
+   },
+   "publication": {
+    "status": "NOT_YET_DUE",
+    "official_release_time": null,
+    "observed_available_at_utc": null,
+    "verification": {
+     "state": "NOT_ATTEMPTED",
+     "last_attempt_at_utc": null,
+     "detail": null,
+     "page_event_id": null
+    },
+    "evidence": []
+   },
+   "retrieval": {
+    "state": "FRESH",
+    "last_attempt_at_utc": "2026-10-17T13:52:04Z",
+    "last_success_at_utc": "2026-10-17T13:52:04Z",
+    "last_error": null,
+    "stale_after": "P7D"
+   },
+   "conflicts": [],
+   "notes": [],
+   "sources": [
+    {
+     "url": "https://www.bea.gov/news/schedule/ics/online-calendar-subscription.ics",
+     "publisher": "BEA",
+     "kind": "ICS_CALENDAR",
+     "retrieved_at_utc": "2026-10-16T06:13:38Z"
+    }
+   ],
+   "attribution": [
+    "Source: U.S. Bureau of Economic Analysis"
+   ],
+   "synthetic": false,
+   "record_version": 1
+  },
+  {
+   "event_id": "BLS.EMPSIT.2027-10",
+   "family": "BLS_EMPSIT",
+   "stage": null,
+   "family_label": "Employment Situation",
+   "authority_code": "BLS",
+   "authority_name": "U.S. Bureau of Labor Statistics",
+   "release_name": "Employment Situation",
+   "reference_period": {
+    "kind": "month",
+    "period": "2027-10"
+   },
+   "desk_status": "SCHEDULED_UNVERIFIED",
+   "flags": [
+    "ZONE_NOT_STATED"
+   ],
+   "schedule": {
+    "status": "SCHEDULED",
+    "current": {
+     "local_date": "2027-11-05",
+     "local_time": "08:30",
+     "time_zone": null,
+     "source_tz_label": null,
+     "precision": "minute",
+     "utc": null,
+     "source_kind": "SCHEDULE_PAGE",
+     "source_url": "https://www.bls.gov/schedule/news_release/empsit.htm"
+    },
+    "original": {
+     "local_date": "2027-11-05",
+     "local_time": "08:30",
+     "time_zone": null,
+     "source_tz_label": null,
+     "precision": "minute",
+     "utc": null,
+     "source_kind": "SCHEDULE_PAGE",
+     "source_url": "https://www.bls.gov/schedule/news_release/empsit.htm"
+    },
+    "history": [
+     {
+      "local_date": "2027-11-05",
+      "local_time": "08:30",
+      "time_zone": null,
+      "source_tz_label": null,
+      "precision": "minute",
+      "utc": null,
+      "source_kind": "SCHEDULE_PAGE",
+      "source_url": "https://www.bls.gov/schedule/news_release/empsit.htm"
+     }
+    ]
+   },
+   "publication": {
+    "status": "NOT_YET_DUE",
+    "official_release_time": null,
+    "observed_available_at_utc": null,
+    "verification": {
+     "state": "NOT_ATTEMPTED",
+     "last_attempt_at_utc": null,
+     "detail": null,
+     "page_event_id": null
+    },
+    "evidence": []
+   },
+   "retrieval": {
+    "state": "FRESH",
+    "last_attempt_at_utc": "2026-10-17T13:51:59Z",
+    "last_success_at_utc": "2026-10-17T13:51:59Z",
+    "last_error": null,
+    "stale_after": "P7D"
+   },
+   "conflicts": [],
+   "notes": [],
+   "sources": [
+    {
+     "url": "https://www.bls.gov/schedule/news_release/empsit.htm",
+     "publisher": "BLS",
+     "kind": "SCHEDULE_PAGE",
+     "retrieved_at_utc": "2026-10-16T06:13:33Z"
+    }
+   ],
+   "attribution": [
+    "Source: U.S. Bureau of Labor Statistics"
+   ],
+   "synthetic": false,
+   "record_version": 1
+  },
+  {
+   "event_id": "BLS.CPI.2027-10",
+   "family": "BLS_CPI",
+   "stage": null,
+   "family_label": "Consumer Price Index",
+   "authority_code": "BLS",
+   "authority_name": "U.S. Bureau of Labor Statistics",
+   "release_name": "Consumer Price Index",
+   "reference_period": {
+    "kind": "month",
+    "period": "2027-10"
+   },
+   "desk_status": "SCHEDULED_UNVERIFIED",
+   "flags": [
+    "ZONE_NOT_STATED"
+   ],
+   "schedule": {
+    "status": "SCHEDULED",
+    "current": {
+     "local_date": "2027-11-10",
+     "local_time": "08:30",
+     "time_zone": null,
+     "source_tz_label": null,
+     "precision": "minute",
+     "utc": null,
+     "source_kind": "SCHEDULE_PAGE",
+     "source_url": "https://www.bls.gov/schedule/news_release/cpi.htm"
+    },
+    "original": {
+     "local_date": "2027-11-10",
+     "local_time": "08:30",
+     "time_zone": null,
+     "source_tz_label": null,
+     "precision": "minute",
+     "utc": null,
+     "source_kind": "SCHEDULE_PAGE",
+     "source_url": "https://www.bls.gov/schedule/news_release/cpi.htm"
+    },
+    "history": [
+     {
+      "local_date": "2027-11-10",
+      "local_time": "08:30",
+      "time_zone": null,
+      "source_tz_label": null,
+      "precision": "minute",
+      "utc": null,
+      "source_kind": "SCHEDULE_PAGE",
+      "source_url": "https://www.bls.gov/schedule/news_release/cpi.htm"
+     }
+    ]
+   },
+   "publication": {
+    "status": "NOT_YET_DUE",
+    "official_release_time": null,
+    "observed_available_at_utc": null,
+    "verification": {
+     "state": "NOT_ATTEMPTED",
+     "last_attempt_at_utc": null,
+     "detail": null,
+     "page_event_id": null
+    },
+    "evidence": []
+   },
+   "retrieval": {
+    "state": "FRESH",
+    "last_attempt_at_utc": "2026-10-17T13:51:54Z",
+    "last_success_at_utc": "2026-10-17T13:51:54Z",
+    "last_error": null,
+    "stale_after": "P7D"
+   },
+   "conflicts": [],
+   "notes": [],
+   "sources": [
+    {
+     "url": "https://www.bls.gov/schedule/news_release/cpi.htm",
+     "publisher": "BLS",
+     "kind": "SCHEDULE_PAGE",
+     "retrieved_at_utc": "2026-10-16T06:13:28Z"
+    }
+   ],
+   "attribution": [
+    "Source: U.S. Bureau of Labor Statistics"
+   ],
+   "synthetic": false,
+   "record_version": 1
+  },
+  {
+   "event_id": "BLS.EMPSIT.2027-11",
+   "family": "BLS_EMPSIT",
+   "stage": null,
+   "family_label": "Employment Situation",
+   "authority_code": "BLS",
+   "authority_name": "U.S. Bureau of Labor Statistics",
+   "release_name": "Employment Situation",
+   "reference_period": {
+    "kind": "month",
+    "period": "2027-11"
+   },
+   "desk_status": "SCHEDULED_UNVERIFIED",
+   "flags": [
+    "ZONE_NOT_STATED"
+   ],
+   "schedule": {
+    "status": "SCHEDULED",
+    "current": {
+     "local_date": "2027-12-03",
+     "local_time": "08:30",
+     "time_zone": null,
+     "source_tz_label": null,
+     "precision": "minute",
+     "utc": null,
+     "source_kind": "SCHEDULE_PAGE",
+     "source_url": "https://www.bls.gov/schedule/news_release/empsit.htm"
+    },
+    "original": {
+     "local_date": "2027-12-03",
+     "local_time": "08:30",
+     "time_zone": null,
+     "source_tz_label": null,
+     "precision": "minute",
+     "utc": null,
+     "source_kind": "SCHEDULE_PAGE",
+     "source_url": "https://www.bls.gov/schedule/news_release/empsit.htm"
+    },
+    "history": [
+     {
+      "local_date": "2027-12-03",
+      "local_time": "08:30",
+      "time_zone": null,
+      "source_tz_label": null,
+      "precision": "minute",
+      "utc": null,
+      "source_kind": "SCHEDULE_PAGE",
+      "source_url": "https://www.bls.gov/schedule/news_release/empsit.htm"
+     }
+    ]
+   },
+   "publication": {
+    "status": "NOT_YET_DUE",
+    "official_release_time": null,
+    "observed_available_at_utc": null,
+    "verification": {
+     "state": "NOT_ATTEMPTED",
+     "last_attempt_at_utc": null,
+     "detail": null,
+     "page_event_id": null
+    },
+    "evidence": []
+   },
+   "retrieval": {
+    "state": "FRESH",
+    "last_attempt_at_utc": "2026-10-17T13:51:59Z",
+    "last_success_at_utc": "2026-10-17T13:51:59Z",
+    "last_error": null,
+    "stale_after": "P7D"
+   },
+   "conflicts": [],
+   "notes": [],
+   "sources": [
+    {
+     "url": "https://www.bls.gov/schedule/news_release/empsit.htm",
+     "publisher": "BLS",
+     "kind": "SCHEDULE_PAGE",
+     "retrieved_at_utc": "2026-10-16T06:13:33Z"
+    }
+   ],
+   "attribution": [
+    "Source: U.S. Bureau of Labor Statistics"
+   ],
+   "synthetic": false,
+   "record_version": 1
+  },
+  {
+   "event_id": "BLS.CPI.2027-11",
+   "family": "BLS_CPI",
+   "stage": null,
+   "family_label": "Consumer Price Index",
+   "authority_code": "BLS",
+   "authority_name": "U.S. Bureau of Labor Statistics",
+   "release_name": "Consumer Price Index",
+   "reference_period": {
+    "kind": "month",
+    "period": "2027-11"
+   },
+   "desk_status": "SCHEDULED_UNVERIFIED",
+   "flags": [
+    "ZONE_NOT_STATED"
+   ],
+   "schedule": {
+    "status": "SCHEDULED",
+    "current": {
+     "local_date": "2027-12-10",
+     "local_time": "08:30",
+     "time_zone": null,
+     "source_tz_label": null,
+     "precision": "minute",
+     "utc": null,
+     "source_kind": "SCHEDULE_PAGE",
+     "source_url": "https://www.bls.gov/schedule/news_release/cpi.htm"
+    },
+    "original": {
+     "local_date": "2027-12-10",
+     "local_time": "08:30",
+     "time_zone": null,
+     "source_tz_label": null,
+     "precision": "minute",
+     "utc": null,
+     "source_kind": "SCHEDULE_PAGE",
+     "source_url": "https://www.bls.gov/schedule/news_release/cpi.htm"
+    },
+    "history": [
+     {
+      "local_date": "2027-12-10",
+      "local_time": "08:30",
+      "time_zone": null,
+      "source_tz_label": null,
+      "precision": "minute",
+      "utc": null,
+      "source_kind": "SCHEDULE_PAGE",
+      "source_url": "https://www.bls.gov/schedule/news_release/cpi.htm"
+     }
+    ]
+   },
+   "publication": {
+    "status": "NOT_YET_DUE",
+    "official_release_time": null,
+    "observed_available_at_utc": null,
+    "verification": {
+     "state": "NOT_ATTEMPTED",
+     "last_attempt_at_utc": null,
+     "detail": null,
+     "page_event_id": null
+    },
+    "evidence": []
+   },
+   "retrieval": {
+    "state": "FRESH",
+    "last_attempt_at_utc": "2026-10-17T13:51:54Z",
+    "last_success_at_utc": "2026-10-17T13:51:54Z",
+    "last_error": null,
+    "stale_after": "P7D"
+   },
+   "conflicts": [],
+   "notes": [],
+   "sources": [
+    {
+     "url": "https://www.bls.gov/schedule/news_release/cpi.htm",
+     "publisher": "BLS",
+     "kind": "SCHEDULE_PAGE",
+     "retrieved_at_utc": "2026-10-16T06:13:28Z"
+    }
+   ],
+   "attribution": [
+    "Source: U.S. Bureau of Labor Statistics"
+   ],
+   "synthetic": false,
+   "record_version": 1
+  }
+ ],
+ "events_sha256": "8a5fd212634b22db79c5b5151d16f9746f8f25190f59cb885390f47bd082598d"
+}

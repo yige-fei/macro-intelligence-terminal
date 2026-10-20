@@ -1,0 +1,22 @@
+{
+ "synthetic": true,
+ "notice": "Provenance of the simulated demo data. No third-party data is included.",
+ "generator": {
+  "name": "terminal_demo.generate v1",
+  "seed": 20261020,
+  "calendar": "Monday-Friday, no holidays",
+  "start": "2016-01-04",
+  "end": "2023-12-29"
+ },
+ "built_utc": "not time-stamped (deterministic output)",
+ "bound": "2023-12-29",
+ "snapshot_id": "synthetic demo data, terminal_demo.generate v1, seed 20261020",
+ "snapshot_end": "2023-12-29",
+ "repository_head": "not applicable",
+ "raw_sha256": {},
+ "evidence_sha256": {},
+ "files_sha256": {
+  "etf_prices.json": "f14ce1aa783eba66e21a8d81798e47da350c6332ce1839a3471b7bfd2af54e5c",
+  "research.json": "d84abb864ac55bfabed478925fecd63f26684b1cb2fddf06ca2d960a59147fb9"
+ }
+}

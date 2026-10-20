@@ -1,0 +1,5 @@
+TradingView Lightweight Charts™
+Copyright (c) 2025 TradingView, Inc. https://www.tradingview.com/
+
+(Text of the NOTICE file in https://github.com/tradingview/lightweight-charts, reproduced because the npm package
+does not include it.)

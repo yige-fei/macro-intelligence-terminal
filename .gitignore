@@ -1,0 +1,19 @@
+# dependencies and build output
+node_modules/
+web/.next/
+web/out/
+*.tsbuildinfo
+
+# Python
+__pycache__/
+*.pyc
+
+# local environment and secrets (never committed)
+.env
+.env.*
+
+# OS clutter
+.DS_Store
+
+# local test output
+test-output/

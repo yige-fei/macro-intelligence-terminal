@@ -1,0 +1,344 @@
+{
+ "manifest": "t3_r2_release_desk_preview",
+ "manifest_version": "1",
+ "note": "Public copy of the release-desk snapshot manifest. It binds the export to the private collection dataset by hash; gate labels and evidence locations of the private collection are omitted.",
+ "dataset": {
+  "tree_sha256": "6c422a39eabba72ccdcc0ee5951ba0c738091896d5e1a9f8a9172f881e5e73f8",
+  "files": 83,
+  "events": 38,
+  "versions": 38,
+  "records": [
+   {
+    "event_id": "BEA.GDP.ADVANCE.2025-Q4",
+    "version": 1,
+    "record_sha256": "e8c7429b43912bd14ba07518c63365445c5a400f5977d326c45551bf7e11094b",
+    "written_at_utc": "2026-10-16T06:13:43Z"
+   },
+   {
+    "event_id": "BEA.GDP.ADVANCE.2026-Q1",
+    "version": 1,
+    "record_sha256": "09e009b5a1d7607337354de231f93c243db19b7d23a61cd0f8171a4b43f20d44",
+    "written_at_utc": "2026-10-16T06:13:43Z"
+   },
+   {
+    "event_id": "BEA.GDP.ADVANCE.2026-Q2",
+    "version": 1,
+    "record_sha256": "7d954d3835e395b5d4bbabd911ea951395f56ad7ac03fab0c76b8f1641713909",
+    "written_at_utc": "2026-10-16T06:13:43Z"
+   },
+   {
+    "event_id": "BEA.GDP.ADVANCE.2026-Q3",
+    "version": 1,
+    "record_sha256": "a599629b010ff3da57f28dd013fa4efe563951ec225d0ef782dacb2d0e4dc1d5",
+    "written_at_utc": "2026-10-16T06:13:43Z"
+   },
+   {
+    "event_id": "BEA.GDP.ADVANCE.2026-Q4",
+    "version": 1,
+    "record_sha256": "090083dc66ab113e9322d6590096d88dc7663fa84137f102c15c3eb9536902f9",
+    "written_at_utc": "2026-10-16T06:13:43Z"
+   },
+   {
+    "event_id": "BEA.GDP.ADVANCE.2027-Q1",
+    "version": 1,
+    "record_sha256": "cc4be22a9f3d6f099235e08762ec256b8642ed795e68e70932d6f4d7e23a48ce",
+    "written_at_utc": "2026-10-16T06:13:43Z"
+   },
+   {
+    "event_id": "BEA.GDP.ADVANCE.2027-Q2",
+    "version": 1,
+    "record_sha256": "914fb8dcb11b71640d08faa94d32b067021480979a5f3eb536c7d794953cc333",
+    "written_at_utc": "2026-10-16T06:13:43Z"
+   },
+   {
+    "event_id": "BEA.GDP.ADVANCE.2027-Q3",
+    "version": 1,
+    "record_sha256": "d2841849c444f7cd599d4a137f3100541bf5140357d58270358d9328e2f26479",
+    "written_at_utc": "2026-10-16T06:13:43Z"
+   },
+   {
+    "event_id": "BLS.CPI.2026-09",
+    "version": 1,
+    "record_sha256": "2424109e7dbc191da55ae51879e50efbe80bdd8a7c562079e9bc63fede082ffe",
+    "written_at_utc": "2026-10-17T14:15:09Z"
+   },
+   {
+    "event_id": "BLS.CPI.2026-10",
+    "version": 1,
+    "record_sha256": "81e0570ea74dc04ae8b69c3278cd67e5345e9eb90f67be8537943ea1dd1152ca",
+    "written_at_utc": "2026-10-16T06:13:43Z"
+   },
+   {
+    "event_id": "BLS.CPI.2026-11",
+    "version": 1,
+    "record_sha256": "80ded3158b21f56e5c9763b7ad2607a53aaea6b48ccf01950205e8fc58fedb48",
+    "written_at_utc": "2026-10-16T06:13:43Z"
+   },
+   {
+    "event_id": "BLS.CPI.2026-12",
+    "version": 1,
+    "record_sha256": "3b190bd8da9280008d07d3eca2d38424145ca3be9ddb2914d28158c513733308",
+    "written_at_utc": "2026-10-16T06:13:43Z"
+   },
+   {
+    "event_id": "BLS.CPI.2027-01",
+    "version": 1,
+    "record_sha256": "2a854fbbdf77af7abe3c0956e512a46a78bf703e5f723641a052a8b357d1e76b",
+    "written_at_utc": "2026-10-16T06:13:43Z"
+   },
+   {
+    "event_id": "BLS.CPI.2027-02",
+    "version": 1,
+    "record_sha256": "24d061afad24c79efb7bc0e02f30a78e4e783f892d285e02924fe301a3f7c3d5",
+    "written_at_utc": "2026-10-16T06:13:43Z"
+   },
+   {
+    "event_id": "BLS.CPI.2027-03",
+    "version": 1,
+    "record_sha256": "e2c0c3bb6038b9b0975d592e97f4b7e06e4a2e1096e084f944b116138964b438",
+    "written_at_utc": "2026-10-16T06:13:43Z"
+   },
+   {
+    "event_id": "BLS.CPI.2027-04",
+    "version": 1,
+    "record_sha256": "32d1d2127c7f4a743115d8d4492e2b03dd0723b1158c9c507bc98270283a0a1d",
+    "written_at_utc": "2026-10-16T06:13:43Z"
+   },
+   {
+    "event_id": "BLS.CPI.2027-05",
+    "version": 1,
+    "record_sha256": "cc323106dc8c828a27899277163b4099207487d47c603e1df15450e085026714",
+    "written_at_utc": "2026-10-16T06:13:43Z"
+   },
+   {
+    "event_id": "BLS.CPI.2027-06",
+    "version": 1,
+    "record_sha256": "9e43a34329767ea3894216ec368f7556b7ed3c770fee79cae25797366a99ff66",
+    "written_at_utc": "2026-10-16T06:13:43Z"
+   },
+   {
+    "event_id": "BLS.CPI.2027-07",
+    "version": 1,
+    "record_sha256": "0ba5290251b1d4b25d1d33d0efd8d5aba446381676a2433b4176a5fdd606e264",
+    "written_at_utc": "2026-10-16T06:13:43Z"
+   },
+   {
+    "event_id": "BLS.CPI.2027-08",
+    "version": 1,
+    "record_sha256": "e7d67659fc07bf276b28465ea6144dd1b32a67e5fedfd21910dc60d161e8567b",
+    "written_at_utc": "2026-10-16T06:13:43Z"
+   },
+   {
+    "event_id": "BLS.CPI.2027-09",
+    "version": 1,
+    "record_sha256": "8b7eac41dca4113ebae507a0045aee984f4a78be6c0f23c8ed6f7d621b63d89c",
+    "written_at_utc": "2026-10-16T06:13:43Z"
+   },
+   {
+    "event_id": "BLS.CPI.2027-10",
+    "version": 1,
+    "record_sha256": "9ff1cd9cc4bf543a363f859f2a4c86b6e17f367b99483011f8440f62eefd04f3",
+    "written_at_utc": "2026-10-16T06:13:43Z"
+   },
+   {
+    "event_id": "BLS.CPI.2027-11",
+    "version": 1,
+    "record_sha256": "6bbc97dbfa48a43d96430ba60bac5feb787c7d3581d8e2acdc20403e7ed30a80",
+    "written_at_utc": "2026-10-16T06:13:43Z"
+   },
+   {
+    "event_id": "BLS.EMPSIT.2026-09",
+    "version": 1,
+    "record_sha256": "e216c984a1ed150bdedc20cee21d96849631267684c8b4e4006b7bc58fcb9336",
+    "written_at_utc": "2026-10-16T06:13:43Z"
+   },
+   {
+    "event_id": "BLS.EMPSIT.2026-10",
+    "version": 1,
+    "record_sha256": "6c2e4c69308066299492d421d1378c4f985b62693a69155e7e4fc43c4ac9ff76",
+    "written_at_utc": "2026-10-16T06:13:43Z"
+   },
+   {
+    "event_id": "BLS.EMPSIT.2026-11",
+    "version": 1,
+    "record_sha256": "7c52599a63a1ea335416a1a3a4650223996b9107e3c05b87528a28b6e4939fe6",
+    "written_at_utc": "2026-10-16T06:13:43Z"
+   },
+   {
+    "event_id": "BLS.EMPSIT.2026-12",
+    "version": 1,
+    "record_sha256": "533f8c884e94326e25a28ae02f831f76b61e763ddb73d50edc4c05aa9b56548e",
+    "written_at_utc": "2026-10-16T06:13:43Z"
+   },
+   {
+    "event_id": "BLS.EMPSIT.2027-01",
+    "version": 1,
+    "record_sha256": "02a0f39577326a51f539994c55892e647dbfedf138dc214376d37f7a2b390a7b",
+    "written_at_utc": "2026-10-16T06:13:43Z"
+   },
+   {
+    "event_id": "BLS.EMPSIT.2027-02",
+    "version": 1,
+    "record_sha256": "96334cc21b9157c2d61eb3650410936db3d967db9c297b2ee66987d5891e53a5",
+    "written_at_utc": "2026-10-16T06:13:43Z"
+   },
+   {
+    "event_id": "BLS.EMPSIT.2027-03",
+    "version": 1,
+    "record_sha256": "b5c7e0fc9a396d32cfd92c2e4a01e0db4b6985ff7590f28a3eaea0914699b0eb",
+    "written_at_utc": "2026-10-16T06:13:43Z"
+   },
+   {
+    "event_id": "BLS.EMPSIT.2027-04",
+    "version": 1,
+    "record_sha256": "03a7a1ffbb30f400b55d3ffa568bac1cde7b7a587c8d83467eaedbb32c76ac09",
+    "written_at_utc": "2026-10-16T06:13:43Z"
+   },
+   {
+    "event_id": "BLS.EMPSIT.2027-05",
+    "version": 1,
+    "record_sha256": "da355290a866c970c54857c13d963bdd3e8c9d3aa0e024ada815b7cf73e42853",
+    "written_at_utc": "2026-10-16T06:13:43Z"
+   },
+   {
+    "event_id": "BLS.EMPSIT.2027-06",
+    "version": 1,
+    "record_sha256": "88a197b0df588988cf35d696d328328ae23c1b9e79142343584203234ee3888c",
+    "written_at_utc": "2026-10-16T06:13:43Z"
+   },
+   {
+    "event_id": "BLS.EMPSIT.2027-07",
+    "version": 1,
+    "record_sha256": "5fa2f45c57ff4d2660c673f59f4d81edbedef030b0d9ce7f74dfab7635b26beb",
+    "written_at_utc": "2026-10-16T06:13:43Z"
+   },
+   {
+    "event_id": "BLS.EMPSIT.2027-08",
+    "version": 1,
+    "record_sha256": "092a52dbbd5e05f712cbf3ed02a77d18d758eb12add6ca7eb3eaedf0fb119203",
+    "written_at_utc": "2026-10-16T06:13:43Z"
+   },
+   {
+    "event_id": "BLS.EMPSIT.2027-09",
+    "version": 1,
+    "record_sha256": "8cc3b5957343e8b3299a70d380e469af7ff0163a28f39cd3faffd5217a9e39e4",
+    "written_at_utc": "2026-10-16T06:13:43Z"
+   },
+   {
+    "event_id": "BLS.EMPSIT.2027-10",
+    "version": 1,
+    "record_sha256": "87e53fd8b16fae9b130f67ea01cf5e1506cdd9e9c0fb21e97d4882d80de69f94",
+    "written_at_utc": "2026-10-16T06:13:43Z"
+   },
+   {
+    "event_id": "BLS.EMPSIT.2027-11",
+    "version": 1,
+    "record_sha256": "9068cde8a0413134c59e3f1e05e9543bd104cfe4494c2a0a9bb748bb666c1590",
+    "written_at_utc": "2026-10-16T06:13:43Z"
+   }
+  ]
+ },
+ "runs": [
+  {
+   "run_id": "c16d2bf0fcfbe130",
+   "label": "collection run 1",
+   "mode": "LIVE",
+   "run_type": null,
+   "as_of_utc": "2026-10-16T06:13:43Z",
+   "documents": 5,
+   "new_versions": [
+    "BEA.GDP.ADVANCE.2025-Q4 v1",
+    "BEA.GDP.ADVANCE.2026-Q1 v1",
+    "BEA.GDP.ADVANCE.2026-Q2 v1",
+    "BEA.GDP.ADVANCE.2026-Q3 v1",
+    "BEA.GDP.ADVANCE.2026-Q4 v1",
+    "BEA.GDP.ADVANCE.2027-Q1 v1",
+    "BEA.GDP.ADVANCE.2027-Q2 v1",
+    "BEA.GDP.ADVANCE.2027-Q3 v1",
+    "BLS.CPI.2026-10 v1",
+    "BLS.CPI.2026-11 v1",
+    "BLS.CPI.2026-12 v1",
+    "BLS.CPI.2027-01 v1",
+    "BLS.CPI.2027-02 v1",
+    "BLS.CPI.2027-03 v1",
+    "BLS.CPI.2027-04 v1",
+    "BLS.CPI.2027-05 v1",
+    "BLS.CPI.2027-06 v1",
+    "BLS.CPI.2027-07 v1",
+    "BLS.CPI.2027-08 v1",
+    "BLS.CPI.2027-09 v1",
+    "BLS.CPI.2027-10 v1",
+    "BLS.CPI.2027-11 v1",
+    "BLS.EMPSIT.2026-09 v1",
+    "BLS.EMPSIT.2026-10 v1",
+    "BLS.EMPSIT.2026-11 v1",
+    "BLS.EMPSIT.2026-12 v1",
+    "BLS.EMPSIT.2027-01 v1",
+    "BLS.EMPSIT.2027-02 v1",
+    "BLS.EMPSIT.2027-03 v1",
+    "BLS.EMPSIT.2027-04 v1",
+    "BLS.EMPSIT.2027-05 v1",
+    "BLS.EMPSIT.2027-06 v1",
+    "BLS.EMPSIT.2027-07 v1",
+    "BLS.EMPSIT.2027-08 v1",
+    "BLS.EMPSIT.2027-09 v1",
+    "BLS.EMPSIT.2027-10 v1",
+    "BLS.EMPSIT.2027-11 v1"
+   ]
+  },
+  {
+   "run_id": "61b047d1287dcbd6",
+   "label": "collection run 2",
+   "mode": "LIVE",
+   "run_type": "CALENDAR_REFRESH",
+   "as_of_utc": "2026-10-17T13:52:06Z",
+   "documents": 4,
+   "new_versions": []
+  },
+  {
+   "run_id": "8ce7df695bd8f52b",
+   "label": "collection run 3",
+   "mode": "LIVE",
+   "run_type": "PUBLICATION_CHECK",
+   "as_of_utc": "2026-10-17T14:15:09Z",
+   "documents": 1,
+   "new_versions": [
+    "BLS.CPI.2026-09 v1"
+   ]
+  }
+ ],
+ "export": {
+  "file": "intel/release_desk.v1.json",
+  "sha256": "e97eead882680da492b0e0adb8c4f3c840df752eff944f134a186e465bd18c35",
+  "events_sha256": "8a5fd212634b22db79c5b5151d16f9746f8f25190f59cb885390f47bd082598d",
+  "as_of_utc": "2026-10-17T14:15:09Z",
+  "generated_at_utc": "2026-10-17T14:34:59Z",
+  "contract": "release_desk_export 1.0.0",
+  "values_policy": "NO_ECONOMIC_VALUES"
+ },
+ "change_summary": {
+  "compared_with": {
+   "label": "previous snapshot",
+   "as_of_utc": "2026-10-16T06:13:43Z",
+   "export_sha256": "0ec29b9edddd04d718fbc0f1d5f30888d88ffd1ce8a2cd87ed8843e3e1008cd3",
+   "events": 37
+  },
+  "events_now": 38,
+  "unchanged_records": 37,
+  "changed_records": [],
+  "added": [
+   {
+    "event_id": "BLS.CPI.2026-09",
+    "desk_status": "CONFIRMED",
+    "publication_status": "CONFIRMED",
+    "schedule_status": "UNKNOWN",
+    "document_ids": [
+     "USDL-26-1574"
+    ]
+   }
+  ],
+  "removed": [],
+  "retrieval_refreshed": 36,
+  "display_status_changes": []
+ }
+}
