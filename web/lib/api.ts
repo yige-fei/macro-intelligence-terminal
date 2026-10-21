@@ -2,17 +2,18 @@
 // HTTP API client (/api/* proxied to market-data providers) is removed: this build reads only static JSON files from
 // the same origin, ./data/<name>, which the local server (`python3 -m terminal_demo.serve`) serves from demo-data/.
 
-const DATA_FILES = ["etf_prices.json", "macro_series.json", "research.json", "manifest.json"] as const;
+const DATA_FILES = ["etf_prices.json", "event_overlay_prices.json", "macro_series.json", "research.json", "manifest.json"] as const;
 export type DataFile = (typeof DATA_FILES)[number];
 
 // Build-time data mode (next.config.ts). Files outside the mode are never requested; their panels show an explicit
 // "not included" state instead of an error.
-//   demo     — simulated market bars, illustrative research figures and their manifest (no macro series);
+//   demo     — simulated market bars (the 2016–2023 demo set and the 2025–2026 event-overlay set), illustrative research
+//              figures and their manifest (no macro series);
 //   excluded — official release-desk metadata only.
 export type DataMode = "demo" | "excluded";
 const MODE = process.env.NEXT_PUBLIC_HISTORICAL_DATA;
 export const HISTORICAL_DATA: DataMode = MODE === "excluded" ? "excluded" : "demo";
-const DEMO_FILES: readonly DataFile[] = ["etf_prices.json", "research.json", "manifest.json"];
+const DEMO_FILES: readonly DataFile[] = ["etf_prices.json", "event_overlay_prices.json", "research.json", "manifest.json"];
 
 /** Whether this build may request the given data file at all. */
 export function dataIncluded(name: DataFile): boolean {
@@ -53,6 +54,8 @@ export type Candle = {
 export type EtfExport = {
   bound: string; source: string; symbols: string[]; candles: Record<string, Candle[]>;
   synthetic?: boolean; notice?: string; generator?: GeneratorInfo; names?: Record<string, string>;
+  /** Event-overlay dataset only: the official release-desk snapshot date its last bar is aligned to. */
+  overlay?: boolean; event_snapshot?: string;
 };
 
 export type MacroPoint = { release?: string; reference?: string; date?: string; value: number | null };

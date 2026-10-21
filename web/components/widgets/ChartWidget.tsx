@@ -16,6 +16,10 @@
 // kept inside the loaded bars; no wheel capture, nothing persisted (same as drag-pan and axis zoom).
 // Demo: the bars are simulated (terminal_demo.generate); a fixed label above the chart and the caption say so, and a
 // range without bars shows an explicit empty state.
+// OS-P2A: two simulated datasets per chart panel (view.dataset): the 2016–2023 demo set (default, unchanged) and the
+// event-overlay set, which ends at the official release-desk snapshot and carries markers for the release events that
+// were due by then (lib/eventMarkers.ts). Range presets are computed from the selected dataset's own dates; for the
+// demo set they equal the earlier fixed values. Switching datasets resets the range and rebuilds chart and markers.
 
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -26,17 +30,29 @@ import {
   HistogramSeries,
   AreaSeries,
   BarSeries,
+  createSeriesMarkers,
   type IChartApi,
   type ISeriesApi,
+  type SeriesMarker,
   type SeriesType,
+  type Time,
   type UTCTimestamp,
 } from "lightweight-charts";
-import { fmt, fmtBig, isNotIncluded, loadLocal, type Candle, type EtfExport } from "../../lib/api";
+import { fmt, fmtBig, isNotIncluded, loadLocal, type Candle, type DataFile, type EtfExport } from "../../lib/api";
+import { loadReleaseDesk } from "../../lib/releaseDesk";
+import { MARK_STYLE, markTime, planEventMarkers, type EventMark, type EventPlan } from "../../lib/eventMarkers";
 import NotIncluded from "../NotIncluded";
 import { sma, ema, rsi, macd, bollinger, type Point } from "../../lib/indicators";
 import { useTerminal, useWidgetSymbol, type WidgetInstance } from "../../store/terminal";
 
-const RANGES = ["1Y", "3Y", "5Y", "2016–23", "ALL"] as const;
+const RANGES = ["1Y", "3Y", "5Y", "SPAN", "ALL"] as const;
+const DEFAULT_RANGE = "5Y";
+const LEGACY_RANGE: Record<string, (typeof RANGES)[number]> = { "2016–23": "SPAN" }; // OS-P1 saved layouts stored the label
+
+const DATASETS = ["demo", "overlay"] as const;
+type Dataset = (typeof DATASETS)[number];
+const DATASET_FILE: Record<Dataset, DataFile> = { demo: "etf_prices.json", overlay: "event_overlay_prices.json" };
+const DATASET_LABEL: Record<Dataset, string> = { demo: "DEMO SET", overlay: "EVENT OVERLAY" };
 const CHART_TYPES = ["candles", "bars", "line", "area"] as const;
 const INDICATORS = ["SMA20", "SMA50", "SMA200", "EMA20", "BOLL", "RSI", "MACD"] as const;
 
@@ -46,9 +62,19 @@ type Indicator = (typeof INDICATORS)[number];
 
 const ts = (t: number) => t as UTCTimestamp;
 const toMap = (pts: Point[]) => new Map(pts.map((p) => [p.time, p.value]));
-const RANGE_START: Record<Range, string> = {
-  "1Y": "2023-01-01", "3Y": "2021-01-01", "5Y": "2019-01-01", "2016–23": "2016-01-01", ALL: "0000-00-00",
-};
+// Range starts relative to the selected dataset: calendar-year anchored to the year of its last bar (1Y = 1 January of
+// that year, 3Y = two years earlier, 5Y = four years earlier), SPAN = 1 January of its first bar's year. For the
+// 2016–2023 demo set this is exactly the earlier 2023-01-01 / 2021-01-01 / 2019-01-01 / 2016-01-01.
+function rangeStart(r: Range, first: string | undefined, last: string | undefined): string {
+  if (r === "ALL" || !first || !last) return "0000-00-00";
+  const y = Number(last.slice(0, 4));
+  if (r === "SPAN") return `${first.slice(0, 4)}-01-01`;
+  return `${y - ({ "1Y": 0, "3Y": 2, "5Y": 4 } as const)[r]}-01-01`;
+}
+function rangeLabel(r: Range, first: string | undefined, last: string | undefined): string {
+  if (r !== "SPAN") return r;
+  return first && last ? `${first.slice(0, 4)}–${last.slice(2, 4)}` : "SPAN";
+}
 
 const INDICATOR_COLOR: Record<string, string> = {
   SMA20: "#ffd966", SMA50: "#4fc3f7", SMA200: "#ba68c8", EMA20: "#ff8a65", RSI: "#ff9900", BOLL: "#ff9900", MACD: "#4fc3f7",
@@ -62,7 +88,9 @@ export default function ChartWidget({ widget }: { widget: WidgetInstance }) {
   const symbol = useWidgetSymbol(widget);
   const setWidgetView = useTerminal((s) => s.setWidgetView);
   const v = widget.view;
-  const range: Range = (RANGES as readonly string[]).includes(v?.range ?? "") ? (v!.range as Range) : "5Y";
+  const dataset: Dataset = v?.dataset === "overlay" ? "overlay" : "demo";
+  const storedRange = LEGACY_RANGE[v?.range ?? ""] ?? v?.range;
+  const range: Range = (RANGES as readonly string[]).includes(storedRange ?? "") ? (storedRange as Range) : DEFAULT_RANGE;
   const chartType: ChartType = (CHART_TYPES as readonly string[]).includes(v?.chartType ?? "") ? (v!.chartType as ChartType) : "candles";
   const storedIndicators = v?.indicators;
   const active = useMemo(
@@ -71,26 +99,65 @@ export default function ChartWidget({ widget }: { widget: WidgetInstance }) {
   );
   const setRange = (r: Range) => setWidgetView(widget.id, { range: r });
   const setChartType = (t: ChartType) => setWidgetView(widget.id, { chartType: t });
+  // A range chosen for one dataset is not carried over to the other.
+  const setDataset = (d: Dataset) => { if (d !== dataset) setWidgetView(widget.id, { dataset: d, range: DEFAULT_RANGE }); };
   const [legend, setLegend] = useState<Candle | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const chartRef = useRef<IChartApi | null>(null);
+  const mainRef = useRef<ISeriesApi<SeriesType> | null>(null);
   const [chart, setChart] = useState<IChartApi | null>(null);
+  const [markerCount, setMarkerCount] = useState(0);
 
   const { data: etf, error } = useQuery({
-    queryKey: ["etf"],
-    queryFn: () => loadLocal<EtfExport>("etf_prices.json"),
+    queryKey: ["etf", DATASET_FILE[dataset]],
+    queryFn: () => loadLocal<EtfExport>(DATASET_FILE[dataset]),
     staleTime: Infinity,
   });
-  const candles = useMemo(
-    () => (etf?.candles[symbol] ?? []).filter((c) => c.date >= RANGE_START[range]),
-    [etf, symbol, range]
-  );
+  const all = useMemo(() => etf?.candles[symbol] ?? [], [etf, symbol]);
+  const first = all[0]?.date, last = all.at(-1)?.date;
+  const candles = useMemo(() => all.filter((c) => c.date >= rangeStart(range, first, last)), [all, range, first, last]);
+
+  // Release-desk events: plotted on the event-overlay dataset only, and only when it is what was loaded.
+  const { data: desk } = useQuery({ queryKey: ["release-desk"], queryFn: loadReleaseDesk, staleTime: Infinity, retry: false });
+  const plan: EventPlan | null = useMemo(() => {
+    if (dataset !== "overlay" || !etf || !desk) return null;
+    if (etf.overlay !== true) return { kind: "error", reason: "the loaded chart data is not the event-overlay dataset" };
+    if (desk.kind === "none") return { kind: "error", reason: "the release-desk export is not available" };
+    if (desk.kind === "invalid") return { kind: "error", reason: `the release-desk export is invalid (${desk.reason})` };
+    return planEventMarkers(desk.data, all, etf.event_snapshot);
+  }, [dataset, etf, desk, all]);
+  // Demo set: report honestly how many release-desk events fall within its dates (markers are overlay-only).
+  const eventsInDemoDates = useMemo(() => {
+    if (dataset !== "demo" || desk?.kind !== "ok" || !first || !last) return null;
+    return desk.data.events.filter((e) => {
+      const d = e.publication.official_release_time?.local_date ?? e.schedule.current?.local_date;
+      return !!d && d >= first && d <= last;
+    }).length;
+  }, [dataset, desk, first, last]);
 
   const byTime = useMemo(() => {
     const m = new Map<number, Candle>();
     for (const c of candles) m.set(c.time, c);
     return m;
   }, [candles]);
+
+  // Markers for the aligned events whose bar is inside the selected range.
+  const inView: EventMark[] = useMemo(
+    () => (plan?.kind === "ok" ? plan.marks.filter((m) => m.barTime !== null && byTime.has(m.barTime)) : []),
+    [plan, byTime]
+  );
+  const seriesMarkers: SeriesMarker<Time>[] = useMemo(
+    () => inView.map((m) => ({
+      time: ts(m.barTime!), position: "aboveBar" as const, shape: MARK_STYLE[m.status].shape, color: MARK_STYLE[m.status].color,
+      text: `${m.short} ${m.status === "confirmed" ? "✓" : "?"}`, id: m.eventId,
+    })),
+    [inView]
+  );
+  const eventsByTime = useMemo(() => {
+    const m = new Map<number, EventMark[]>();
+    for (const e of inView) m.set(e.barTime!, [...(m.get(e.barTime!) ?? []), e]);
+    return m;
+  }, [inView]);
 
   const indicatorData = useMemo(() => {
     if (candles.length === 0) return null;
@@ -172,20 +239,21 @@ export default function ChartWidget({ widget }: { widget: WidgetInstance }) {
     const upColor = "#00c853";
     const downColor = "#ff3d3d";
 
+    let main: ISeriesApi<SeriesType>;
     if (chartType === "candles") {
-      chart
-        .addSeries(CandlestickSeries, { upColor, downColor, borderUpColor: upColor, borderDownColor: downColor, wickUpColor: upColor, wickDownColor: downColor })
-        .setData(candles.map((c) => ({ time: ts(c.time), open: c.open, high: c.high, low: c.low, close: c.close })));
+      main = chart.addSeries(CandlestickSeries, { upColor, downColor, borderUpColor: upColor, borderDownColor: downColor, wickUpColor: upColor, wickDownColor: downColor });
+      main.setData(candles.map((c) => ({ time: ts(c.time), open: c.open, high: c.high, low: c.low, close: c.close })));
     } else if (chartType === "bars") {
-      chart.addSeries(BarSeries, { upColor, downColor })
-        .setData(candles.map((c) => ({ time: ts(c.time), open: c.open, high: c.high, low: c.low, close: c.close })));
+      main = chart.addSeries(BarSeries, { upColor, downColor });
+      main.setData(candles.map((c) => ({ time: ts(c.time), open: c.open, high: c.high, low: c.low, close: c.close })));
     } else if (chartType === "line") {
-      chart.addSeries(LineSeries, { color: "#ff9900", lineWidth: 1 }).setData(candles.map((c) => ({ time: ts(c.time), value: c.close })));
+      main = chart.addSeries(LineSeries, { color: "#ff9900", lineWidth: 1 });
+      main.setData(candles.map((c) => ({ time: ts(c.time), value: c.close })));
     } else {
-      chart
-        .addSeries(AreaSeries, { lineColor: "#ff9900", topColor: "rgba(255,153,0,0.25)", bottomColor: "rgba(255,153,0,0)" })
-        .setData(candles.map((c) => ({ time: ts(c.time), value: c.close })));
+      main = chart.addSeries(AreaSeries, { lineColor: "#ff9900", topColor: "rgba(255,153,0,0.25)", bottomColor: "rgba(255,153,0,0)" });
+      main.setData(candles.map((c) => ({ time: ts(c.time), value: c.close })));
     }
+    mainRef.current = main;
 
     const vol = chart.addSeries(HistogramSeries, { priceScaleId: "vol", priceFormat: { type: "volume" } });
     vol.priceScale().applyOptions({ scaleMargins: { top: 0.85, bottom: 0 } });
@@ -205,9 +273,25 @@ export default function ChartWidget({ widget }: { widget: WidgetInstance }) {
     setChart(chart);
     return () => {
       chartRef.current = null;
+      mainRef.current = null;
       chart.remove();
     };
   }, [candles, chartType, byTime]);
+
+  // Event markers on the live chart's price series (a plugin: attaching them does not rebuild the chart or reset zoom).
+  // Every rebuild (dataset, symbol, range or chart type) starts from a new chart, so no marker is carried over.
+  useEffect(() => {
+    const series = mainRef.current;
+    if (!chart || chartRef.current !== chart || !series || seriesMarkers.length === 0) {
+      setMarkerCount(0);
+      return;
+    }
+    const plugin = createSeriesMarkers(series, seriesMarkers);
+    setMarkerCount(plugin.markers().length);
+    return () => {
+      if (chartRef.current === chart) plugin.detach();
+    };
+  }, [chart, seriesMarkers]);
 
   // Indicator series on the live chart; only these are replaced when an indicator is toggled.
   useEffect(() => {
@@ -273,11 +357,22 @@ export default function ChartWidget({ widget }: { widget: WidgetInstance }) {
     timeScale.setVisibleLogicalRange({ from: centre - span / 2, to: centre + span / 2 });
   };
 
+  const shownConfirmed = inView.filter((m) => m.status === "confirmed").length;
+  const outOfRange = plan?.kind === "ok" ? plan.marks.length - inView.length : 0;
+
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full" data-testid="chart-root" data-dataset={dataset} data-first-bar={candles[0]?.date ?? ""}
+      data-last-bar={candles.at(-1)?.date ?? ""} data-bars={candles.length} data-markers={markerCount}>
       <div className="flex gap-1 p-1 flex-wrap shrink-0">
+        {DATASETS.map((d) => (
+          <button key={d} className={`term-btn ${dataset === d ? "active" : ""}`} data-testid={`dataset-${d}`} onClick={() => setDataset(d)}
+            title={d === "demo" ? "Simulated 2016–2023 demo bars" : "Simulated bars ending at the release-desk snapshot, with official release-event markers"}>
+            {DATASET_LABEL[d]}
+          </button>
+        ))}
+        <span className="w-2" />
         {RANGES.map((r) => (
-          <button key={r} className={`term-btn ${range === r ? "active" : ""}`} onClick={() => setRange(r)}>{r}</button>
+          <button key={r} className={`term-btn ${range === r ? "active" : ""}`} data-range={r} onClick={() => setRange(r)}>{rangeLabel(r, first, last)}</button>
         ))}
         <button className="term-btn" title="Zoom in" aria-label="Zoom in" onClick={() => zoom(1 / ZOOM_STEP)}>+</button>
         <button className="term-btn" title="Zoom out" aria-label="Zoom out" onClick={() => zoom(ZOOM_STEP)}>−</button>
@@ -297,6 +392,14 @@ export default function ChartWidget({ widget }: { widget: WidgetInstance }) {
           SIMULATED DATA — NOT REAL MARKET PRICES
         </div>
       )}
+      {dataset === "overlay" && etf?.synthetic && (
+        <div className="mx-1 mb-1 px-2 py-px border border-[var(--up)] text-[10px] leading-tight shrink-0" role="note" data-testid="overlay-notice">
+          <b className="text-[var(--up)]">REAL OFFICIAL EVENT METADATA</b> (BLS/BEA{plan?.kind === "ok" ? `, snapshot ${plan.snapshot}` : ""}) on{" "}
+          <b className="amber">SIMULATED PRICES</b> · illustrative alignment: no market reaction, trading edge or causal link is shown ·{" "}
+          <span style={{ color: MARK_STYLE.confirmed.color }}>●✓</span> publication confirmed{" "}
+          <span style={{ color: MARK_STYLE.unconfirmed.color }}>■?</span> scheduled time passed, not confirmed
+        </div>
+      )}
       {etf && candles.length === 0 && (
         <div className="p-2 dim" role="status" data-testid="chart-empty">No bars for {symbol} in this range. Nothing is drawn rather than an empty chart.</div>
       )}
@@ -312,6 +415,12 @@ export default function ChartWidget({ widget }: { widget: WidgetInstance }) {
               <span className="dim">Adj C <span className="text-[var(--text)]">{fmt(legend.adjClose)}</span></span>
               <span className="dim">Vol <span className="text-[var(--text)]">{fmtBig(legend.volume)}</span></span>
             </div>
+            {(eventsByTime.get(legend.time) ?? []).map((e) => (
+              <div key={e.eventId} className="flex gap-2 flex-wrap" data-testid="legend-event">
+                <span style={{ color: MARK_STYLE[e.status].color }}>EVENT {e.title}</span>
+                <span className="dim">{MARK_STYLE[e.status].label} · {markTime(e)}</span>
+              </div>
+            ))}
             {indicatorRows.length > 0 && (
               <div className="flex gap-3 flex-wrap">
                 {indicatorRows.map((r) => (
@@ -323,9 +432,52 @@ export default function ChartWidget({ widget }: { widget: WidgetInstance }) {
         )}
         <div ref={containerRef} className="w-full h-full" />
       </div>
+      {dataset === "demo" && eventsInDemoDates !== null && (
+        <div className="px-2 py-0.5 dim text-[10px] shrink-0" role="status" data-testid="event-none">
+          Event markers: {eventsInDemoDates === 0
+            ? `none — no release-desk event falls within this dataset (${first} to ${last}).`
+            : `${eventsInDemoDates} release-desk events fall within these dates, but markers are drawn only on the event-overlay dataset.`}
+          {" "}Select EVENT OVERLAY to see official 2026 release dates on separately simulated bars.
+        </div>
+      )}
+      {dataset === "overlay" && plan?.kind === "error" && (
+        <div className="px-2 py-0.5 down text-[11px] shrink-0" role="alert" data-testid="event-error">
+          Event markers unavailable: {plan.reason}. No markers are drawn.
+        </div>
+      )}
+      {dataset === "overlay" && plan?.kind === "ok" && (
+        <details className="px-2 py-0.5 text-[10px] shrink-0 max-h-24 overflow-auto" data-testid="event-list">
+          <summary className="cursor-pointer dim" data-testid="event-summary">
+            Event markers: {inView.length} shown ({shownConfirmed} confirmed, {inView.length - shownConfirmed} not confirmed)
+            {outOfRange > 0 ? `, ${outOfRange} outside the selected range` : ""}
+            {plan.omitted.length > 0 ? `, ${plan.omitted.length} not drawn` : ""} · {plan.later} later scheduled events are listed in Macro →
+            Release schedule (no future prices are simulated)
+          </summary>
+          <ul className="mt-1 flex flex-col gap-1">
+            {plan.marks.map((m) => (
+              <li key={m.eventId} data-testid="event-row" data-event-id={m.eventId} data-status={m.status} data-date={m.date}
+                data-shown={inView.includes(m) ? "yes" : "no"}>
+                <span style={{ color: MARK_STYLE[m.status].color }}>{MARK_STYLE[m.status].shape === "circle" ? "●" : "■"} {m.title}</span>
+                {" — "}{MARK_STYLE[m.status].label}. {m.status === "confirmed" ? "Official release time" : "Scheduled time"}: {markTime(m)}
+                {m.documentIds.length > 0 ? ` · ${m.documentIds.join(", ")}` : ""} · {m.sources.map((x, i) => (
+                  <a key={i} href={x.url} target="_blank" rel="noopener noreferrer" className="underline decoration-dotted mr-1">{x.publisher}</a>
+                ))}
+                <span className="dim">
+                  {inView.includes(m) ? ` Marker on the ${m.date} bar (same US Eastern calendar date; daily bars do not show intraday timing).` : " Outside the selected range."}
+                </span>
+              </li>
+            ))}
+            {plan.omitted.map((o) => (
+              <li key={o.eventId} data-testid="event-omitted" data-event-id={o.eventId} className="dim">
+                Not drawn: {o.eventId}{o.mark ? ` (${o.mark.date})` : ""} — {o.reason}.
+              </li>
+            ))}
+          </ul>
+        </details>
+      )}
       <div className="px-2 py-0.5 dim text-[10px] shrink-0">
         {etf?.synthetic
-          ? `Simulated daily bars to ${etf.bound}, ${etf.generator ? `${etf.generator.name}, seed ${etf.generator.seed}` : "generated"}; no market data was used. Adj C equals C (no dividends are simulated). Indicators are computed in the browser from these values. Not live.`
+          ? `Simulated daily bars to ${etf.bound}, ${etf.generator ? `${etf.generator.name}, seed ${etf.generator.seed}` : "generated"}; no market data was used${etf.overlay ? " and no event effect is simulated" : ""}. Adj C equals C (no dividends are simulated). Indicators are computed in the browser from these values. Not live.`
           : `Daily bars to ${etf?.bound ?? "2023-12-29"}. Indicators are computed in the browser from these values. Not live.`}
       </div>
     </div>

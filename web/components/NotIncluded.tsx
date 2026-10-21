@@ -7,6 +7,7 @@ import { NavLink } from "./ShellHeader";
 
 const WHAT: Record<DataFile, string> = {
   "etf_prices.json": "simulated daily market bars",
+  "event_overlay_prices.json": "the simulated event-overlay bars",
   "macro_series.json": "point-in-time macro series (first releases, yields, volatility)",
   "research.json": "illustrative research figures",
   "manifest.json": "the provenance record of the demo data",

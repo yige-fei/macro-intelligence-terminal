@@ -33,8 +33,9 @@ export default function SourcesWidget() {
   return (
     <div className="p-2 flex flex-col gap-2 text-[11px]" data-testid="sources">
       <div>
-        <span className="amber">Demo data:</span> simulated market bars and illustrative research figures to <b>{data.bound}</b>, produced by
-        this repository&apos;s seeded generator. No third-party market or macro data is included. Nothing here is live.
+        <span className="amber">Demo data:</span> simulated market bars (the 2016–2023 demo set and the event-overlay set ending at the
+        release-desk snapshot) and illustrative research figures, produced by this repository&apos;s seeded generator. No third-party market or
+        macro data is included. Nothing here is live.
       </div>
       <table className="data-table">
         <tbody>

@@ -22,7 +22,8 @@ const LINKS: Array<{ ws: WorkspaceId; label: string }> = [
 /** Header badge for the historical views: never claims a data range the build does not contain. */
 export function historicalBadge(manifest: Manifest | undefined): string {
   if (HISTORICAL_DATA === "excluded") return "HISTORICAL DATA NOT INCLUDED · NOT LIVE";
-  return `DEMO · SIMULATED MARKET DATA TO ${manifest?.bound ?? "2023-12-29"} · NOT LIVE`;
+  // OS-P2A: two simulated datasets with different end dates, so the badge names no single end date.
+  return "DEMO · SIMULATED MARKET DATA · NOT LIVE";
 }
 
 export function NavLink({ ws, children, className = "", current = false }: { ws: WorkspaceId; children: React.ReactNode; className?: string; current?: boolean }) {

@@ -21,8 +21,9 @@ export const UNREADABLE_BACKUP_KEY = "macro-research-workspace-v2-unreadable";
 
 export type WidgetType = "chart" | "macro" | "research" | "sources";
 
-/** Chart: range / chart type / indicators. Macro: series / range. Widgets ignore values they don't know. */
+/** Chart: dataset / range / chart type / indicators. Macro: series / range. Widgets ignore values they don't know. */
 export type WidgetView = {
+  dataset?: string;
   range?: string;
   chartType?: string;
   indicators?: string[];
