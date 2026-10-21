@@ -22,9 +22,10 @@ and TradingView Lightweight Charts™. It adds:
 | Home, navigation (`?ws=` deep links, browser Back), Settings & About | Working |
 | **Market**: daily candlestick/bar/line/area charts, volume, SMA/EMA/Bollinger overlays, RSI and MACD panes, range presets, zoom and pan, command palette (Ctrl/⌘+K), layout saved in the browser | Working on **simulated** data. Panel drag and resize come from upstream; the automated checks don't exercise them. |
 | **Macro**: release schedule and publication status for 38 events (CPI, Employment Situation, GDP Advance) | Working, real official metadata, **dated snapshot** collected 2026-10-16/17. Not refreshed. |
+| **Event overlay** (Market → EVENT OVERLAY): markers for the 5 release events due by the 2026-10-17 snapshot (2 publication confirmed, 3 scheduled time passed but not confirmed), with official times and source links | Working: **real event dates and statuses on a separately simulated price set** (2025-01-02 to 2026-10-16). The alignment is illustrative; it shows no market reaction. |
 | **Research**: results view (labels, intervals, per-model AUCs) | Working, **illustrative random figures** |
 | Point-in-time macro explorer (first releases, yields) | Panel exists; **no dataset included** (shows a "not included" notice) |
-| Event markers / event studies, strategy backtesting, AI research assistant | **Not implemented** (planned) |
+| Event studies (measured reactions), strategy backtesting, AI research assistant | **Not implemented** (planned) |
 
 ## Quick start
 
@@ -82,6 +83,7 @@ python3 -m terminal_demo.generate --check                 # demo-data/ equals a 
 | File | What it is |
 |---|---|
 | `demo-data/etf_prices.json` | 4 fictional instruments × 2,085 weekday bars (2016-01-04 to 2023-12-29), from a seeded random walk with volatility regimes. Every record is structurally valid (low ≤ open/close ≤ high, ordered UTC-midnight timestamps). It doesn't model real market behaviour. |
+| `demo-data/event_overlay_prices.json` | A separate simulated set for the event overlay: the same 4 fictional instruments × 467 weekday bars (2025-01-02 to 2026-10-16), from its own seed. It ends at the release-desk snapshot, so there are no future prices, and it simulates no event effect. |
 | `demo-data/research.json` | Illustrative figures: uniform random draws around AUC 0.5. No model was fitted. |
 | `demo-data/manifest.json`, `ALLOWLIST.json` | Generator identity and SHA-256 of each served file |
 | `web/public/intel/release_desk.v1.json` | Release metadata from official BLS/BEA pages. Schedule and status only; no economic values. |
@@ -110,7 +112,7 @@ See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 ## Roadmap (not implemented)
 
 1. Optional adapters for official direct sources (BLS, BEA, Federal Reserve Board), labelled "revised" until point-in-time vintages are reconstructed.
-2. Event markers on charts, and event-study views.
+2. Event-study views (the event overlay marks dates only; it measures nothing).
 3. A documented import path for user-supplied price files, behind the same validator.
 4. Strategy backtesting (a separate design).
 5. An evidence-grounded AI research assistant.

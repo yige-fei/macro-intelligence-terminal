@@ -24,6 +24,12 @@
   - The layout and each panel's view (range, chart type, indicators, instrument) persist in `localStorage` under `macro-research-workspace-v2`.
   - Stored state is sanitised on load.
 - **Charts.** `ChartWidget` uses Lightweight Charts 5. Indicators are computed in the browser (`lib/indicators.ts`).
+  - Each chart panel chooses a dataset (`view.dataset`): `demo` (2016–2023, the default) or `overlay` (the event-overlay set).
+  - **Range presets are computed from the selected dataset's dates.** 1Y, 3Y and 5Y start on 1 January of the last bar's year, two years earlier and four years earlier. The span preset starts on 1 January of the first bar's year. For the 2016–2023 set these are exactly the earlier fixed values, and an older saved range `"2016–23"` still loads.
+  - **Switching datasets** resets the range to 5Y and rebuilds the chart, so no range or marker carries over.
+- **Event markers.** On the overlay dataset, `lib/eventMarkers.ts` maps the bundled release-desk events to bars (contract in [DATA.md](DATA.md)). The markers are attached with `createSeriesMarkers` as a series plugin, which leaves zoom and indicators untouched.
+  - The panel shows a notice: real official event metadata, simulated prices, illustrative alignment.
+  - It also shows an event list with official or scheduled times, document ids, source links and the reason for anything not drawn.
   - Zoom is by the +/− buttons or by dragging the time axis; pan is by dragging the plot.
   - The mouse wheel is left to the page.
 - **Data mode.** The data mode is fixed at build time (`next.config.ts`, from `TERMINAL_DATA_MODE`):
