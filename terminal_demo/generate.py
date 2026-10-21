@@ -17,6 +17,15 @@ Market bars (etf_prices.json), four fictional instruments DEMO-A..DEMO-D:
  - adjClose equals close (there are no dividends in the simulation).
 These are well-formed demonstration bars, not a model of real market microstructure.
 
+Event-overlay bars (event_overlay_prices.json), a separate dataset for the release-event markers:
+ - the same four fictional instruments and the same process, from an independent generator (seed OVERLAY_SEED), so
+   the files above are unaffected;
+ - calendar: every Monday-Friday from 2025-01-02 to the last weekday on or before EVENT_SNAPSHOT (2026-10-17, the
+   as-of date of the official release-desk snapshot in web/public/intel/release_desk.v1.json). No bar is generated
+   after that date; there are no future prices. The date is a fixed parameter here, never the current clock;
+ - the bars are independent of the event dates: no event effect is simulated. Markers placed on them by the frontend
+   show when real releases happened, not how any market reacted.
+
 Research figures (research.json) are ILLUSTRATIVE: each AUC is 0.5 plus a uniform draw in [-0.03, 0.03], the
 "macro" AUC adds a further uniform draw in [-0.02, 0.02], the headline estimate is the mean difference and its
 interval is the estimate +/- a uniform half-width in [0.01, 0.03]. No model is fitted and nothing is evaluated.
@@ -32,11 +41,14 @@ import sys
 from datetime import date, timedelta
 from pathlib import Path
 
-from .validate import utc_midnight, validate_etf, validate_manifest, validate_research
+from .validate import utc_midnight, validate_etf, validate_manifest, validate_overlay, validate_research
 
 GENERATOR = "terminal_demo.generate v1"
 SEED = 20261020
 START, END = date(2016, 1, 4), date(2023, 12, 29)
+OVERLAY_SEED = 20261017
+OVERLAY_START = date(2025, 1, 2)
+EVENT_SNAPSHOT = date(2026, 10, 17)  # as-of date of the bundled official release-desk snapshot (fixed, not the clock)
 REPO = Path(__file__).resolve().parent.parent
 OUT_DIR = REPO / "demo-data"
 
@@ -81,7 +93,7 @@ def _bars(rng: random.Random, price: float, drift: float, vol: float, base_volum
     return out
 
 
-def build(seed: int = SEED) -> dict:
+def build(seed: int = SEED, overlay_seed: int = OVERLAY_SEED) -> dict:
     """The demo files as bytes, keyed by file name (ALLOWLIST.json included)."""
     rng = random.Random(seed)
     days = list(weekdays(START, END))
@@ -127,7 +139,27 @@ def build(seed: int = SEED) -> dict:
     }
 
     enc = lambda o, compact=False: (json.dumps(o, separators=(",", ":")) if compact else json.dumps(o, indent=1)).encode() + b"\n"
-    files = {"etf_prices.json": enc(etf, compact=True), "research.json": enc(research)}
+    # Event-overlay dataset: its own generator, so the files above are byte-identical with or without it.
+    orng = random.Random(overlay_seed)
+    odays = list(weekdays(OVERLAY_START, EVENT_SNAPSHOT))
+    ogen = {"name": GENERATOR + " (event overlay)", "seed": overlay_seed, "calendar": "Monday-Friday, no holidays",
+            "start": odays[0].isoformat(), "end": odays[-1].isoformat()}
+    overlay = {
+        "synthetic": True,
+        "overlay": True,
+        "notice": "SIMULATED DATA - NOT REAL MARKET PRICES. Event-overlay dataset: bars end at the official release-desk "
+                  "snapshot date and simulate no event effect.",
+        "generator": ogen,
+        "event_snapshot": EVENT_SNAPSHOT.isoformat(),
+        "bound": odays[-1].isoformat(),
+        "source": f"SIMULATED ({GENERATOR}, event overlay, seed {overlay_seed})",
+        "symbols": list(INSTRUMENTS),
+        "names": {s: p[4] for s, p in INSTRUMENTS.items()},
+        "candles": {s: _bars(orng, p[0], p[1], p[2], p[3], odays) for s, p in INSTRUMENTS.items()},
+    }
+
+    files = {"etf_prices.json": enc(etf, compact=True), "research.json": enc(research),
+             "event_overlay_prices.json": enc(overlay, compact=True)}
     sha = {k: hashlib.sha256(v).hexdigest() for k, v in files.items()}
     manifest = {
         "synthetic": True,
@@ -143,7 +175,7 @@ def build(seed: int = SEED) -> dict:
         "files_sha256": sha,
     }
     files["manifest.json"] = enc(manifest)
-    validate_etf(etf), validate_research(research), validate_manifest(manifest)
+    validate_etf(etf), validate_research(research), validate_manifest(manifest), validate_overlay(overlay)
     allow = {"allowlist": "macro-intelligence-terminal demo data", "version": 1,
              "files": {k: hashlib.sha256(v).hexdigest() for k, v in files.items()}}
     files["ALLOWLIST.json"] = enc(allow)

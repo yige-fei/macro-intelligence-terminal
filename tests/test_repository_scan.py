@@ -76,10 +76,12 @@ class Scan(unittest.TestCase):
 
     def test_only_generated_market_data(self):
         data_like = [p for p in self.files if p.suffix == ".json" and re.search(r"(etf|price|macro|series|vix|fred|alfred)", p.name, re.I)]
-        self.assertEqual([self.rel(p) for p in data_like], ["demo-data/etf_prices.json"])
-        etf = json.loads((REPO / "demo-data" / "etf_prices.json").read_text())
-        self.assertIs(etf["synthetic"], True)
-        self.assertTrue(all(s.startswith("DEMO-") for s in etf["symbols"]))
+        # OS-P2A added the second generated price file (event overlay).
+        self.assertEqual(sorted(self.rel(p) for p in data_like), ["demo-data/etf_prices.json", "demo-data/event_overlay_prices.json"])
+        for name in ("etf_prices.json", "event_overlay_prices.json"):
+            etf = json.loads((REPO / "demo-data" / name).read_text())
+            self.assertIs(etf["synthetic"], True, name)
+            self.assertTrue(all(s.startswith("DEMO-") for s in etf["symbols"]), name)
 
     def test_every_served_data_file_is_marked(self):
         for p in sorted((REPO / "demo-data").glob("*.json")):

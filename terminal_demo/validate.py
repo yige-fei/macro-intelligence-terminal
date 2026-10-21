@@ -137,4 +137,19 @@ def validate_manifest(obj) -> None:
         _req(obj, k, dict, w)
 
 
-VALIDATORS = {"etf_prices.json": validate_etf, "research.json": validate_research, "manifest.json": validate_manifest}
+def validate_overlay(obj) -> None:
+    """event_overlay_prices.json: the etf_prices contract, marked as the event overlay, ending on or before the
+    official release-desk snapshot it is aligned to (no bar after the snapshot date: no future prices)."""
+    validate_etf(obj)
+    w = "event_overlay_prices"
+    if obj.get("overlay") is not True:
+        raise Invalid(f"{w}: not marked as the event-overlay dataset")
+    snap = _date(_req(obj, "event_snapshot", str, w), f"{w}.event_snapshot")
+    if _date(obj["bound"], f"{w}.bound") > snap:
+        raise Invalid(f"{w}: bound is after the event snapshot date")
+    if not any(obj["candles"][s] for s in obj["symbols"]):
+        raise Invalid(f"{w}: no bars")
+
+
+VALIDATORS = {"etf_prices.json": validate_etf, "research.json": validate_research, "manifest.json": validate_manifest,
+              "event_overlay_prices.json": validate_overlay}

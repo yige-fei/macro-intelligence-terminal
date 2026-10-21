@@ -267,7 +267,9 @@ class FailClosed(unittest.TestCase):
 class RepositoryData(unittest.TestCase):
     def test_default_data_dir_is_valid(self):
         from terminal_demo.serve import load_allowlisted, DEFAULT_DATA_DIR
-        self.assertEqual(set(load_allowlisted(DEFAULT_DATA_DIR)), {"/data/etf_prices.json", "/data/research.json", "/data/manifest.json"})
+        # OS-P2A added the event-overlay file to the served set.
+        self.assertEqual(set(load_allowlisted(DEFAULT_DATA_DIR)),
+                         {"/data/etf_prices.json", "/data/event_overlay_prices.json", "/data/research.json", "/data/manifest.json"})
         self.assertEqual(DEFAULT_DATA_DIR, REPO / "demo-data")
 
 

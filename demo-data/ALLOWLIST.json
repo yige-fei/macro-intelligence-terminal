@@ -4,6 +4,7 @@
  "files": {
   "etf_prices.json": "f14ce1aa783eba66e21a8d81798e47da350c6332ce1839a3471b7bfd2af54e5c",
   "research.json": "d84abb864ac55bfabed478925fecd63f26684b1cb2fddf06ca2d960a59147fb9",
-  "manifest.json": "ec82e36afc3574d5ef553e1b6ab2641cc69825d04745185d28739b83ebe48c0b"
+  "event_overlay_prices.json": "2a5eb9a824179372dff4a58fad09550deaec5455f419a13d3dc621eee9b72438",
+  "manifest.json": "ce0c9cb572d5d1952e51a0f8d8c29ef18b633f91bac0d862b53d54bbfad3c7e1"
  }
 }

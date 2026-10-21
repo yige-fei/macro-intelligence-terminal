@@ -17,6 +17,7 @@
  "evidence_sha256": {},
  "files_sha256": {
   "etf_prices.json": "f14ce1aa783eba66e21a8d81798e47da350c6332ce1839a3471b7bfd2af54e5c",
-  "research.json": "d84abb864ac55bfabed478925fecd63f26684b1cb2fddf06ca2d960a59147fb9"
+  "research.json": "d84abb864ac55bfabed478925fecd63f26684b1cb2fddf06ca2d960a59147fb9",
+  "event_overlay_prices.json": "2a5eb9a824179372dff4a58fad09550deaec5455f419a13d3dc621eee9b72438"
  }
 }
