@@ -92,6 +92,11 @@ const INDICATOR_COLOR: Record<string, string> = {
 const DEFAULT_INDICATORS: Indicator[] = ["SMA50"];
 const ZOOM_STEP = 1.5;     // visible span is divided (+) or multiplied (−) by this per click
 const MIN_ZOOM_BARS = 20;  // narrowest window, about one trading month
+// UX-2: marker label density. With at least FULL_LABEL_PX to the nearest other marker a label reads "CPI ✓"; with at
+// least GLYPH_LABEL_PX only the status sign ("✓" / "?") is drawn; closer than that, the shape alone. Markers, dates and
+// colours never change; the hover legend and the event list always name every event.
+const FULL_LABEL_PX = 48;
+const GLYPH_LABEL_PX = 16;
 
 export default function ChartWidget({ widget }: { widget: WidgetInstance }) {
   const symbol = useWidgetSymbol(widget);
@@ -149,6 +154,7 @@ export default function ChartWidget({ widget }: { widget: WidgetInstance }) {
   const mainRef = useRef<ISeriesApi<SeriesType> | null>(null);
   const [chart, setChart] = useState<IChartApi | null>(null);
   const [markerCount, setMarkerCount] = useState(0);
+  const [markerLabels, setMarkerLabels] = useState("");
 
   const { data: etf, error } = useQuery({
     queryKey: ["etf", DATASET_FILE[dataset]],
@@ -322,16 +328,44 @@ export default function ChartWidget({ widget }: { widget: WidgetInstance }) {
 
   // Event markers on the live chart's price series (a plugin: attaching them does not rebuild the chart or reset zoom).
   // Every rebuild (dataset, symbol, range or chart type) starts from a new chart, so no marker is carried over.
+  // UX-2: labels follow the on-screen spacing (zoom, pan, resize); only the text changes, never a marker.
   useEffect(() => {
     const series = mainRef.current;
     if (!chart || chartRef.current !== chart || !series || seriesMarkers.length === 0) {
       setMarkerCount(0);
+      setMarkerLabels("");
       return;
     }
     const plugin = createSeriesMarkers(series, seriesMarkers);
     setMarkerCount(plugin.markers().length);
+    const scale = chart.timeScale();
+    let applied = "";
+    const relabel = () => {
+      if (chartRef.current !== chart) return;
+      const xs = seriesMarkers.map((m) => scale.timeToCoordinate(m.time));
+      const next = seriesMarkers.map((m, i) => {
+        const x = xs[i];
+        const gaps = xs.filter((y, j) => j !== i && x !== null && y !== null).map((y) => Math.abs((y as number) - (x as number)));
+        const gap = gaps.length ? Math.min(...gaps) : Infinity;
+        const text = gap >= FULL_LABEL_PX ? m.text : gap >= GLYPH_LABEL_PX ? m.text?.slice(-1) : "";
+        return { ...m, text };
+      });
+      // Signature (also exposed as data-marker-labels): label text and whether the marker is inside the plot.
+      const width = scale.width();
+      const signature = next.map((m, i) => `${m.id}=${m.text}@${xs[i] !== null && xs[i]! >= 0 && xs[i]! <= width ? "on" : "off"}`).join("|");
+      if (signature === applied) return;
+      applied = signature;
+      plugin.setMarkers(next);
+      setMarkerLabels(signature);
+    };
+    relabel();
+    scale.subscribeVisibleLogicalRangeChange(relabel);
+    scale.subscribeSizeChange(relabel);
     return () => {
-      if (chartRef.current === chart) plugin.detach();
+      if (chartRef.current !== chart) return; // chart already removed with its plugin and subscriptions
+      scale.unsubscribeVisibleLogicalRangeChange(relabel);
+      scale.unsubscribeSizeChange(relabel);
+      plugin.detach();
     };
   }, [chart, seriesMarkers]);
 
@@ -407,7 +441,7 @@ export default function ChartWidget({ widget }: { widget: WidgetInstance }) {
 
   return (
     <div className="flex flex-col h-full" data-testid="chart-root" data-dataset={source} data-first-bar={candles[0]?.date ?? ""}
-      data-last-bar={candles.at(-1)?.date ?? ""} data-bars={candles.length} data-markers={markerCount}>
+      data-last-bar={candles.at(-1)?.date ?? ""} data-bars={candles.length} data-markers={markerCount} data-marker-labels={markerLabels}>
       <div className="flex gap-1 p-1 flex-wrap shrink-0">
         {DATASETS.map((d) => (
           <button key={d} className={`term-btn ${source === d ? "active" : ""}`} data-testid={`dataset-${d}`} onClick={() => setDataset(d)}

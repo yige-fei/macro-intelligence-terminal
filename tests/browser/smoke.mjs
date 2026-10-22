@@ -312,6 +312,41 @@ try {
   }
   check("overlay", "E8", "Every chart type keeps the SIMULATED label, the overlay notice and all markers",
     Object.values(modes).every(([m, a, b]) => m === String(EXPECTED_EVENTS.length) && a && b), modes);
+  // UX-2: label density follows the markers' actual on-screen spacing; markers never change. Spacing is changed by
+  // zooming (a wider window does not change it: the chart keeps its bar spacing on resize; see the UX-1 note).
+  const labelMap = async () => Object.fromEntries(((await chartRoot(page)).markerLabels || "").split("|").filter(Boolean).map((x) => {
+    const [id, rest] = x.split("="); const at = rest.lastIndexOf("@"); return [id, { text: rest.slice(0, at), on: rest.slice(at + 1) === "on" }];
+  }));
+  const JOBS = "BLS.EMPSIT.2026-09", CPI = "BLS.CPI.2026-09";
+  const gdpIds = EXPECTED_EVENTS.filter((e) => e.status === "unconfirmed").map((e) => e.id);
+  const overlayAll = JSON.stringify({ state: { activeSymbol: "DEMO-A", widgets: [{ id: "w-chart", type: "chart", linked: true,
+    view: { dataset: "overlay", range: "ALL", chartType: "candles", indicators: ["SMA50"] } }], layout: [{ i: "w-chart", x: 0, y: 0, w: 8, h: 14 }] }, version: 2 });
+  await page.seedStorage(O + "?ws=market", { "macro-research-workspace-v2": overlayAll }); await chartReady(page); await sleep(1000);
+  const lA = await labelMap(); const mA = (await chartRoot(page)).markers;
+  const legShapeOnly = await hoverDate(page, cpi.date); // CPI has no text label here: the legend must still name it
+  await page.shot(join(OUT, "10_labels_A_all_shapes.png"));
+  await clickButton(page, "1Y"); await sleep(900);
+  const lB = await labelMap();
+  await page.shot(join(OUT, "11_labels_B_1y_status.png"));
+  for (let i = 0; i < 2; i++) { await clickButton(page, "+"); await sleep(500); }
+  const rz = await page.rect('[data-widget="chart"] canvas');
+  for (let i = 0; i < 8; i++) { // pan to the latest bars until Jobs and CPI are both inside the plot
+    const l = await labelMap(); if (l[JOBS]?.on && l[CPI]?.on) break;
+    await page.drag(rz.x + rz.w * 0.7, rz.y + rz.h * 0.3, rz.x + rz.w * 0.3, rz.y + rz.h * 0.3, 10);
+  }
+  const lC = await labelMap(); const mC = (await chartRoot(page)).markers;
+  await page.shot(join(OUT, "12_labels_C_zoomed_full.png"));
+  for (let i = 0; i < 2; i++) { await clickButton(page, "−"); await sleep(500); }
+  const lD = await labelMap();
+  await clickButton(page, "ALL"); await sleep(900);
+  const lE = await labelMap(); const mE = (await chartRoot(page)).markers;
+  const gdpFull = (l) => gdpIds.every((id) => l[id]?.text === "GDP ?");
+  const both = (l, text) => l[JOBS]?.on && l[CPI]?.on && l[JOBS].text === (text === "full" ? "Jobs ✓" : text) && l[CPI].text === (text === "full" ? "CPI ✓" : text);
+  check("overlay", "E9", "Marker labels follow actual spacing: ALL shapes only, 1Y status sign, zoomed-in full labels (both on screen), back again on zoom-out and ALL; 5 markers throughout; the legend names an unlabelled marker",
+    [mA, mC, mE].every((m) => m === "5") && Object.keys(lA).length === 5 && Object.values(lA).every((x) => x.on) && gdpFull(lA) && both(lA, "")
+    && gdpFull(lB) && both(lB, "✓") && both(lC, "full") && both(lD, "✓") && both(lE, "") && gdpFull(lE)
+    && (legShapeOnly ?? "").includes(`EVENT ${NAME[cpi.id]}`) && (legShapeOnly ?? "").includes("publication confirmed"),
+    { lA, lB, lC, lD, lE, mA, mC, mE, legShapeOnly });
   await page.shot(join(OUT, "06_overlay_candles.png"));
   await page.clickEl(`document.querySelector('[data-testid="dataset-demo"]')`); await sleep(800);
 
