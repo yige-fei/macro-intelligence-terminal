@@ -19,7 +19,7 @@ first comment.
 |---|---|
 | **Upstream, unchanged** | `app/error.tsx`, `app/global-error.tsx`, `components/WidgetErrorBoundary.tsx`, `lib/indicators.ts`, `next-env.d.ts`, `postcss.config.mjs`, `tsconfig.json` |
 | **Upstream, modified** | `app/globals.css`, `app/layout.tsx`, `app/page.tsx`, `app/providers.tsx`, `components/CommandPalette.tsx`, `components/Sidebar.tsx`, `components/Terminal.tsx`, `components/TopBar.tsx`, `components/Workspace.tsx`, `components/widgets/ChartWidget.tsx`, `lib/api.ts`, `lib/symbol.ts`, `next.config.ts`, `store/terminal.ts` |
-| **Original to this project** | `components/AppShell.tsx`, `Home.tsx`, `MacroView.tsx`, `NotIncluded.tsx`, `ReleaseSchedule.tsx`, `ResearchView.tsx`, `SettingsView.tsx`, `ShellHeader.tsx`; `components/widgets/PitMacroWidget.tsx`, `ResearchWidget.tsx`, `SourcesWidget.tsx`; `lib/buildInfo.ts`, `lib/eventMarkers.ts`, `lib/nav.ts`, `lib/releaseDesk.ts` |
+| **Original to this project** | `components/AppShell.tsx`, `Home.tsx`, `MacroView.tsx`, `NotIncluded.tsx`, `ReleaseSchedule.tsx`, `ResearchView.tsx`, `SettingsView.tsx`, `ShellHeader.tsx`; `components/widgets/PitMacroWidget.tsx`, `ResearchWidget.tsx`, `SourcesWidget.tsx`; `lib/buildInfo.ts`, `lib/eventMarkers.ts`, `lib/importData.ts`, `lib/nav.ts`, `lib/releaseDesk.ts`; `store/imported.ts` |
 
 Everything outside `web/` is original to this project, except:
 - the licence texts in `LICENSES/`;

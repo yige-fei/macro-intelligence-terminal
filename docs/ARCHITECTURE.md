@@ -27,6 +27,11 @@
   - Each chart panel chooses a dataset (`view.dataset`): `demo` (2016–2023, the default) or `overlay` (the event-overlay set).
   - **Range presets are computed from the selected dataset's dates.** 1Y, 3Y and 5Y start on 1 January of the last bar's year, two years earlier and four years earlier. The span preset starts on 1 January of the first bar's year. For the 2016–2023 set these are exactly the earlier fixed values, and an older saved range `"2016–23"` still loads.
   - **Switching datasets** resets the range to 5Y and rebuilds the chart, so no range or marker carries over.
+- **Local import.** IMPORT LOCAL DATA reads one user-chosen `.csv` or `.json` file with the browser File API.
+  - `lib/importData.ts` (an RFC 4180 CSV reader plus a strict daily-OHLCV validator) turns it into the existing `Candle` format, or rejects it with row-referenced reasons. It never repairs a value.
+  - The result lives only in `store/imported.ts`, a non-persisted Zustand store. It doesn't touch the server, browser storage or the repository.
+  - While a panel shows imported data, its view settings are an in-memory override, so the saved layout is unchanged.
+  - Imported data gets its own label and panel title, and no event markers. A reload returns the panel to its saved built-in dataset. See [IMPORT.md](IMPORT.md).
 - **Event markers.** On the overlay dataset, `lib/eventMarkers.ts` maps the bundled release-desk events to bars (contract in [DATA.md](DATA.md)). The markers are attached with `createSeriesMarkers` as a series plugin, which leaves zoom and indicators untouched.
   - The panel shows a notice: real official event metadata, simulated prices, illustrative alignment.
   - It also shows an event list with official or scheduled times, document ids, source links and the reason for anything not drawn.
@@ -81,4 +86,5 @@ The generator is deterministic and reads no files (a test checks this). The vali
 | `test_demo_data.py` | Determinism, record validity, rejection of malformed records |
 | `test_server.py` | Real server processes: allowlisted bytes and headers, refused paths, symlink escapes, methods, no path leakage, loopback only, every fail-closed startup case |
 | `test_repository_scan.py` | Tracked files contain no personal paths, emails, credentials, nested `.git`, provider endpoints or third-party data |
-| `browser/smoke.mjs` | Headless Chrome over CDP against the built app, including missing-data scenarios |
+| `browser/smoke.mjs` | Headless Chrome over CDP against the built app, including missing-data scenarios and the local import (I1–I12) |
+| `import/import.test.mjs` | Node test runner on `web/lib/importData.ts`: valid and invalid fixtures, CSV grammar, limits, OHLC rules |
