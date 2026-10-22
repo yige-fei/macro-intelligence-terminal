@@ -34,7 +34,7 @@ const CARDS: Card[] = [
     title: "Market Intelligence",
     status: "SIMULATED DATA",
     statusTone: "partial",
-    now: "Your saved workspace: interactive daily charts with indicators, zoom, pan and saved layouts, on four simulated instruments (DEMO-A to DEMO-D), plus an event overlay that marks official 2026 release dates on separately simulated bars.",
+    now: "Your saved workspace: interactive daily charts with indicators, zoom, pan and saved layouts, on four simulated instruments (DEMO-A to DEMO-D), plus an event overlay that marks official 2026 release dates on separately simulated bars. You can also chart your own daily CSV/JSON file, locally in the browser.",
     notYet: "Simulated bars, not real market prices; no live or intraday data.",
     action: { label: "Open workspace", ws: "market" },
   },

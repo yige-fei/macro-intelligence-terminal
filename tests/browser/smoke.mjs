@@ -315,6 +315,147 @@ try {
   await page.shot(join(OUT, "06_overlay_candles.png"));
   await page.clickEl(`document.querySelector('[data-testid="dataset-demo"]')`); await sleep(800);
 
+  // ---------------------------------------------------------------- OS-P2B: local import (fictional fixtures)
+  const FIX = join(REPO, "tests", "fixtures", "import");
+  const SENTINEL = "271.8281"; // first close in valid_daily_250.csv; must never leave the page or reach storage
+  const fx250 = readFileSync(join(FIX, "valid_daily_250.csv"), "utf8").trim().split("\n").slice(1).map((l) => l.split(","));
+  await page.goto(O + "?ws=market", 3500); await chartReady(page);
+  const persistedBefore = await page.evaluate(`localStorage.getItem("macro-research-workspace-v2")`);
+  const viewBefore = (await page.store())?.state?.widgets?.find((w) => w.type === "chart")?.view;
+  const reqStart = page.log.requests.length;
+  await page.send("Page.setInterceptFileChooserDialog", { enabled: true });
+  /** The real picker flow: click IMPORT LOCAL DATA, wait for the file chooser, choose the file. */
+  async function pickFile(path) {
+    const n = page.log.fileChooser.length;
+    await page.clickEl(`document.querySelector('[data-widget="chart"] [data-testid="import-button"]')`);
+    for (let i = 0; i < 40 && page.log.fileChooser.length === n; i++) await sleep(100);
+    const ev = page.log.fileChooser[n];
+    if (!ev) throw new Error("the file chooser did not open");
+    await page.send("DOM.setFileInputFiles", { files: [path], backendNodeId: ev.backendNodeId });
+    await sleep(1200);
+  }
+  const ensureIndicator = async (name, on) => {
+    const isOn = await page.evaluate(`[...document.querySelectorAll('[data-widget="chart"] button')].find(b => b.innerText.trim() === ${JSON.stringify(name)})?.classList.contains("active")`);
+    if (isOn !== on) { await clickButton(page, name); await sleep(600); }
+  };
+
+  await pickFile(join(FIX, "valid_daily_250.csv"));
+  let ir = await chartRoot(page);
+  const impLabel = await text(page, '[data-testid="imported-label"]');
+  const impNotice = await text(page, '[data-testid="imported-notice"]');
+  const impOk = await text(page, '[data-testid="import-ok"]');
+  const impTitle = await page.evaluate(`document.querySelector('[data-widget="chart"] .panel-title span')?.textContent`);
+  check("import", "I1", "IMPORT LOCAL DATA opens the file chooser; a valid CSV is charted with its own label and none of the simulated ones",
+    page.log.fileChooser.length >= 1 && ir?.dataset === "imported" && ir.bars === "250" && ir.firstBar === "2024-01-02" && ir.lastBar === fx250.at(-1)[0]
+    && impLabel === "USER-IMPORTED DATA — LOCAL FILE" && /supplied by you/.test(impNotice ?? "") && /has not verified its\s+source, accuracy, authenticity or your right/.test(impNotice ?? "")
+    && /not uploaded, not saved, gone after a\s+reload/.test(impNotice ?? "") && /250 daily bars, 2024-01-02 to/.test(impOk ?? "")
+    && (await text(page, '[data-testid="simulated-label"]')) === null && impTitle === "Price History (imported file)", { ir, impLabel, impNotice, impOk, impTitle });
+  const lastRow = fx250.at(-1);
+  legend = await page.legend();
+  check("import", "I2", "Legend shows the imported last bar exactly, without the simulated tag or an Adj C value",
+    legend?.startsWith(`IMPORTED ${lastRow[0]}`) && legend.includes(`C ${fmt(Number(lastRow[4]))}`) && legend.includes(`H ${fmt(Number(lastRow[2]))}`)
+    && !/simulated|Adj C/.test(legend), legend);
+  check("import", "I3", "No event markers, overlay notice or event list on imported data",
+    ir.markers === "0" && (await text(page, '[data-testid="overlay-notice"]')) === null && (await text(page, '[data-testid="event-list"]')) === null
+    && /Event markers are not shown on imported data/.test(impNotice ?? ""), ir);
+
+  // chart behaviour on imported data (state kept in memory)
+  const ih0 = await page.chartHash();
+  await ensureIndicator("RSI", true); await ensureIndicator("MACD", true); await ensureIndicator("SMA50", true);
+  const ig = await page.chartGeom();
+  await clickButton(page, "+"); await sleep(500); const ih1 = await page.chartHash();
+  const ir2 = await page.rect('[data-widget="chart"] canvas');
+  await page.drag(ir2.x + ir2.w * 0.6, ir2.y + ir2.h * 0.3, ir2.x + ir2.w * 0.3, ir2.y + ir2.h * 0.3, 12); const ih2 = await page.chartHash();
+  const typeOk = {};
+  for (const t of ["BARS", "LINE", "AREA", "CANDLES"]) { await clickButton(page, t); await sleep(600); typeOk[t] = [(await chartRoot(page)).bars, await page.chartHash()]; }
+  const presetsImp = {};
+  for (const r of ["1Y", "3Y", "5Y", "SPAN", "ALL"]) {
+    await page.clickEl(`document.querySelector('[data-widget="chart"] button[data-range="${r}"]')`); await sleep(400);
+    presetsImp[r] = (await chartRoot(page)).firstBar;
+  }
+  const spanLabel = await page.evaluate(`document.querySelector('[data-widget="chart"] button[data-range="SPAN"]')?.innerText`);
+  check("import", "I4", "Indicators, zoom, pan, all chart types and data-relative ranges work on imported data",
+    ig.rowHeights.filter((h) => h > 5).length === 4 && ih1 !== ih0 && ih2 !== ih1 && Object.values(typeOk).every(([b]) => b === "250")
+    && new Set(Object.values(typeOk).map(([, h]) => h)).size === 4 && Object.values(presetsImp).every((d) => d === "2024-01-02") && spanLabel === "2024–24",
+    { panes: ig.rowHeights, ih0, ih1, ih2, typeOk, presetsImp, spanLabel });
+  check("import", "I5", "The saved workspace layout is untouched by everything done on imported data",
+    (await page.evaluate(`localStorage.getItem("macro-research-workspace-v2")`)) === persistedBefore);
+
+  await pickFile(join(FIX, "short_15.csv"));
+  ir = await chartRoot(page);
+  const insuff = await text(page, '[data-testid="indicator-insufficient"]');
+  check("import", "I6", "A 15-bar file is charted; indicators without enough history are named and not drawn",
+    ir.bars === "15" && /SMA50 \(needs 50\)/.test(insuff ?? "") && /MACD \(needs 26\)/.test(insuff ?? "") && !/RSI/.test(insuff ?? "") && /This range has 15/.test(insuff ?? ""),
+    { ir, insuff });
+
+  const failCases = [
+    ["duplicate_dates.csv", /row 4 \(line 5\): duplicate date 2025-02-05/],
+    ["high_below_low.csv", /row 5 \(line 6\): inconsistent prices/],
+    ["unsupported.txt", /unsupported file type/],
+    ["empty.csv", /the file is empty/],
+    ["invalid.json", /not valid JSON/],
+    ["bad_quoting.csv", /quoted field is never closed/],
+  ];
+  const big = join(TMP, "oversized.csv");
+  writeFileSync(big, "date,open,high,low,close,volume\n" + "2025-01-02,1,1,1,1,1\n".repeat(300_000)); // > 5 MiB
+  failCases.push([big, /limit is 5 MiB/]);
+  const failSeen = {};
+  for (const [file, pattern] of failCases) {
+    await pickFile(file.startsWith("/") ? file : join(FIX, file));
+    const err = await page.evaluate(`[...document.querySelectorAll('[data-testid="import-issue"]')].map(li => li.innerText).join(" | ")`);
+    const head = await page.evaluate(`document.querySelector('[data-testid="import-error"] b')?.innerText ?? ""`);
+    const rt = await chartRoot(page);
+    failSeen[file.split("/").pop()] = { ok: pattern.test(err) && /was not loaded\. Nothing else was changed\./.test(head) && rt.dataset === "imported" && rt.bars === "15"
+      && (await text(page, '[data-testid="imported-label"]')) === "USER-IMPORTED DATA — LOCAL FILE", err };
+  }
+  check("import", "I7", "Rejected files (duplicate date, bad OHLC, wrong type, empty, bad JSON, bad quoting, > 5 MiB) show the reason with row references and leave the previous import displayed",
+    Object.values(failSeen).every((x) => x.ok), failSeen);
+
+  await pickFile(join(FIX, "valid_daily_40.json"));
+  ir = await chartRoot(page);
+  check("import", "I8", "A valid JSON file replaces the previous import", ir.bars === "40" && ir.firstBar === "2025-03-03", ir);
+
+  // privacy: nothing leaves the page, nothing is stored
+  const stored = await page.evaluate(`(async () => ({ local: JSON.stringify({ ...localStorage }), session: JSON.stringify({ ...sessionStorage }), cookie: document.cookie,
+    idb: (await indexedDB.databases()).map(d => d.name), caches: await caches.keys() }))()`);
+  const importReqs = page.log.requestDetails.slice(reqStart);
+  const anyBody = page.log.requestDetails.filter((r) => r.body || !["GET", "HEAD"].includes(r.method));
+  const leaks = page.log.requests.filter((u) => u.includes(SENTINEL) || /valid_daily|short_15|fixtures/.test(u));
+  check("import", "I9", "Importing sent no request at all, no request in the session carried a body, and no storage holds the file's data or name",
+    importReqs.length === 0 && anyBody.length === 0 && leaks.length === 0 && ![stored.local, stored.session, stored.cookie].some((x) => x.includes(SENTINEL) || /valid_daily|short_15|\.json"|\.csv/.test(x))
+    && stored.idb.length === 0 && stored.caches.length === 0,
+    { importReqs, anyBody, leaks, idb: stored.idb, caches: stored.caches, cookie: stored.cookie });
+
+  await page.viewport(1024, 800); await sleep(800);
+  await pickFile(join(FIX, "missing_column.csv"));
+  const ov1024 = await page.evaluate("document.documentElement.scrollWidth - window.innerWidth");
+  await page.shot(join(OUT, "07_import_error_1024.png"));
+  await page.viewport(1440, 790); await sleep(800);
+  check("import", "I10", "Imported chart with an error notice has no horizontal overflow at 1024 px", ov1024 <= 0, ov1024);
+  await page.clickEl(`document.querySelector('[data-testid="import-error"] button')`); await sleep(300);
+  await page.shot(join(OUT, "08_import_json.png"));
+
+  // back to the built-in datasets
+  await page.clickEl(`document.querySelector('[data-testid="dataset-demo"]')`); await sleep(1200);
+  const backDemo = { root: await chartRoot(page), view: (await page.store())?.state?.widgets?.find((w) => w.type === "chart")?.view, sim: await text(page, '[data-testid="simulated-label"]'),
+    imp: await text(page, '[data-testid="imported-label"]'), persisted: await page.evaluate(`localStorage.getItem("macro-research-workspace-v2")`),
+    title: await page.evaluate(`document.querySelector('[data-widget="chart"] .panel-title span')?.textContent`) };
+  await page.clickEl(`document.querySelector('[data-testid="dataset-overlay"]')`); await sleep(1500);
+  const backOverlay = await chartRoot(page);
+  await page.clickEl(`document.querySelector('[data-testid="dataset-imported"]')`); await sleep(1000);
+  const backImported = await chartRoot(page);
+  check("import", "I11", "DEMO SET restores the saved view exactly; EVENT OVERLAY still has its 5 markers; IMPORTED FILE returns to the import without re-reading",
+    backDemo.root.dataset === "demo" && JSON.stringify(backDemo.view) === JSON.stringify(viewBefore) && backDemo.persisted === persistedBefore
+    && backDemo.sim === "SIMULATED DATA — NOT REAL MARKET PRICES" && backDemo.imp === null && backDemo.root.markers === "0" && /^Price History \(simulated\)/.test(backDemo.title ?? "")
+    && backOverlay.dataset === "overlay" && backOverlay.markers === String(EXPECTED_EVENTS.length) && backImported.dataset === "imported" && backImported.bars === "40",
+    { backDemo, backOverlay, backImported });
+  await page.reload(4000); await chartReady(page); await sleep(800);
+  const afterReloadImp = { root: await chartRoot(page), btn: await page.evaluate(`!!document.querySelector('[data-testid="dataset-imported"]')`), label: await text(page, '[data-testid="imported-label"]') };
+  check("import", "I12", "After a reload the import is gone and the panel shows its saved built-in dataset",
+    afterReloadImp.root.dataset === "overlay" && !afterReloadImp.btn && afterReloadImp.label === null, afterReloadImp);
+  await page.send("Page.setInterceptFileChooserDialog", { enabled: false });
+  await page.clickEl(`document.querySelector('[data-testid="dataset-demo"]')`); await sleep(800);
+
   // ---------------------------------------------------------------- Research
   await page.goto(O + "?ws=research", 3500);
   await waitFor(page, `document.querySelector('[data-testid="research"]')`);

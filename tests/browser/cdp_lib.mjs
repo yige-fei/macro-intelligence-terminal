@@ -36,7 +36,9 @@ export async function launch({ profileDir, port = 9334, width = 1440, height = 7
     `--user-data-dir=${profileDir}`, `--remote-debugging-port=${port}`, `--window-size=${width},${height}`,
     "--host-resolver-rules=MAP * ~NOTFOUND, EXCLUDE 127.0.0.1", "about:blank",
   ], { stdio: "ignore" });
-  const log = { requests: [], failed: [], console: [], exceptions: [], browserLog: [] }; // browserLog: Log domain (only if Log.enable is sent)
+  // browserLog: Log domain (only if Log.enable is sent). requestDetails: method and whether a body was sent (OS-P2B privacy checks).
+  // fileChooser: Page.fileChooserOpened events (only with Page.setInterceptFileChooserDialog).
+  const log = { requests: [], requestDetails: [], failed: [], console: [], exceptions: [], browserLog: [], fileChooser: [] };
   let target;
   for (let i = 0; i < 150 && !target; i++) { // up to 30 s: a first start with a new profile can be slow
     await sleep(200);
@@ -49,7 +51,11 @@ export async function launch({ profileDir, port = 9334, width = 1440, height = 7
   ws.onmessage = (m) => {
     const msg = JSON.parse(m.data);
     if (msg.id && pending.has(msg.id)) { pending.get(msg.id)(msg); pending.delete(msg.id); return; }
-    if (msg.method === "Network.requestWillBeSent") log.requests.push(msg.params.request.url);
+    if (msg.method === "Network.requestWillBeSent") {
+      log.requests.push(msg.params.request.url);
+      log.requestDetails.push({ url: msg.params.request.url, method: msg.params.request.method, body: !!(msg.params.request.hasPostData || msg.params.request.postData) });
+    }
+    if (msg.method === "Page.fileChooserOpened") log.fileChooser.push(msg.params);
     if (msg.method === "Log.entryAdded") log.browserLog.push({ level: msg.params.entry.level, text: String(msg.params.entry.text).slice(0, 300), url: msg.params.entry.url });
     if (msg.method === "Network.loadingFailed") log.failed.push({ error: msg.params.errorText, canceled: msg.params.canceled });
     if (msg.method === "Runtime.consoleAPICalled" && ["error", "warning"].includes(msg.params.type))

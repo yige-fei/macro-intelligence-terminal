@@ -11,6 +11,7 @@ import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
 import { normalizeSymbol } from "../lib/symbol";
 import { SCREEN_ROWS, useTerminal, type WidgetInstance } from "../store/terminal";
+import { useImported } from "../store/imported";
 import ChartWidget from "./widgets/ChartWidget";
 import PitMacroWidget from "./widgets/PitMacroWidget";
 import ResearchWidget from "./widgets/ResearchWidget";
@@ -94,6 +95,8 @@ export default function Workspace() {
   const toggleLinked = useTerminal((s) => s.toggleLinked);
   const activeSymbol = useTerminal((s) => s.activeSymbol);
   const focus = useTerminal((s) => s.focus);
+  const importedActive = useImported((s) => s.active);
+  const hasImport = useImported((s) => s.set !== null);
   const wrapRef = useRef<HTMLDivElement>(null);
   const [viewH, setViewH] = useState<number | null>(null);
 
@@ -142,8 +145,9 @@ export default function Workspace() {
           <div className="terminal-panel">
             <div className="panel-title">
               <span>
-                {TITLES[w.type]}
-                {symbolAware.has(w.type) && <SymbolTag widget={w} activeSymbol={activeSymbol} />}
+                {/* OS-P2B: a chart showing an imported file is titled as such, without a demo instrument tag. */}
+                {w.type === "chart" && importedActive[w.id] && hasImport ? "Price History (imported file)" : TITLES[w.type]}
+                {symbolAware.has(w.type) && !(w.type === "chart" && importedActive[w.id] && hasImport) && <SymbolTag widget={w} activeSymbol={activeSymbol} />}
               </span>
               <span className="flex gap-2 items-center">
                 {symbolAware.has(w.type) && (
