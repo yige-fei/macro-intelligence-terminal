@@ -8,6 +8,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { loadLocal, type MacroExport } from "../lib/api";
 import { SYMBOL_NAMES, SYMBOLS } from "../lib/symbol";
 import { useTerminal } from "../store/terminal";
+import { useImportedContext } from "./TopBar";
 
 type Entry = { kind: "SIM" | "MACRO"; id: string; name: string; detail: string };
 
@@ -20,6 +21,7 @@ export default function CommandPalette() {
   const [query, setQuery] = useState("");
   const [selected, setSelected] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
+  const importedContext = useImportedContext();
   const { data: macro } = useQuery({ queryKey: ["macro"], queryFn: () => loadLocal<MacroExport>("macro_series.json"), staleTime: Infinity, enabled: open });
 
   const index: Entry[] = useMemo(() => [
@@ -64,6 +66,12 @@ export default function CommandPalette() {
           placeholder="DEMO-A, DEMO-B, DEMO-C or DEMO-D (simulated instruments)"
           className="w-full !border-0 !border-b !border-[var(--border)] px-3 py-2 text-[13px]"
         />
+        {importedContext && (
+          <div className="px-3 py-1.5 text-[11px] dim border-b border-[var(--border)]" role="note" data-testid="palette-imported-note">
+            The chart shows your imported file. Choosing an instrument sets the built-in instrument for DEMO SET and EVENT OVERLAY;
+            the imported chart does not change.
+          </div>
+        )}
         <div className="max-h-80 overflow-auto" role="listbox">
           {results.map((r, i) => (
             <div

@@ -456,6 +456,47 @@ try {
   check("import", "I12", "After a reload the import is gone; the panel shows its saved overlay dataset with its own labels under the neutral header",
     afterReloadImp.root.dataset === "overlay" && !afterReloadImp.btn && afterReloadImp.label === null && afterReloadImp.badge === "LOCAL TERMINAL · NO LIVE MARKET FEED"
     && afterReloadImp.sim === "SIMULATED DATA — NOT REAL MARKET PRICES" && /REAL OFFICIAL EVENT METADATA/.test(afterReloadImp.notice ?? ""), afterReloadImp);
+  // ---------------------------------------------------------------- OS-P2 UX-3: instrument picker vs imported data
+  const picker = async () => page.evaluate(`(() => { const b = document.querySelector('[data-testid="instrument-picker"]'); return b ? { text: b.innerText.replace(/\\s+/g, " ").trim(), ctx: b.dataset.context } : null })()`);
+  const choose = async (sym) => { // keyboard: Ctrl+K, type, Enter
+    await page.key({ key: "k", code: "KeyK", vk: 75, modifiers: 2 }); await sleep(500);
+    const note = await text(page, '[data-testid="palette-imported-note"]');
+    await page.type(sym); await sleep(300); await page.key({ key: "Enter", code: "Enter", vk: 13, text: "\r" }); await sleep(1200);
+    return note;
+  };
+  const savedLayout = async () => { const st = (await page.store())?.state; return JSON.stringify({ widgets: st?.widgets, layout: st?.layout }); };
+  await page.clickEl(`document.querySelector('[data-testid="dataset-demo"]')`); await sleep(1000);
+  await page.clickEl(`document.querySelector('[data-testid="instrument-picker"]')`); await sleep(500); // pointer opens the palette
+  const pointerOpen = !!(await text(page, 'input[aria-label="Search instruments and macro series"]') !== null);
+  await page.key({ key: "Escape", code: "Escape", vk: 27 }); await sleep(300);
+  const noteDemo = await choose("DEMO-C");
+  const u1 = { picker: await picker(), legend: await page.legend(), noteDemo, pointerOpen };
+  await page.clickEl(`document.querySelector('[data-testid="dataset-overlay"]')`); await sleep(1500);
+  await choose("DEMO-D");
+  const u1o = { picker: await picker(), legend: await page.legend(), root: await chartRoot(page) };
+  check("ux3", "U1", "Built-in context: the picker names the instrument; pointer and Ctrl+K both work; it switches DEMO SET and EVENT OVERLAY charts",
+    u1.pointerOpen && u1.picker.ctx === "built-in" && u1.picker.text.startsWith("DEMO-C — search instruments…") && u1.legend?.startsWith("DEMO-C (simulated)") && u1.noteDemo === null
+    && u1o.picker.text.startsWith("DEMO-D — search instruments…") && u1o.legend?.startsWith("DEMO-D (simulated)") && u1o.root.dataset === "overlay" && u1o.root.markers === String(EXPECTED_EVENTS.length),
+    { u1, u1o });
+  const layoutBeforeImport = await savedLayout();
+  await pickFile(join(FIX, "valid_daily_250.csv"));
+  const u2 = { picker: await picker(), root: await chartRoot(page) };
+  const noteImp = await choose("DEMO-C");
+  const u2b = { picker: await picker(), root: await chartRoot(page), legend: await page.legend(), active: (await page.store())?.state?.activeSymbol };
+  check("ux3", "U2", "Imported context: the picker says IMPORTED FILE (built-in kept), the palette explains, and a pick changes only the built-in instrument",
+    u2.picker.ctx === "imported" && u2.picker.text.startsWith("IMPORTED FILE · built-in: DEMO-D — search…") && !/^DEMO-/.test(u2.picker.text)
+    && /imported chart does not change/.test(noteImp ?? "") && u2b.root.dataset === "imported" && u2b.root.bars === "250" && u2b.legend?.startsWith("IMPORTED ")
+    && u2b.picker.text.startsWith("IMPORTED FILE · built-in: DEMO-C") && u2b.active === "DEMO-C", { u2, noteImp, u2b });
+  await page.clickEl(`document.querySelector('[data-testid="dataset-demo"]')`); await sleep(1200);
+  const u3 = { picker: await picker(), legend: await page.legend(), root: await chartRoot(page), layout: await savedLayout() };
+  check("ux3", "U3", "Back on DEMO SET: the chosen built-in instrument is shown and named; panels and layout unchanged apart from the chosen dataset",
+    u3.picker.ctx === "built-in" && u3.picker.text.startsWith("DEMO-C — search instruments…") && u3.legend?.startsWith("DEMO-C (simulated)") && u3.root.dataset === "demo"
+    && JSON.stringify(JSON.parse(u3.layout).layout) === JSON.stringify(JSON.parse(layoutBeforeImport).layout)
+    && JSON.parse(u3.layout).widgets.length === JSON.parse(layoutBeforeImport).widgets.length, { u3: { ...u3, layout: undefined } });
+  await page.reload(4000); await chartReady(page); await sleep(800);
+  const u4 = { picker: await picker(), legend: await page.legend(), imported: await page.evaluate(`!!document.querySelector('[data-testid="dataset-imported"]')`) };
+  check("ux3", "U4", "After a reload: built-in context, the chosen instrument kept, no imported file",
+    u4.picker.ctx === "built-in" && u4.picker.text.startsWith("DEMO-C — search instruments…") && u4.legend?.startsWith("DEMO-C (simulated)") && !u4.imported, u4);
   await page.send("Page.setInterceptFileChooserDialog", { enabled: false });
   await page.clickEl(`document.querySelector('[data-testid="dataset-demo"]')`); await sleep(800);
 
