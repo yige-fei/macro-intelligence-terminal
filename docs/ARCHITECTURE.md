@@ -27,6 +27,11 @@
   - Each chart panel chooses a dataset (`view.dataset`): `demo` (2016–2023, the default) or `overlay` (the event-overlay set).
   - **Range presets are computed from the selected dataset's dates.** 1Y, 3Y and 5Y start on 1 January of the last bar's year, two years earlier and four years earlier. The span preset starts on 1 January of the first bar's year. For the 2016–2023 set these are exactly the earlier fixed values, and an older saved range `"2016–23"` still loads.
   - **Switching datasets** resets the range to 5Y and rebuilds the chart, so no range or marker carries over.
+  - **Sizing.** The grid starts from a default width and animates to the measured one, and Lightweight Charts keeps its bar spacing on resize.
+    - So, until the user zooms or pans, every plot-width change re-fits the selected range. After that, their view is kept.
+    - `minBarSpacing` is 0.1 px, so ALL fits even the 2,085-bar demo set in a narrow plot.
+    - The panel exposes its plot width and visible first and last bar as `data-*` attributes, which the browser checks use.
+  - **Expand chart** (⤢ in the chart panel title) temporarily shows only that chart at full size. It's component state, never saved: the layout is untouched, and Restore (⤡) or a reload brings the workspace back.
 - **Local import.** IMPORT LOCAL DATA reads one user-chosen `.csv` or `.json` file with the browser File API.
   - `lib/importData.ts` (an RFC 4180 CSV reader plus a strict daily-OHLCV validator) turns it into the existing `Candle` format, or rejects it with row-referenced reasons. It never repairs a value.
   - The result lives only in `store/imported.ts`, a non-persisted Zustand store. It doesn't touch the server, browser storage or the repository.

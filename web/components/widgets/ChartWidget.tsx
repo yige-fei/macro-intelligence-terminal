@@ -97,6 +97,9 @@ const MIN_ZOOM_BARS = 20;  // narrowest window, about one trading month
 // colours never change; the hover legend and the event list always name every event.
 const FULL_LABEL_PX = 48;
 const GLYPH_LABEL_PX = 16;
+// UX-1: Lightweight Charts never draws bars closer than minBarSpacing (default 0.5 px), so ALL could not fit the
+// 2,085-bar demo set in plots narrower than ~1,042 px. 0.1 px lets a selected range fit any realistic plot width.
+const MIN_BAR_SPACING = 0.1;
 
 export default function ChartWidget({ widget }: { widget: WidgetInstance }) {
   const symbol = useWidgetSymbol(widget);
@@ -152,6 +155,8 @@ export default function ChartWidget({ widget }: { widget: WidgetInstance }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const chartRef = useRef<IChartApi | null>(null);
   const mainRef = useRef<ISeriesApi<SeriesType> | null>(null);
+  const rootRef = useRef<HTMLDivElement>(null);
+  const markAdjusted = useRef<() => void>(() => {});
   const [chart, setChart] = useState<IChartApi | null>(null);
   const [markerCount, setMarkerCount] = useState(0);
   const [markerLabels, setMarkerLabels] = useState("");
@@ -276,7 +281,7 @@ export default function ChartWidget({ widget }: { widget: WidgetInstance }) {
       layout: { background: { color: "#0a0a0a" }, textColor: "#808080", fontSize: 10, attributionLogo: true },
       grid: { vertLines: { color: "#1a1a1a" }, horzLines: { color: "#1a1a1a" } },
       crosshair: { mode: 0 },
-      timeScale: { borderColor: "#262626", timeVisible: false },
+      timeScale: { borderColor: "#262626", timeVisible: false, minBarSpacing: MIN_BAR_SPACING },
       // 62 px = widest natural axis measured over all tickers, ranges, indicator panes and viewports (54-62 px)
       rightPriceScale: { borderColor: "#262626", minimumWidth: 62 },
       autoSize: true,
@@ -319,7 +324,52 @@ export default function ChartWidget({ widget }: { widget: WidgetInstance }) {
     chart.timeScale().fitContent();
     chartRef.current = chart;
     setChart(chart);
+
+    // UX-1: the chart can be created before its panel has its final width (the grid starts from a default width and
+    // animates to the measured one), and a resize keeps the bar spacing. So while the user has not zoomed or panned,
+    // every plot-width change re-fits the selected range; once they have, their view is left alone.
+    const scale = chart.timeScale();
+    let userAdjusted = false;
+    let pointerDown = false;
+    const onDown = () => { pointerDown = true; };
+    const onUp = () => { pointerDown = false; };
+    el.addEventListener("pointerdown", onDown);
+    window.addEventListener("pointerup", onUp);
+    markAdjusted.current = () => { userAdjusted = true; };
+    // Visible first/last bar and plot width, written straight to the DOM (no React state, so panning re-renders nothing).
+    const report = () => {
+      const root = rootRef.current;
+      const lr = scale.getVisibleLogicalRange();
+      if (!root) return;
+      root.dataset.plotWidth = String(Math.round(scale.width()));
+      root.dataset.userAdjusted = String(userAdjusted);
+      if (!lr) return;
+      root.dataset.visibleLogical = `${lr.from.toFixed(3)},${lr.to.toFixed(3)}`;
+      // A bar counts as visible when its centre (its logical index) is inside the range; 0.001 absorbs float noise
+      // (a fitted range can start at +1e-9, which must not drop the first bar from the report).
+      const from = Math.min(Math.max(0, Math.ceil(lr.from - 1e-3)), candles.length - 1);
+      const to = Math.max(Math.min(candles.length - 1, Math.floor(lr.to + 1e-3)), 0);
+      root.dataset.visibleFrom = candles[from].date;
+      root.dataset.visibleTo = candles[to].date;
+      root.dataset.visibleBars = String(Math.max(0, to - from + 1));
+    };
+    const onRange = () => {
+      if (pointerDown) userAdjusted = true; // drag-pan or axis drag by the user
+      report();
+    };
+    const onSize = () => {
+      if (!userAdjusted) scale.fitContent();
+      report();
+    };
+    scale.subscribeVisibleLogicalRangeChange(onRange);
+    scale.subscribeSizeChange(onSize);
+    report();
     return () => {
+      scale.unsubscribeVisibleLogicalRangeChange(onRange);
+      scale.unsubscribeSizeChange(onSize);
+      el.removeEventListener("pointerdown", onDown);
+      window.removeEventListener("pointerup", onUp);
+      markAdjusted.current = () => {};
       chartRef.current = null;
       mainRef.current = null;
       chart.remove();
@@ -428,6 +478,7 @@ export default function ChartWidget({ widget }: { widget: WidgetInstance }) {
     const visible = timeScale?.getVisibleLogicalRange();
     const last = candles.length - 1;
     if (!timeScale || !visible || last < 1) return;
+    markAdjusted.current(); // an intentional view: later resizes keep it
     const span = Math.min(Math.max((visible.to - visible.from) * factor, Math.min(MIN_ZOOM_BARS, last)), last);
     const centre = Math.min(Math.max((visible.from + visible.to) / 2, span / 2), last - span / 2);
     timeScale.setVisibleLogicalRange({ from: centre - span / 2, to: centre + span / 2 });
@@ -440,7 +491,7 @@ export default function ChartWidget({ widget }: { widget: WidgetInstance }) {
   const outOfRange = plan?.kind === "ok" ? plan.marks.length - inView.length : 0;
 
   return (
-    <div className="flex flex-col h-full" data-testid="chart-root" data-dataset={source} data-first-bar={candles[0]?.date ?? ""}
+    <div ref={rootRef} className="flex flex-col h-full" data-testid="chart-root" data-dataset={source} data-first-bar={candles[0]?.date ?? ""}
       data-last-bar={candles.at(-1)?.date ?? ""} data-bars={candles.length} data-markers={markerCount} data-marker-labels={markerLabels}>
       <div className="flex gap-1 p-1 flex-wrap shrink-0">
         {DATASETS.map((d) => (

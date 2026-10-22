@@ -532,6 +532,90 @@ try {
   const u4 = { picker: await picker(), legend: await page.legend(), imported: await page.evaluate(`!!document.querySelector('[data-testid="dataset-imported"]')`) };
   check("ux3", "U4", "After a reload: built-in context, the chosen instrument kept, no imported file",
     u4.picker.ctx === "built-in" && u4.picker.text.startsWith("DEMO-C — search instruments…") && u4.legend?.startsWith("DEMO-C (simulated)") && !u4.imported, u4);
+  // ---------------------------------------------------------------- OS-P2 UX-1: chart sizing, range truthfulness, focus
+  const ws = (dataset, range, indicators = ["SMA50"]) => JSON.stringify({ state: { activeSymbol: "DEMO-A", widgets: [
+    { id: "w-chart", type: "chart", linked: true, view: { dataset, range, chartType: "candles", indicators } },
+    { id: "w-research", type: "research", linked: false }, { id: "w-macro", type: "macro", linked: false }, { id: "w-sources", type: "sources", linked: false }],
+    layout: [{ i: "w-chart", x: 0, y: 0, w: 8, h: 14 }, { i: "w-research", x: 8, y: 0, w: 4, h: 16 }, { i: "w-macro", x: 0, y: 14, w: 8, h: 10 }, { i: "w-sources", x: 8, y: 16, w: 4, h: 8 }] }, version: 2 });
+  const geo = async () => page.evaluate(`(() => { const r = document.querySelector('[data-testid="chart-root"]'); const p = document.querySelector('.react-grid-item[data-widget="chart"]');
+    const c = p?.querySelector('canvas'); return { ...r.dataset, panelW: Math.round(p.getBoundingClientRect().width), panelH: Math.round(p.getBoundingClientRect().height),
+    canvasW: Math.round(c?.getBoundingClientRect().width ?? 0), items: document.querySelectorAll('.react-grid-item').length } })()`);
+  const sets = { demo: etf.candles["DEMO-A"], overlay: overlay.candles["DEMO-A"] };
+  const zRows = {};
+  for (const w of [1024, 1280, 1440, 2400]) for (const ds of ["demo", "overlay"]) {
+    await page.viewport(w, 800);
+    await page.seedStorage(O + "?ws=market", { "macro-research-workspace-v2": ws(ds, "ALL") }, 4500); await chartReady(page); await sleep(700);
+    const g = await geo();
+    const rows = sets[ds];
+    let hoverFirst = null;
+    if (w === 1024) { const r = await page.rect('[data-widget="chart"] canvas'); await page.move(r.x + 2, r.y + r.h / 2); await sleep(80); hoverFirst = (await page.legend())?.match(/\d{4}-\d{2}-\d{2}/)?.[0] ?? null; }
+    zRows[`${w}:${ds}`] = { ok: g.visibleFrom === rows[0].date && g.visibleTo === rows.at(-1).date && g.visibleBars === String(rows.length)
+      && Math.abs(Number(g.plotWidth) - g.canvasW) <= 2 && Number(g.plotWidth) >= g.panelW - 90 && (hoverFirst === null || hoverFirst <= rows[Math.floor(rows.length * 0.02)].date),
+      from: g.visibleFrom, to: g.visibleTo, bars: g.visibleBars, plot: g.plotWidth, panel: g.panelW, hoverFirst };
+  }
+  check("ux1", "Z1", "ALL shows the whole dataset (first to last bar) and the plot fills its panel at 1024, 1280, 1440 and 2400 px, for DEMO SET and EVENT OVERLAY (the earlier 1024 px failure)",
+    Object.values(zRows).every((r) => r.ok), zRows);
+
+  await page.viewport(1024, 800);
+  await page.seedStorage(O + "?ws=market", { "macro-research-workspace-v2": ws("demo", "1Y") }, 4500); await chartReady(page); await sleep(700);
+  const z2a = await geo();
+  await page.seedStorage(O + "?ws=market", { "macro-research-workspace-v2": ws("overlay", "SPAN") }, 4500); await chartReady(page); await sleep(700);
+  const z2b = await geo();
+  check("ux1", "Z2", "Presets stay truthful at 1024 px: demo 1Y shows 2023-01-02 to 2023-12-29; overlay span shows its whole range",
+    z2a.visibleFrom === firstOnOrAfter(etf.candles["DEMO-A"], "2023-01-01") && z2a.visibleTo === "2023-12-29" && z2a.visibleBars === z2a.bars
+    && z2b.visibleFrom === "2025-01-02" && z2b.visibleTo === "2026-10-16" && z2b.visibleBars === z2b.bars, { z2a, z2b });
+
+  await page.send("Page.setInterceptFileChooserDialog", { enabled: true });
+  await pickFile(join(FIX, "valid_daily_250.csv"));
+  const z3 = await geo();
+  check("ux1", "Z3", "An imported file's ALL range is whole at 1024 px", z3.dataset === "imported" && z3.visibleFrom === "2024-01-02"
+    && z3.visibleTo === fx250.at(-1)[0] && z3.visibleBars === "250", z3);
+
+  await page.viewport(1440, 800);
+  await page.seedStorage(O + "?ws=market", { "macro-research-workspace-v2": ws("demo", "ALL") }, 4500); await chartReady(page); await sleep(700);
+  const z4a = await geo();
+  await page.viewport(1024, 800); await sleep(1200); const z4b = await geo();
+  await page.viewport(2400, 800); await sleep(1200); const z4c = await geo();
+  check("ux1", "Z4", "Without zooming or panning, a live resize re-fits the selected range to the new width",
+    [z4a, z4b, z4c].every((g) => g.visibleFrom === "2016-01-04" && g.visibleTo === "2023-12-29" && g.visibleBars === "2085" && g.userAdjusted === "false")
+    && Number(z4b.plotWidth) < Number(z4a.plotWidth) && Number(z4c.plotWidth) > Number(z4a.plotWidth), { z4a, z4b, z4c });
+
+  await page.viewport(1440, 800);
+  await page.seedStorage(O + "?ws=market", { "macro-research-workspace-v2": ws("overlay", "ALL") }, 4500); await chartReady(page); await sleep(700);
+  await clickButton(page, "+"); await sleep(500);
+  const z5a = await geo();
+  await page.viewport(1280, 800); await sleep(1200); const z5b = await geo();
+  const rp = await page.rect('[data-widget="chart"] canvas');
+  await page.drag(rp.x + rp.w * 0.3, rp.y + rp.h * 0.3, rp.x + rp.w * 0.6, rp.y + rp.h * 0.3, 10); const z5c = await geo();
+  await page.viewport(1440, 800); await sleep(1200); const z5d = await geo();
+  check("ux1", "Z5", "After the user zooms or pans, resizing keeps their view instead of re-fitting it",
+    z5a.userAdjusted === "true" && Number(z5a.visibleBars) < 467 && z5b.userAdjusted === "true" && z5b.visibleTo === z5a.visibleTo && Number(z5b.visibleBars) < 467
+    && z5c.visibleTo < z5b.visibleTo && z5d.visibleTo === z5c.visibleTo && Number(z5d.visibleBars) < 467, { z5a, z5b, z5c, z5d });
+
+  // focus: expand the chart, restore the workspace
+  await page.seedStorage(O + "?ws=market", { "macro-research-workspace-v2": ws("overlay", "ALL", ["SMA50", "RSI", "MACD"]) }, 4500); await chartReady(page); await sleep(800);
+  const savedBefore = await page.evaluate(`localStorage.getItem("macro-research-workspace-v2")`);
+  const f0 = await geo(); const l0 = await labelMap(); const panes0 = (await page.chartGeom()).rowHeights.filter((h) => h > 5).length;
+  await page.clickEl(`document.querySelector('[data-testid="chart-expand"]')`); await sleep(1200);
+  const f1 = await geo(); const l1 = await labelMap(); const panes1 = (await page.chartGeom()).rowHeights.filter((h) => h > 5).length;
+  const savedDuring = await page.evaluate(`localStorage.getItem("macro-research-workspace-v2")`);
+  await page.shot(join(OUT, "13_chart_expanded.png"));
+  for (const t of ["LINE", "CANDLES"]) { await clickButton(page, t); await sleep(500); }
+  const fT = await geo();
+  await page.reload(4000); await chartReady(page); await sleep(800);
+  const fR = await geo();
+  await page.clickEl(`document.querySelector('[data-testid="chart-expand"]')`); await sleep(1000);
+  await page.clickEl(`document.querySelector('[data-testid="chart-expand"]')`); await sleep(1200);
+  const f2 = await geo(); const savedAfter = await page.evaluate(`localStorage.getItem("macro-research-workspace-v2")`);
+  const keep = (a, b) => a.dataset === b.dataset && a.markers === b.markers;
+  check("ux1", "Z6", "Expand chart shows only the chart at full size (same dataset, markers, indicator panes, whole range); the saved layout is never written; a reload or Restore returns the exact workspace",
+    f0.items === 4 && f1.items === 1 && f1.panelW > f0.panelW * 1.3 && f1.panelH > f0.panelH * 1.3 && keep(f0, f1) && f1.markers === "5" && panes1 === panes0
+    && f1.visibleFrom === "2025-01-02" && f1.visibleTo === "2026-10-16" && savedDuring === savedBefore && fT.items === 1
+    && fR.items === 4 && f2.items === 4 && f2.panelW === f0.panelW && f2.panelH === f0.panelH && keep(f0, f2)
+    && JSON.parse(savedAfter).state.layout.length === 4 && JSON.stringify(JSON.parse(savedAfter).state.layout) === JSON.stringify(JSON.parse(savedBefore).state.layout)
+    && l0["BLS.CPI.2026-09"].text === "" && l1["BLS.CPI.2026-09"].text !== "",
+    { f0, f1, f2, fR: { items: fR.items }, panes0, panes1, cpiLabel: [l0["BLS.CPI.2026-09"], l1["BLS.CPI.2026-09"]], savedSame: [savedDuring === savedBefore, savedAfter === savedBefore] });
+  await page.viewport(1440, 790); await sleep(600);
   await page.send("Page.setInterceptFileChooserDialog", { enabled: false });
   await page.clickEl(`document.querySelector('[data-testid="dataset-demo"]')`); await sleep(800);
 

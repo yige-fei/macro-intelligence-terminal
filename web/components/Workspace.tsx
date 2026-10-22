@@ -99,6 +99,10 @@ export default function Workspace() {
   const hasImport = useImported((s) => s.set !== null);
   const wrapRef = useRef<HTMLDivElement>(null);
   const [viewH, setViewH] = useState<number | null>(null);
+  // UX-1: temporary chart focus. Component state only (never persisted): while a chart is expanded only it is drawn,
+  // full width and height, layout changes are ignored, so the saved layout and panel settings stay exactly as they were.
+  const [expandedId, setExpandedId] = useState<string | null>(null);
+  const expanded = expandedId !== null && widgets.some((w) => w.id === expandedId) ? expandedId : null;
 
   // Visible height of the scrolling <main> that holds the grid.
   useLayoutEffect(() => {
@@ -133,14 +137,16 @@ export default function Workspace() {
     {rowHeight !== null && (
     <Grid
       className="layout"
-      layout={layout}
+      layout={expanded ? [{ i: expanded, x: 0, y: 0, w: 12, h: SCREEN_ROWS }] : layout}
       cols={12}
       rowHeight={rowHeight}
       margin={[MARGIN, MARGIN]}
       draggableHandle=".panel-title"
-      onLayoutChange={(l) => setLayout(l.map(({ i, x, y, w, h }) => ({ i, x, y, w, h })))}
+      isDraggable={!expanded}
+      isResizable={!expanded}
+      onLayoutChange={(l) => { if (!expanded) setLayout(l.map(({ i, x, y, w, h }) => ({ i, x, y, w, h }))); }}
     >
-      {widgets.map((w) => (
+      {(expanded ? widgets.filter((w) => w.id === expanded) : widgets).map((w) => (
         <div key={w.id} data-widget={w.type} data-widget-id={w.id}>
           <div className="terminal-panel">
             <div className="panel-title">
@@ -150,6 +156,19 @@ export default function Workspace() {
                 {symbolAware.has(w.type) && !(w.type === "chart" && importedActive[w.id] && hasImport) && <SymbolTag widget={w} activeSymbol={activeSymbol} />}
               </span>
               <span className="flex gap-2 items-center">
+                {w.type === "chart" && (
+                  <button
+                    data-testid="chart-expand"
+                    aria-label={expanded === w.id ? "Restore workspace" : "Expand chart"}
+                    title={expanded === w.id ? "Restore workspace: show all panels again (layout unchanged)" : "Expand chart: hide the other panels for now (layout unchanged)"}
+                    aria-pressed={expanded === w.id}
+                    onMouseDown={(e) => e.stopPropagation()}
+                    onClick={() => setExpandedId(expanded === w.id ? null : w.id)}
+                    className={expanded === w.id ? "text-[var(--amber)]" : "dim hover:text-[var(--amber)]"}
+                  >
+                    {expanded === w.id ? "⤡" : "⤢"}
+                  </button>
+                )}
                 {symbolAware.has(w.type) && (
                   <button
                     title={w.linked ? "Linked to active symbol (click to unlink)" : "Unlinked (click to link)"}
