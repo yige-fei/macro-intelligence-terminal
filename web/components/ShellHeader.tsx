@@ -7,7 +7,7 @@
 // T4-P1: product name, SETTINGS link, and an honest badge and build stamp (see historicalBadge / buildLabel).
 
 import { useQuery } from "@tanstack/react-query";
-import { HISTORICAL_DATA, loadLocal, type Manifest } from "../lib/api";
+import { loadLocal, type Manifest } from "../lib/api";
 import { buildLabel, PRODUCT_NAME } from "../lib/buildInfo";
 import { hrefFor, navigate, type WorkspaceId } from "../lib/nav";
 
@@ -19,11 +19,12 @@ const LINKS: Array<{ ws: WorkspaceId; label: string }> = [
   { ws: "settings", label: "SETTINGS" },
 ];
 
-/** Header badge for the historical views: never claims a data range the build does not contain. */
-export function historicalBadge(manifest: Manifest | undefined): string {
-  if (HISTORICAL_DATA === "excluded") return "HISTORICAL DATA NOT INCLUDED · NOT LIVE";
-  // OS-P2A: two simulated datasets with different end dates, so the badge names no single end date.
-  return "DEMO · SIMULATED MARKET DATA · NOT LIVE";
+/**
+ * App-wide header badge (Home, Market, Research). OS-P2B: source-neutral, because a Market panel can show simulated,
+ * event-overlay or user-imported data at the same time; each panel states its own data's provenance.
+ */
+export function historicalBadge(_manifest?: Manifest): string {
+  return "LOCAL TERMINAL · NO LIVE MARKET FEED";
 }
 
 export function NavLink({ ws, children, className = "", current = false }: { ws: WorkspaceId; children: React.ReactNode; className?: string; current?: boolean }) {

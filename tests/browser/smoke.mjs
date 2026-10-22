@@ -130,7 +130,7 @@ try {
   const intro = await text(page, '[data-testid="home-intro"]');
   const badge = await text(page, ".hist-badge");
   check("home", "H2", "Intro and header badge say what is real and what is simulated",
-    /release metadata \(BLS, BEA\) is real/.test(intro ?? "") && /simulated/.test(intro ?? "") && /^DEMO · SIMULATED MARKET DATA · NOT LIVE$/.test(badge ?? ""), { intro, badge }); // OS-P2A: no single end date
+    /release metadata \(BLS, BEA\) is real/.test(intro ?? "") && /simulated/.test(intro ?? "") && /^LOCAL TERMINAL · NO LIVE MARKET FEED$/.test(badge ?? ""), { intro, badge }); // OS-P2B: source-neutral (panels state provenance)
 
   // navigation through the shared header, then Back
   const visited = [];
@@ -349,7 +349,8 @@ try {
     page.log.fileChooser.length >= 1 && ir?.dataset === "imported" && ir.bars === "250" && ir.firstBar === "2024-01-02" && ir.lastBar === fx250.at(-1)[0]
     && impLabel === "USER-IMPORTED DATA — LOCAL FILE" && /supplied by you/.test(impNotice ?? "") && /has not verified its\s+source, accuracy, authenticity or your right/.test(impNotice ?? "")
     && /not uploaded, not saved, gone after a\s+reload/.test(impNotice ?? "") && /250 daily bars, 2024-01-02 to/.test(impOk ?? "")
-    && (await text(page, '[data-testid="simulated-label"]')) === null && impTitle === "Price History (imported file)", { ir, impLabel, impNotice, impOk, impTitle });
+    && (await text(page, '[data-testid="simulated-label"]')) === null && impTitle === "Price History (imported file)"
+    && (await text(page, ".hist-badge")) === "LOCAL TERMINAL · NO LIVE MARKET FEED", { ir, impLabel, impNotice, impOk, impTitle, badge: await text(page, ".hist-badge") });
   const lastRow = fx250.at(-1);
   legend = await page.legend();
   check("import", "I2", "Legend shows the imported last bar exactly, without the simulated tag or an Adj C value",
@@ -450,9 +451,11 @@ try {
     && backOverlay.dataset === "overlay" && backOverlay.markers === String(EXPECTED_EVENTS.length) && backImported.dataset === "imported" && backImported.bars === "40",
     { backDemo, backOverlay, backImported });
   await page.reload(4000); await chartReady(page); await sleep(800);
-  const afterReloadImp = { root: await chartRoot(page), btn: await page.evaluate(`!!document.querySelector('[data-testid="dataset-imported"]')`), label: await text(page, '[data-testid="imported-label"]') };
-  check("import", "I12", "After a reload the import is gone and the panel shows its saved built-in dataset",
-    afterReloadImp.root.dataset === "overlay" && !afterReloadImp.btn && afterReloadImp.label === null, afterReloadImp);
+  const afterReloadImp = { root: await chartRoot(page), btn: await page.evaluate(`!!document.querySelector('[data-testid="dataset-imported"]')`), label: await text(page, '[data-testid="imported-label"]'),
+    badge: await text(page, ".hist-badge"), sim: await text(page, '[data-testid="simulated-label"]'), notice: await text(page, '[data-testid="overlay-notice"]') };
+  check("import", "I12", "After a reload the import is gone; the panel shows its saved overlay dataset with its own labels under the neutral header",
+    afterReloadImp.root.dataset === "overlay" && !afterReloadImp.btn && afterReloadImp.label === null && afterReloadImp.badge === "LOCAL TERMINAL · NO LIVE MARKET FEED"
+    && afterReloadImp.sim === "SIMULATED DATA — NOT REAL MARKET PRICES" && /REAL OFFICIAL EVENT METADATA/.test(afterReloadImp.notice ?? ""), afterReloadImp);
   await page.send("Page.setInterceptFileChooserDialog", { enabled: false });
   await page.clickEl(`document.querySelector('[data-testid="dataset-demo"]')`); await sleep(800);
 
