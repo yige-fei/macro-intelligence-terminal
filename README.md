@@ -33,7 +33,14 @@ and TradingView Lightweight Charts™. It adds:
 You need:
 - **Node 22 or newer.** Developed and tested with Node 26.0.0 and npm 11.12.1; `.nvmrc` says 26.
 - **Python 3.10 or newer.** Tested with 3.12.6.
-- macOS or Linux. The npm scripts set an environment variable POSIX-style.
+
+**Tested platform:** macOS 14 only, with Node 26.0.0, Python 3.12.6 and Chrome 155 (the automated browser checks drive
+Chrome).
+- **Linux:** untested.
+- **Windows:** untested, and `npm run build` won't run in cmd or PowerShell (the npm scripts set an environment
+  variable POSIX-style).
+- **Other browsers** (Safari, Firefox, Edge): untested.
+- There's no installer or hosted version; you build and run it locally as below.
 
 ```bash
 cd web
@@ -94,8 +101,8 @@ Regenerate with `python3 -m terminal_demo.generate` (seed `20261020`). Details: 
 
 **Rights:**
 - This repository contains **no** third-party market data and **no** FRED/ALFRED or Cboe data.
-- A software licence (when one is chosen) won't grant rights in data from any provider.
-- Optional adapters for official sources or user-supplied files are planned, not implemented.
+- The project's MIT licence grants no rights in data from any provider; see [NOTICE.md](NOTICE.md).
+- Optional adapters for official sources are planned, not implemented. You can already chart your own daily CSV/JSON file in the browser ([docs/IMPORT.md](docs/IMPORT.md)); it stays under its own terms.
 
 ## Research
 
@@ -122,4 +129,10 @@ See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 ## Provenance and licence
 
 - **Provenance:** upstream, modified and original files are listed in [NOTICE.md](NOTICE.md). Third-party licence texts are in [LICENSES/](LICENSES/).
-- **Licence:** **none has been chosen yet for this project's own code**, so none is granted for now.
+- **Licence:** this project's own code, documentation and generated fictional data are under the **MIT License**, Copyright (c) 2026 Samology ([LICENSE](LICENSE)).
+  - Files adapted from OpenTerminal keep OpenTerminal's MIT notice.
+  - Third-party libraries keep their own licences.
+  - BLS/BEA release metadata keeps its public-domain source status.
+  - Files you import are not covered.
+
+  The boundaries are set out in [NOTICE.md](NOTICE.md).
