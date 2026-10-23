@@ -1,12 +1,25 @@
 # Macro Intelligence Terminal
 
-A local, Bloomberg-style research terminal for macroeconomic events and markets.
+An open-source research workspace for U.S. macroeconomic release events and daily price charts. You build it from
+source and run it on your own computer; there's no hosted demo or installer.
 
-It's a static Next.js app with interactive financial charts, built on [OpenTerminal](https://github.com/ErTasselli/OpenTerminal)
-and TradingView Lightweight Charts™. It adds:
-- a release desk for official U.S. economic releases;
-- a research results view;
-- a small, security-conscious local server.
+**What it does today:**
+- **Official release calendar:** 38 CPI, Employment Situation and GDP Advance releases from the U.S. Bureau of Labor
+  Statistics (BLS) and Bureau of Economic Analysis (BEA), from a pinned snapshot taken on 17 October 2026. Each event
+  cites its official source and shows whether its publication was confirmed or it was only scheduled. This is
+  metadata only, with no economic values.
+- **Charts:** daily candlestick, bar, line and area charts with volume, moving averages, Bollinger Bands, RSI and MACD,
+  on fictional, simulated prices. A separate simulated set shows the release dates as chart markers.
+- **Your own data:** chart a daily price file (CSV or JSON) entirely in your browser. It isn't uploaded or saved.
+- **Research view:** shows how evaluation results would be presented, using illustrative random figures rather than
+  a real model's output.
+
+**Not built:** live market feeds, automatically refreshed releases, real macroeconomic numbers, an AI research
+assistant, a backtesting engine, trade execution, or a hosted demo or installer. Some of these are on the
+[roadmap](#roadmap-not-implemented).
+
+Under the hood it's a static Next.js app built on [OpenTerminal](https://github.com/ErTasselli/OpenTerminal) and
+TradingView Lightweight Charts™, served by a small Python server that listens only on your own machine (127.0.0.1).
 
 > **What is real and what is simulated**
 > - **Real:** the release-desk metadata (schedules and publication status of CPI, Employment Situation and GDP Advance releases, from official BLS and BEA pages; no economic values).
@@ -49,6 +62,14 @@ npm run build     # static export into web/out/
 cd ..
 python3 -m terminal_demo.serve        # http://127.0.0.1:8800/   (Ctrl-C to stop)
 ```
+
+**Dependency advisories:** an `npm audit` on 23 October 2026 reported 2 findings (1 high, 1 moderate) for `npm ci`. Both
+come from PostCSS 8.4.31, which Next.js 15 bundles, and together they cover four PostCSS advisories.
+- In the reviewed setup, PostCSS runs only during `npm run build`, on this repository's own CSS and pinned dependency
+  CSS. No path for untrusted CSS was found.
+- That limited exposure isn't proof that other setups or forks are safe.
+- Don't run `npm audit fix --force`: it installs an untested major Next.js upgrade. Review the advisories and test any
+  dependency change instead.
 
 **Server options:**
 - `--port N` picks the port;
